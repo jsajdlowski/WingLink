@@ -1,13 +1,11 @@
 name: winglink
 services:
   postgres:
-    image: 'postgres:latest'
-    environment:
-      - 'POSTGRES_DB=winglink'
-      - 'POSTGRES_PASSWORD=winglink'
-      - 'POSTGRES_USER=winglink'
+    image: 'postgres:alpine'
+    env_file:
+      - .env
     ports:
-      - '5432:5432'
+      - '${POSTGRES_PORT:-5432}:${POSTGRES_PORT:-5432}'
     volumes:
       - type: bind
         source: ./tmp-postgresql-data
