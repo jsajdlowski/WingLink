@@ -1,6 +1,6 @@
-package com.example.backend.repository;
+package com.winglink.backend.repository;
 
-import com.example.backend.entity.Airport;
+import com.winglink.backend.entity.Airport;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 

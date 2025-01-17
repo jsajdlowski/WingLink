@@ -1,7 +1,8 @@
-package com.example.backend.service;
+package com.winglink.backend.service;
 
-import com.example.backend.entity.Flight;
-import com.example.backend.repository.FlightRepository;
+
+import com.winglink.backend.entity.Flight;
+import com.winglink.backend.repository.FlightRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
