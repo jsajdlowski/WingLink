@@ -1,4 +1,4 @@
-package com.example.backend.entity;
+package com.winglink.backend.entity;
 
 import jakarta.persistence.*;
 import java.math.BigDecimal;

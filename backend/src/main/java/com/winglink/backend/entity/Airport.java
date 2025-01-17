@@ -1,4 +1,4 @@
-package com.example.backend.entity;
+package com.winglink.backend.entity;
 
 import jakarta.persistence.*;
 
@@ -14,7 +14,6 @@ public class Airport {
     private String country;
     private String city;
 
-    // Getters and Setters
     public Long getId() {
         return id;
     }
