@@ -1,6 +1,7 @@
 package com.winglink.backend.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.winglink.backend.entity.Flight;
 import com.winglink.backend.enums.SeatClass;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
