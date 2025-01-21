@@ -1,6 +1,6 @@
 package com.winglink.backend.controller;
 
-import com.winglink.backend.domain.User;
+import com.winglink.backend.entity.User;
 import com.winglink.backend.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,4 +1,4 @@
-package com.winglink.backend.domain;
+package com.winglink.backend.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.winglink.backend.enums.SeatClass;

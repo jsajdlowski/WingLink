@@ -1,4 +1,4 @@
-package com.winglink.backend.domain;
+package com.winglink.backend.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.winglink.backend.enums.UserRole;
@@ -14,7 +14,7 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "user")
-public class User {
+public class    User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)

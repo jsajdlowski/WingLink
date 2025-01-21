@@ -1,6 +1,6 @@
 package com.winglink.backend.controller;
 
-import com.winglink.backend.domain.Ticket;
+import com.winglink.backend.entity.Ticket;
 import com.winglink.backend.service.TicketService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
