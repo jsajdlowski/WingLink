@@ -1,7 +1,9 @@
-package com.example.backend.controller;
+package com.winglink.backend.controller;
 
-import com.example.backend.entity.Flight;
-import com.example.backend.service.FlightService;
+
+
+import com.winglink.backend.entity.Flight;
+import com.winglink.backend.service.FlightService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
