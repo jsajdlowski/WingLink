@@ -1,6 +1,6 @@
 package com.winglink.backend.service;
 
-import com.winglink.backend.domain.User;
+import com.winglink.backend.entity.User;
 import com.winglink.backend.enums.UserRole;
 import com.winglink.backend.repository.UserRepository;
 import org.springframework.stereotype.Service;

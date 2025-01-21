@@ -1,6 +1,6 @@
 package com.winglink.backend.service;
 
-import com.winglink.backend.domain.Ticket;
+import com.winglink.backend.entity.Ticket;
 import com.winglink.backend.repository.TicketRepository;
 import org.springframework.stereotype.Service;
 
