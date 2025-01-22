@@ -34,3 +34,4 @@ build/
 
 tmp-postgresql-data
 .env
+.DS_Store
