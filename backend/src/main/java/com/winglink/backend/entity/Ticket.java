@@ -1,4 +1,4 @@
-package com.winglink.backend.domain;
+package com.winglink.backend.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.winglink.backend.enums.SeatClass;
@@ -26,13 +26,11 @@ public class Ticket {
     @NotNull
     private SeatClass seatClass;
     @NotNull
-    @OneToOne(fetch = FetchType.LAZY)
-    private User boughtBy;
-    @NotNull
     @OneToOne(fetch = FetchType.EAGER)
     private Flight flight;
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     @JsonBackReference
-    private User user;
+    private User boughtBy;
 }
