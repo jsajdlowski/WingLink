@@ -1,0 +1,14 @@
+okta:
+  oauth2:
+    issuer: ${OKTA_OAUTH2_ISSUER}
+    audience: ${OKTA_OAUTH2_AUDIENCE}
+
+application:
+  client-origin-url: ${CLIENT_ORIGIN_URL}
+
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${OKTA_OAUTH2_ISSUER}
