@@ -43,4 +43,12 @@ public class FlightService {
     public void deleteFlight(Long id) {
         flightRepository.deleteById(id);
     }
+
+    public List<Flight> searchFlightsByAirportCode(String originCode, String destinationCode) {
+        return flightRepository.findByOriginAndDestination(originCode, destinationCode);
+    }
+
+    public List<Flight> searchFlightsByCountry(String originCountry, String destinationCountry) {
+        return flightRepository.findByOriginAndDestination(originCountry, destinationCountry);
+    }
 }

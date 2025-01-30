@@ -1,7 +1,5 @@
 package com.winglink.backend.controller;
 
-
-
 import com.winglink.backend.entity.Flight;
 import com.winglink.backend.service.FlightService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,5 +42,15 @@ public class FlightController {
     public ResponseEntity<Void> deleteFlight(@PathVariable Long id) {
         flightService.deleteFlight(id);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/search")
+    public List<Flight> searchFlights(@RequestParam String origin, @RequestParam String destination) {
+        return flightService.searchFlightsByAirportCode(origin, destination);
+    }
+
+    @GetMapping("/searchByCountry")
+    public List<Flight> searchFlightsByCountry(@RequestParam String originCountry, @RequestParam String destinationCountry) {
+        return flightService.searchFlightsByCountry(originCountry, destinationCountry);
     }
 }
