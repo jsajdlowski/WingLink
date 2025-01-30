@@ -30,6 +30,6 @@ public class AppUser {
     private UserRole role;
 
     @OneToMany(mappedBy = "boughtBy", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JsonManagedReference
+    @JsonManagedReference(value = "user-ticket")
     private List<Ticket> tickets;
 }
