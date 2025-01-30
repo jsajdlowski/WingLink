@@ -33,7 +33,7 @@ public class Ticket {
     private Flight flight;
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "app_user_id", nullable = false)
     @JsonBackReference(value = "user-ticket")
     private AppUser boughtBy;
 }

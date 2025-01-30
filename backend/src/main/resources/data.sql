@@ -76,7 +76,7 @@ INSERT INTO app_user (first_name, last_name, email, role) VALUES
 ('Admin', 'User', 'admin@example.com', 'ADMIN');
 
 -- Insert Ticket instances
-INSERT INTO ticket (seat, first_name, last_name, seat_class, flight_id, user_id) VALUES
+INSERT INTO ticket (seat, first_name, last_name, seat_class, flight_id, app_user_id) VALUES
 -- Tickets for flight WL100 (JFK -> LHR)
 ('A1', 'John', 'Doe', 'ECONOMY', 1, 1),
 ('B2', 'Bob', 'Brown', 'PREMIUM_ECONOMY', 1, 1),
