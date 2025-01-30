@@ -3,7 +3,6 @@ package com.winglink.backend.service;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.winglink.backend.entity.Airport;
@@ -12,8 +11,11 @@ import com.winglink.backend.repository.AirportRepository;
 @Service
 public class AirportService {
 
-    @Autowired
     private AirportRepository airportRepository;
+
+    public AirportService(AirportRepository airportRepository) {
+        this.airportRepository = airportRepository;
+    }
 
     public List<Airport> findAllFlights() {
         return airportRepository.findAll();
