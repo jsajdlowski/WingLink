@@ -13,7 +13,7 @@ public class AirportService {
     @Autowired
     private AirportRepository airportRepository;
 
-    public List<Airport> findAlFlights() {
+    public List<Airport> findAllFlights() {
         return airportRepository.findAll();
     }
 
