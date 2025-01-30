@@ -24,6 +24,7 @@ public class Ticket {
     @NotBlank
     private String lastName;
     @NotNull
+    @Enumerated(EnumType.STRING)
     private SeatClass seatClass;
     @NotNull
     @ManyToOne(fetch = FetchType.EAGER)
