@@ -65,3 +65,36 @@ INSERT INTO flight (flight_number, origin_id, destination_id, departure_time, ar
 ('WL128', 19, 1, '2025-02-17 13:00:00', '2025-02-17 21:00:00', 'Qantas', 700.00),
 ('WL129', 20, 8, '2025-02-18 07:30:00', '2025-02-18 15:30:00', 'Japan Airlines', 860.00);
 
+
+-- Insert AppUser instances
+INSERT INTO app_user (first_name, last_name, email, role) VALUES
+('John', 'Doe', 'john.doe@example.com', 'NORMAL'),
+('Jane', 'Smith', 'jane.smith@example.com', 'NORMAL'),
+('Michael', 'Johnson', 'michael.johnson@example.com', 'NORMAL'),
+('Emily', 'Davis', 'emily.davis@example.com', 'NORMAL'),
+('Robert', 'Brown', 'robert.brown@example.com', 'NORMAL'),
+('Admin', 'User', 'admin@example.com', 'ADMIN');
+
+-- Insert Ticket instances
+INSERT INTO ticket (seat, first_name, last_name, seat_class, flight_id, user_id) VALUES
+-- Tickets for flight WL100 (JFK -> LHR)
+('A1', 'John', 'Doe', 'ECONOMY', 1, 1),
+('B2', 'Bob', 'Brown', 'PREMIUM_ECONOMY', 1, 1),
+-- Tickets for flight WL101 (JFK -> DXB)
+('C3', 'Jane', 'Smith', 'BUSINESS', 2, 2),
+-- Tickets for flight WL102 (JFK -> CDG)
+('D4', 'Michael', 'Johnson', 'FIRST_CLASS', 3, 3),
+-- Tickets for flight WL103 (JFK -> AMS)
+('E5', 'Eva', 'Green', 'ECONOMY', 4, 5),
+-- Tickets for flight WL104 (LHR -> JFK)
+('F6', 'Frank', 'Wilson', 'ECONOMY', 5, 1),
+('G7', 'Grace', 'Taylor', 'BUSINESS', 5, 1),
+-- Tickets for flight WL105 (LHR -> SIN)
+('H8', 'Emily', 'Davis', 'FIRST_CLASS', 6, 4),
+('I9', 'Isabella', 'Thomas', 'PREMIUM_ECONOMY', 6, 2),
+-- Tickets for flight WL106 (LHR -> GRU)
+('J10', 'Jack', 'Jackson', 'ECONOMY', 7, 3),
+('K11', 'Emily', 'Davis', 'BUSINESS', 7, 4),
+-- Tickets for flight WL107 (DXB -> HND)
+('L12', 'Robert', 'Brown', 'FIRST_CLASS', 8, 5),
+('M13', 'Mia', 'Martin', 'PREMIUM_ECONOMY', 8, 1);
