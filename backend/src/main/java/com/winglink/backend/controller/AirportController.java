@@ -2,7 +2,6 @@ package com.winglink.backend.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,12 +17,16 @@ import com.winglink.backend.service.AirportService;
 
 import jakarta.validation.Valid;
 
+
 @RestController
 @RequestMapping("/api/airports")
 public class AirportController {
 
-    @Autowired
     private AirportService airportService;
+
+    public AirportController(AirportService airportService) {
+        this.airportService = airportService;
+    }
 
     @GetMapping
     public ResponseEntity<List<Airport>> getAllAirports() {
