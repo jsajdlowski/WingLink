@@ -13,11 +13,11 @@ public class AirportService {
     @Autowired
     private AirportRepository airportRepository;
 
-    public List<Airport> getAllairports() {
+    public List<Airport> findAlFlights() {
         return airportRepository.findAll();
     }
 
-    public Optional<Airport> getAirportById(Long id) {
+    public Optional<Airport> findAirportById(Long id) {
         return airportRepository.findById(id);
     }
 
