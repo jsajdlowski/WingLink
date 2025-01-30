@@ -26,7 +26,8 @@ public class Ticket {
     @NotNull
     private SeatClass seatClass;
     @NotNull
-    @OneToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "flight_id")
     private Flight flight;
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
