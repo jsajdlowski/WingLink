@@ -3,6 +3,7 @@ package com.winglink.backend.config.security;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -45,9 +46,25 @@ public class SecurityConfiguration {
                 .cors(withDefaults()) // By default, spring will look for a bean with the name "corsConfigurationSource".
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
-//                                .requestMatchers("/api/public").permitAll() // TODO: specify endpoint access for admin/client either here or in controllers
-//                                .requestMatchers("/api/admin/**").hasAuthority("administrator")
-                                .requestMatchers("/api/**").hasAuthority("client")
+                                // allowing GET requests for clients, and everything else for admin
+                                .requestMatchers(HttpMethod.GET, "/api/users/**").hasAuthority("client")
+                                .requestMatchers(HttpMethod.POST, "/api/users/**").hasAuthority("admin")
+                                .requestMatchers(HttpMethod.PUT, "/api/users/**").hasAuthority("admin")
+                                .requestMatchers(HttpMethod.DELETE, "/api/users/**").hasAuthority("admin")
+                                // flights data can be requested by anyone
+                                .requestMatchers(HttpMethod.GET, "/api/flights/**").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/api/flights/**").hasAuthority("admin")
+                                .requestMatchers(HttpMethod.PUT, "/api/flights/**").hasAuthority("admin")
+                                .requestMatchers(HttpMethod.DELETE, "/api/flights/**").hasAuthority("admin")
+                                // airports data can be requested by anyone
+                                .requestMatchers(HttpMethod.GET, "/api/airports/**").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/api/airports/**").hasAuthority("admin")
+                                .requestMatchers(HttpMethod.PUT, "/api/airports/**").hasAuthority("admin")
+                                .requestMatchers(HttpMethod.DELETE, "/api/airports/**").hasAuthority("admin")
+                                .requestMatchers(HttpMethod.GET, "/api/tickets/**").hasAuthority("client")
+                                .requestMatchers(HttpMethod.POST, "/api/tickets/**").hasAuthority("admin")
+                                .requestMatchers(HttpMethod.PUT, "/api/tickets/**").hasAuthority("admin")
+                                .requestMatchers(HttpMethod.DELETE, "/api/tickets/**").hasAuthority("admin")
                                 .anyRequest().authenticated()
                 )
                 .oauth2ResourceServer(oauth2ResourceServer ->
