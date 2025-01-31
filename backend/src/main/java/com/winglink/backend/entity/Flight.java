@@ -6,6 +6,9 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Getter
 @Setter
@@ -25,6 +28,10 @@ public class Flight {
     @ManyToOne
     @JoinColumn(name = "destination_id", nullable = false)
     private Airport destination;
+
+    @OneToMany(mappedBy = "flight", fetch = FetchType.LAZY)
+    @JsonManagedReference(value = "flight-ticket")
+    private List<Ticket> tickets;
 
     private LocalDateTime departureTime;
     private LocalDateTime arrivalTime;

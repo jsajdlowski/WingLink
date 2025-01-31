@@ -24,13 +24,16 @@ public class Ticket {
     @NotBlank
     private String lastName;
     @NotNull
+    @Enumerated(EnumType.STRING)
     private SeatClass seatClass;
     @NotNull
-    @OneToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "flight_id")
+    @JsonBackReference(value = "flight-ticket")
     private Flight flight;
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
-    @JsonBackReference
+    @JoinColumn(name = "app_user_id", nullable = false)
+    @JsonBackReference(value = "user-ticket")
     private AppUser boughtBy;
 }
