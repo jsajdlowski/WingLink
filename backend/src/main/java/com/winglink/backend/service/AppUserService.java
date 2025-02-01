@@ -47,6 +47,15 @@ public class AppUserService {
         return userRepository.findAll();
     }
 
+    public Optional<AppUser> updateUserNamesByAuth0Id(String auth0Id, String firstName, String lastName) {
+        return userRepository.findByAuth0Id(auth0Id)
+                .map(user -> {
+                    user.setFirstName(firstName);
+                    user.setLastName(lastName);
+                    return userRepository.save(user);
+                });
+    }
+
     public void deleteById(Long id) {
         userRepository.deleteById(id);
     }

@@ -49,6 +49,7 @@ public class SecurityConfiguration {
                                 // allowing access to one's user data and GET other endpoints for clients,
                                 // and everything else for admin
                                 .requestMatchers(HttpMethod.GET, "/api/users/me").hasAuthority("client")
+                                .requestMatchers(HttpMethod.PATCH, "/api/users/me/updatenames").hasAuthority("client")
                                 .requestMatchers("/api/users/**").hasAuthority("admin")
                                 // flights data can be requested by anyone
                                 .requestMatchers(HttpMethod.GET, "/api/flights/**").permitAll()

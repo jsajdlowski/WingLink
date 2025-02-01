@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 /**
- * This advice checks if a user with a given auth0id exists, and if not, it creates a new user.
+ * This advice checks if a user with a given auth0id exists, and if not, it creates a new user
+ * using auth0 id and email provided in JWT. First and last name remain empty,
+ * and have to be updated in a separate action.
  * If the request is unauthenticated, nothing happens.
  */
 @RestControllerAdvice

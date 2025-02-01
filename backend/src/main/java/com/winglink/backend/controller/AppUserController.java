@@ -1,6 +1,7 @@
 package com.winglink.backend.controller;
 
 import com.winglink.backend.config.security.SecurityUtils;
+import com.winglink.backend.dto.AppUserNamesDto;
 import com.winglink.backend.entity.AppUser;
 import com.winglink.backend.service.AppUserService;
 import org.springframework.http.HttpStatus;
@@ -39,6 +40,12 @@ public class AppUserController {
     @GetMapping("/{id}")
     public ResponseEntity<AppUser> getUser(@PathVariable long id) {
         return userService.findById(id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    }
+
+    @PatchMapping("/me/updatenames")
+    public ResponseEntity<AppUser> updateNames(@RequestBody AppUserNamesDto userNamesDTO) {
+        String auth0Id = SecurityUtils.getAuth0UserId();
+        return userService.updateUserNamesByAuth0Id(auth0Id, userNamesDTO.getFirstName(), userNamesDTO.getLastName()).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")
