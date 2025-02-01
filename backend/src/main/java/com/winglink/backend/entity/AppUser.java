@@ -19,9 +19,11 @@ public class AppUser {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
-    @NotBlank(message = "First name is mandatory")
+    @Column(unique = true, nullable = false)
+    private String auth0Id;
+//    @NotBlank(message = "First name is mandatory")
     private String firstName;
-    @NotBlank(message = "Last name is mandatory")
+//    @NotBlank(message = "Last name is mandatory")
     private String lastName;
     @NotBlank(message = "E-mail is mandatory")
     @Email(message = "Incorrect e-mail format")

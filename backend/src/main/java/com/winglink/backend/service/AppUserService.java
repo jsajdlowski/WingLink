@@ -23,6 +23,22 @@ public class AppUserService {
         return userRepository.save(user);
     }
 
+    public AppUser getOrCreateUser(String auth0Id, String firstName, String lastName, String email) {
+        return userRepository.findByAuth0Id(auth0Id)
+                .orElseGet(() -> {
+                    AppUser newUser = new AppUser();
+                    newUser.setAuth0Id(auth0Id);
+                    newUser.setFirstName(firstName);
+                    newUser.setLastName(lastName);
+                    newUser.setEmail(email);
+                    return userRepository.save(newUser);
+                });
+    }
+
+    public Optional<AppUser> getUserByAuth0Id(String auth0Id) {
+        return userRepository.findByAuth0Id(auth0Id);
+    }
+
     public Optional<AppUser> findById(Long id) {
         return userRepository.findById(id);
     }

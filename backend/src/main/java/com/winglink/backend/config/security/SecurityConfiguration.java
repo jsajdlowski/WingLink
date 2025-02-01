@@ -46,8 +46,9 @@ public class SecurityConfiguration {
                 .cors(withDefaults()) // By default, spring will look for a bean with the name "corsConfigurationSource".
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
-                                // allowing GET requests for clients, and everything else for admin
-                                .requestMatchers(HttpMethod.GET, "/api/users/**").hasAuthority("client")
+                                // allowing access to one's user data and GET other endpoints for clients,
+                                // and everything else for admin
+                                .requestMatchers(HttpMethod.GET, "/api/users/me").hasAuthority("client")
                                 .requestMatchers("/api/users/**").hasAuthority("admin")
                                 // flights data can be requested by anyone
                                 .requestMatchers(HttpMethod.GET, "/api/flights/**").permitAll()

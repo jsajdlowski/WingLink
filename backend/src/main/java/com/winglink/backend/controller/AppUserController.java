@@ -1,5 +1,6 @@
 package com.winglink.backend.controller;
 
+import com.winglink.backend.config.security.SecurityUtils;
 import com.winglink.backend.entity.AppUser;
 import com.winglink.backend.service.AppUserService;
 import org.springframework.http.HttpStatus;
@@ -27,6 +28,12 @@ public class AppUserController {
     public ResponseEntity<AppUser> addUser(@RequestBody AppUser user) {
         AppUser userSaved = userService.save(user);
         return new ResponseEntity<>(userSaved,HttpStatus.CREATED);
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<AppUser> getUser() {
+        String auth0Id = SecurityUtils.getAuth0UserId();
+        return userService.getUserByAuth0Id(auth0Id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping("/{id}")
