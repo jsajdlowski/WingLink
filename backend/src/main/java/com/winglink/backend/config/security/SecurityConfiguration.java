@@ -48,23 +48,15 @@ public class SecurityConfiguration {
                         authorizeRequests
                                 // allowing GET requests for clients, and everything else for admin
                                 .requestMatchers(HttpMethod.GET, "/api/users/**").hasAuthority("client")
-                                .requestMatchers(HttpMethod.POST, "/api/users/**").hasAuthority("admin")
-                                .requestMatchers(HttpMethod.PUT, "/api/users/**").hasAuthority("admin")
-                                .requestMatchers(HttpMethod.DELETE, "/api/users/**").hasAuthority("admin")
+                                .requestMatchers("/api/users/**").hasAuthority("admin")
                                 // flights data can be requested by anyone
                                 .requestMatchers(HttpMethod.GET, "/api/flights/**").permitAll()
-                                .requestMatchers(HttpMethod.POST, "/api/flights/**").hasAuthority("admin")
-                                .requestMatchers(HttpMethod.PUT, "/api/flights/**").hasAuthority("admin")
-                                .requestMatchers(HttpMethod.DELETE, "/api/flights/**").hasAuthority("admin")
+                                .requestMatchers("/api/flights/**").hasAuthority("admin")
                                 // airports data can be requested by anyone
                                 .requestMatchers(HttpMethod.GET, "/api/airports/**").permitAll()
-                                .requestMatchers(HttpMethod.POST, "/api/airports/**").hasAuthority("admin")
-                                .requestMatchers(HttpMethod.PUT, "/api/airports/**").hasAuthority("admin")
-                                .requestMatchers(HttpMethod.DELETE, "/api/airports/**").hasAuthority("admin")
+                                .requestMatchers("/api/airports/**").hasAuthority("admin")
                                 .requestMatchers(HttpMethod.GET, "/api/tickets/**").hasAuthority("client")
-                                .requestMatchers(HttpMethod.POST, "/api/tickets/**").hasAuthority("admin")
-                                .requestMatchers(HttpMethod.PUT, "/api/tickets/**").hasAuthority("admin")
-                                .requestMatchers(HttpMethod.DELETE, "/api/tickets/**").hasAuthority("admin")
+                                .requestMatchers("/api/tickets/**").hasAuthority("admin")
                                 .anyRequest().authenticated()
                 )
                 .oauth2ResourceServer(oauth2ResourceServer ->
