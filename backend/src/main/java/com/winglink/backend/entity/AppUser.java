@@ -28,9 +28,10 @@ public class AppUser {
     @NotBlank(message = "E-mail is mandatory")
     @Email(message = "Incorrect e-mail format")
     private String email;
+    @Enumerated(EnumType.STRING)
     private UserRole role;
 
     @OneToMany(mappedBy = "boughtBy", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JsonManagedReference
+    @JsonManagedReference(value = "user-ticket")
     private List<Ticket> tickets;
 }
