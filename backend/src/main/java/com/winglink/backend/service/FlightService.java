@@ -44,11 +44,17 @@ public class FlightService {
         flightRepository.deleteById(id);
     }
 
-    public List<Flight> searchFlightsByAirportCode(String originCode, String destinationCode) {
-        return flightRepository.findByOriginAndDestination(originCode, destinationCode);
-    }
-
-    public List<Flight> searchFlightsByCountry(String originCountry, String destinationCountry) {
-        return flightRepository.findByOriginAndDestination(originCountry, destinationCountry);
+    public List<Flight> searchFlightsCombined(String originCode, String destinationCode, String originCountry, String destinationCountry, LocalDateTime departureDate) {
+        if (departureDate != null) {
+            return flightRepository.findByOrigin_CodeAndDestination_CodeAndDepartureTimeBetweenAndOrigin_CountryAndDestination_Country(
+                    originCode, destinationCode, departureDate.withHour(0).withMinute(0), departureDate.withHour(23).withMinute(59),
+                    originCountry, destinationCountry);
+        } else if (originCode != null && destinationCode != null) {
+            return flightRepository.findByOrigin_CodeAndDestination_Code(originCode, destinationCode);
+        } else if (originCountry != null && destinationCountry != null) {
+            return flightRepository.findByOrigin_CountryAndDestination_Country(originCountry, destinationCountry);
+        } else {
+            return flightRepository.findAll();
+        }
     }
 }

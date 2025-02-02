@@ -45,12 +45,12 @@ public class FlightController {
     }
 
     @GetMapping("/search")
-    public List<Flight> searchFlights(@RequestParam String origin, @RequestParam String destination) {
-        return flightService.searchFlightsByAirportCode(origin, destination);
-    }
-
-    @GetMapping("/searchByCountry")
-    public List<Flight> searchFlightsByCountry(@RequestParam String originCountry, @RequestParam String destinationCountry) {
-        return flightService.searchFlightsByCountry(originCountry, destinationCountry);
+    public List<Flight> searchFlights(@RequestParam(required = false) String origin,
+                                      @RequestParam(required = false) String destination,
+                                      @RequestParam(required = false) String originCountry,
+                                      @RequestParam(required = false) String destinationCountry,
+                                      @RequestParam(required = false) String date) {
+        LocalDateTime departureDate = date != null ? LocalDateTime.parse(date) : null;
+        return flightService.searchFlightsCombined(origin, destination, originCountry, destinationCountry, departureDate);
     }
 }

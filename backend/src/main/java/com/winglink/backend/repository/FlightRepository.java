@@ -8,5 +8,11 @@ import java.util.List;
 
 @Repository
 public interface FlightRepository extends JpaRepository<Flight, Long> {
-    List<Flight> findByOriginAndDestination(String origin, String destination);
+    List<Flight> findByOrigin_CodeAndDestination_Code(String originCode, String destinationCode);
+    List<Flight> findByOrigin_CountryAndDestination_Country(String originCountry, String destinationCountry);
+    List<Flight> findByOrigin_CodeAndDestination_CodeAndDepartureTimeBetween(
+            String originCode, String destinationCode, LocalDateTime start, LocalDateTime end);
+    List<Flight> findByOrigin_CodeAndDestination_CodeAndDepartureTimeBetweenAndOrigin_CountryAndDestination_Country(
+            String originCode, String destinationCode, LocalDateTime start, LocalDateTime end,
+            String originCountry, String destinationCountry);
 }
