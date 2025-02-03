@@ -1,8 +1,16 @@
 import useSWR from 'swr'
 
-import { axiosFetcher } from '../../axios'
 import { User } from './types'
+import { useFetcher } from '../../hooks/useFetcher'
+
+export const useMe = () => {
+  const fetcher = useFetcher()
+
+  return useSWR<User>('/users/me', fetcher)
+}
 
 export const useUsers = () => {
-  return useSWR<User[]>('/users', axiosFetcher)
+  const fetcher = useFetcher()
+
+  return useSWR<User[]>('/users', fetcher)
 }

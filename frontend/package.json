@@ -10,6 +10,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@auth0/auth0-react": "^2.3.0",
+    "@mantine/core": "^7.16.2",
+    "@mantine/hooks": "^7.16.2",
+    "@tabler/icons": "^3.29.0",
+    "@tabler/icons-react": "^3.29.0",
     "axios": "^1.7.9",
     "lodash": "^4.17.21",
     "react": "^18.3.1",
