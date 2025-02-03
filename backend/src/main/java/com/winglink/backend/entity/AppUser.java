@@ -21,9 +21,7 @@ public class AppUser {
     private Long id;
     @Column(unique = true, nullable = false)
     private String auth0Id;
-//    @NotBlank(message = "First name is mandatory")
     private String firstName;
-//    @NotBlank(message = "Last name is mandatory")
     private String lastName;
     @NotBlank(message = "E-mail is mandatory")
     @Email(message = "Incorrect e-mail format")
