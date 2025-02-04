@@ -1,7 +1,5 @@
 package com.winglink.backend.controller;
 
-
-
 import com.winglink.backend.entity.Flight;
 import com.winglink.backend.service.FlightService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.time.LocalDateTime;
+
 
 @RestController
 @RequestMapping("/api/flights")
@@ -44,5 +44,15 @@ public class FlightController {
     public ResponseEntity<Void> deleteFlight(@PathVariable Long id) {
         flightService.deleteFlight(id);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/search")
+    public List<Flight> searchFlights(@RequestParam(required = false) String origin,
+                                      @RequestParam(required = false) String destination,
+                                      @RequestParam(required = false) String originCountry,
+                                      @RequestParam(required = false) String destinationCountry,
+                                      @RequestParam(required = false) String date) {
+        LocalDateTime departureDate = date != null ? LocalDateTime.parse(date) : null;
+        return flightService.searchFlightsCombined(origin, destination, originCountry, destinationCountry, departureDate);
     }
 }
