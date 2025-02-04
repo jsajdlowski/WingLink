@@ -35,7 +35,7 @@ jobs:
 
     # Build with Maven (using wrapper as a fallback)
     - name: Build with Maven
-      run: ./backend/mvnw -B package --file backend/pom.xml
+      run: ./mvnw -B package --file pom.xml
       working-directory: backend
 
     # Optional: Update dependency graph
