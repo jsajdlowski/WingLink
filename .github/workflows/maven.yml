@@ -29,9 +29,13 @@ jobs:
     - name: Set Permissions for pom.xml
       run: chmod 644 backend/pom.xml
 
+    # Set Permissions for mvnw
+    - name: Set Permissions for mvnw
+      run: chmod +x backend/mvnw
+
     # Build with Maven (using wrapper as a fallback)
-    - name: Build with Maven Wrapper
-      run: ./backend/mvnw -B package
+    - name: Build with Maven
+      run: ./backend/mvnw -B package --file backend/pom.xml
       working-directory: backend
 
     # Optional: Update dependency graph
