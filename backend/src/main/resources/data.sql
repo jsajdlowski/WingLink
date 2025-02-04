@@ -67,13 +67,13 @@ INSERT INTO flight (flight_number, origin_id, destination_id, departure_time, ar
 
 
 -- Insert AppUser instances
-INSERT INTO app_user (first_name, last_name, email, role) VALUES
-('John', 'Doe', 'john.doe@example.com', 'NORMAL'),
-('Jane', 'Smith', 'jane.smith@example.com', 'NORMAL'),
-('Michael', 'Johnson', 'michael.johnson@example.com', 'NORMAL'),
-('Emily', 'Davis', 'emily.davis@example.com', 'NORMAL'),
-('Robert', 'Brown', 'robert.brown@example.com', 'NORMAL'),
-('Admin', 'User', 'admin@example.com', 'ADMIN');
+INSERT INTO app_user (first_name, last_name, email, role, auth0Id) VALUES
+('John', 'Doe', 'john.doe@example.com', 'NORMAL', '31'),
+('Jane', 'Smith', 'jane.smith@example.com', 'NORMAL', '32'),
+('Michael', 'Johnson', 'michael.johnson@example.com', 'NORMAL', '33'),
+('Emily', 'Davis', 'emily.davis@example.com', 'NORMAL', '34'),
+('Robert', 'Brown', 'robert.brown@example.com', 'NORMAL', '35'),
+('Admin', 'User', 'admin@example.com', 'ADMIN', '36');
 
 -- Insert Ticket instances
 INSERT INTO ticket (seat, first_name, last_name, seat_class, flight_id, app_user_id) VALUES
