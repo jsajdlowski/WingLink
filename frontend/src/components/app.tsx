@@ -3,9 +3,10 @@ import { useDisclosure } from '@mantine/hooks'
 import { UserAvatar } from './users/UserAvatar'
 import { FlightList } from './flights/flight-list'
 import { useAuth0 } from '@auth0/auth0-react'
-import { LoginButton } from './auth/LoginButton'
-import Chart from './map/map'
+
+import MapChart from './map/map'
 import { SearchForm } from './search-form/search-form'
+import { SignIn } from './auth/SignIn'
 
 export const App = () => {
   const { isLoading, isAuthenticated } = useAuth0()
@@ -13,7 +14,7 @@ export const App = () => {
 
   if (isLoading) return <Loader />
 
-  if (!isAuthenticated) return <LoginButton />
+  if (!isAuthenticated) return <SignIn />
 
   return (
     <AppShell
@@ -45,7 +46,7 @@ export const App = () => {
         <SearchForm />
       </AppShell.Navbar>
       <AppShell.Main>
-        <Chart />
+        <MapChart></MapChart>
       </AppShell.Main>
       <AppShell.Aside p="md" style={{ overflow: 'auto' }}>
         <FlightList />

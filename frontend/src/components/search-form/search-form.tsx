@@ -1,6 +1,9 @@
-import { Button, Container, Group, Paper, TextInput } from '@mantine/core'
+import { Button, Container, Group, Paper, TextInput, Text } from '@mantine/core'
 import { useForm } from 'react-hook-form'
 import { Form } from './types'
+import { setSearch } from '../../store/flightSearchSlice'
+
+import { useAppDispatch } from '../../hooks/storeHooks'
 
 export const SearchForm = () => {
   const {
@@ -8,40 +11,26 @@ export const SearchForm = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<Form>()
+  const dispatch = useAppDispatch()
 
-  const onSubmit = (data: Form) => {
-    console.log(data)
+  const onSubmit = (formData: Form) => {
+    dispatch(setSearch(formData))
   }
 
   return (
     <Container size="sm">
       <Paper shadow="xs" p="lg" radius="md" withBorder>
+        <Text>Search Flights</Text>
         <form onSubmit={handleSubmit(onSubmit)}>
           <TextInput
             label="From"
-            {...register('origin', { required: 'Origin country is required' })}
+            {...register('origin')}
             error={errors.origin?.message}
           />
           <TextInput
             label="To"
-            {...register('destination', {
-              required: 'Destination country is required',
-            })}
+            {...register('destination')}
             error={errors.destination?.message}
-          />
-          <TextInput
-            label="Departure"
-            type="date"
-            {...register('departure', {
-              required: 'Departure date is required',
-            })}
-            error={errors.departure?.message}
-          />
-          <TextInput
-            label="Return"
-            type="date"
-            {...register('comeback', { required: 'Return date is required' })}
-            error={errors.comeback?.message}
           />
           <Group mt="md">
             <Button type="submit">Search</Button>

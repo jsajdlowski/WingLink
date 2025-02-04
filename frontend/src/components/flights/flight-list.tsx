@@ -1,8 +1,10 @@
 import { Group, Paper, Skeleton, Stack, Text, Title } from '@mantine/core'
 import { IconArrowRight, IconPlane } from '@tabler/icons-react'
 
-import { useFlights } from './hooks'
+import { useFlightsSearch } from './hooks'
 import { Flight } from './types'
+import { selectSearch } from '../../store/flightSearchSlice'
+import { useAppSelector } from '../../hooks/storeHooks'
 
 const FlightListItem = ({ flight }: { flight: Flight }) => {
   return (
@@ -23,9 +25,8 @@ const FlightListItem = ({ flight }: { flight: Flight }) => {
 }
 
 export const FlightList = () => {
-  const { data, isLoading } = useFlights()
-
-  console.log(data)
+  const { destination, origin } = useAppSelector(selectSearch)
+  const { data, isLoading } = useFlightsSearch(destination, origin)
 
   if (isLoading)
     return Array(15)

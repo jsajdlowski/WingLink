@@ -8,7 +8,8 @@ import {
 } from '@auth0/auth0-react'
 import { BrowserRouter } from 'react-router-dom'
 import '@mantine/core/styles.css'
-
+import { Provider } from 'react-redux'
+import { store } from './store/store'
 import { App } from './components/app'
 import { getConfig } from './auth/config'
 
@@ -30,12 +31,14 @@ const providerConfig: Auth0ProviderOptions = {
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <Auth0Provider {...providerConfig}>
-      <MantineProvider>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      </MantineProvider>
-    </Auth0Provider>
+    <Provider store={store}>
+      <Auth0Provider {...providerConfig}>
+        <MantineProvider>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </MantineProvider>
+      </Auth0Provider>
+    </Provider>
   </StrictMode>
 )

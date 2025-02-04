@@ -6,14 +6,22 @@ export const useFetcher = () => {
   const { getAccessTokenSilently } = useAuth0()
 
   const fetcher = useCallback(
-    async (url: string) => {
+    async (data: [string, object] | string) => {
+      let url: string
+      let params = {}
+      if (typeof data === 'string') {
+        url = data
+      } else {
+        url = data[0]
+        params = data[1]
+      }
       const token = await getAccessTokenSilently()
-
       return backendInstance
         .get(url, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
+          params,
         })
         .then((res) => res.data)
     },
