@@ -8,23 +8,29 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v4
+
+    # List files to verify that backend/pom.xml exists
+    - name: List files in backend directory
+      run: ls -al backend
+
+    # Set up JDK 21
     - name: Set up JDK 21
       uses: actions/setup-java@v4
       with:
         java-version: '21'
         distribution: 'temurin'
         cache: maven
-        
+
+    # Build the backend with Maven
     - name: Build with Maven
       run: mvn -B package --file backend/pom.xml
       working-directory: backend
 
-    # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
+    # Optional: Update dependency graph
     - name: Update dependency graph
       uses: advanced-security/maven-dependency-submission-action@v4
       with:
