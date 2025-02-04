@@ -13,7 +13,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    # List files to verify that backend/pom.xml exists
+    # List files in backend directory for debugging
     - name: List files in backend directory
       run: ls -al backend
 
@@ -25,9 +25,13 @@ jobs:
         distribution: 'temurin'
         cache: maven
 
-    # Build the backend with Maven
-    - name: Build with Maven
-      run: mvn -B package --file backend/pom.xml
+    # Set Permissions for pom.xml
+    - name: Set Permissions for pom.xml
+      run: chmod 644 backend/pom.xml
+
+    # Build with Maven (using wrapper as a fallback)
+    - name: Build with Maven Wrapper
+      run: ./backend/mvnw -B package
       working-directory: backend
 
     # Optional: Update dependency graph
