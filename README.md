@@ -10,7 +10,6 @@ Winglink is a collaborative project designed to provide a platform for managing 
 
 - Ensure you have the following installed on your machine:
   - **Java 21**
-  - **Maven**
   - **Node.js** (with npm)
   - **Docker** for running the database in a container
 
