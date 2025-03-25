@@ -49,10 +49,10 @@ public class FlightService {
     public List<Flight> searchFlightsCombined(String originCode, String destinationCode, String originCountry, String destinationCountry, LocalDateTime departureDate) {
         if (departureDate != null) {
             return flightRepository.findByOrigin_CodeAndDestination_CodeAndDepartureTimeBetweenAndOrigin_CountryAndDestination_Country(
-                    originCode, destinationCode, departureDate.withHour(0).withMinute(0), departureDate.withHour(23).withMinute(59),
+                    originCode.toUpperCase(), destinationCode.toUpperCase(), departureDate.withHour(0).withMinute(0), departureDate.withHour(23).withMinute(59),
                     originCountry, destinationCountry);
         } else if (originCode != null && destinationCode != null) {
-            return flightRepository.findByOrigin_CodeAndDestination_Code(originCode, destinationCode);
+            return flightRepository.findByOrigin_CodeAndDestination_Code(originCode.toUpperCase(), destinationCode.toUpperCase());
         } else if (originCountry != null && destinationCountry != null) {
             return flightRepository.findByOrigin_CountryAndDestination_Country(originCountry, destinationCountry);
         } else {
