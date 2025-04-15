@@ -1,6 +1,7 @@
 package com.winglink.backend.controller;
 
 import com.winglink.backend.entity.Flight;
+import com.winglink.backend.service.ExternalApiService;
 import com.winglink.backend.service.FlightService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,8 @@ public class FlightController {
 
     @Autowired
     private FlightService flightService;
+    @Autowired
+    private ExternalApiService externalApiService;
 
     @GetMapping
     public List<Flight> getAllFlights() {
@@ -54,5 +57,10 @@ public class FlightController {
                                       @RequestParam(required = false) String date) {
         LocalDateTime departureDate = date != null ? LocalDateTime.parse(date) : null;
         return flightService.searchFlightsCombined(origin, destination, originCountry, destinationCountry, departureDate);
+    }
+
+    @GetMapping("/fetchfromapi")
+    public List<Flight> fetchFlightsFromApi() {
+        return externalApiService.getFlights();
     }
 }
