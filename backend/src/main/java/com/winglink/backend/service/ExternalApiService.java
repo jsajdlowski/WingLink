@@ -2,7 +2,7 @@ package com.winglink.backend.service;
 
 import com.winglink.backend.dto.googleflightsapi.GoogleFlightsFlightDto;
 import com.winglink.backend.dto.googleflightsapi.GoogleFlightsResponseDto;
-import com.winglink.backend.entity.Flight;
+import com.winglink.backend.entity.FlightTrip;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
@@ -17,32 +17,35 @@ import java.util.List;
 
 @Service
 public class ExternalApiService {
-    @Value("externalapi.url")
+    @Value("${externalapi.url}")
     private String apiUrl;
 
-    @Value("externalapi.url")
+    @Value("${externalapi.api_key}")
     private String apiKey;
 
-    @Value("externalapi.host")
+    @Value("${externalapi.host}")
     private String apiHost;
 
     private RestTemplate restTemplate;
-    private FlightService flightService;
+    private FlightTripService flightTripService;
     private FlightDtoConverterService flightDtoConverterService;
 
-    public ExternalApiService(RestTemplate restTemplate, FlightService flightService, FlightDtoConverterService flightDtoConverterService) {
+    public ExternalApiService(RestTemplate restTemplate, FlightTripService flightTripService, FlightDtoConverterService flightDtoConverterService) {
         this.restTemplate = restTemplate;
-        this.flightService = flightService;
+        this.flightTripService = flightTripService;
         this.flightDtoConverterService = flightDtoConverterService;
     }
 
-    public List<Flight> getFlights() {
+    public List<FlightTrip> getFlightTrips() {
+        System.out.println(apiUrl);
         UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(apiUrl)
                 .queryParam("origin", "JFK") // test data
                 .queryParam("destination", "LHR")
                 .queryParam("date", "2025-02-01");
 
         String urlWithParams = builder.toUriString();
+
+        System.out.println(urlWithParams);
 
         HttpHeaders headers = new HttpHeaders();
         headers.set("x-rapidapi-key", apiKey);
@@ -57,12 +60,15 @@ public class ExternalApiService {
                 new ParameterizedTypeReference<GoogleFlightsResponseDto>() {}
         );
 
+        assert response.getBody() != null;
         List<GoogleFlightsFlightDto> topFlights = response.getBody().data().topFlights();
+        List<GoogleFlightsFlightDto> otherFlights = response.getBody().data().otherFlights();
 
-        List<Flight> flights = topFlights.stream().map(flightDto -> flightDtoConverterService.convertToEntity(flightDto)).toList();
-        flights.forEach(flight -> {flightService.createFlight(flight);});
+        // TODO: include otherFlights as well
+        List<FlightTrip> flightTrips = topFlights.stream().map(flightDto -> flightDtoConverterService.convertToEntity(flightDto)).toList();
+        flightTrips.forEach(flightTrip -> flightTripService.createFlightTrip(flightTrip));
 
-        return flights;
+        return flightTrips;
     }
 
 

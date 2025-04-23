@@ -1,32 +1,32 @@
 package com.winglink.backend.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
 @Entity
-public class Flight {
+@Table(name = "flight_trip")
+public class FlightTrip {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private Long id;
-    @NotBlank
-    private String flightNumber;
-//    @NotNull
     @ManyToOne
     @JoinColumn(name = "origin_id", nullable = false)
     private Airport origin;
-//    @NotNull
+    //    @NotNull
     @ManyToOne
     @JoinColumn(name = "destination_id", nullable = false)
     private Airport destination;
-//    @NotNull
-//    @OneToMany(mappedBy = "flight", fetch = FetchType.LAZY)
+//    @OneToMany(mappedBy = "flight_trip", fetch = FetchType.LAZY)
 //    @JsonManagedReference(value = "flight-ticket")
 //    private List<Ticket> tickets;
     @NotNull
@@ -34,9 +34,10 @@ public class Flight {
     @NotNull
     private LocalDateTime arrivalTime;
     @NotNull
-    private String airline;
-    private String airlineLogo;
-//    @NotNull
-//    @Min(value = 1, message = "Price must be at least 1")
-//    private BigDecimal price;
+    @Min(value = 1, message = "Price must be at least 1")
+    private BigDecimal price;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+//    @JsonManagedReference(value = "flights")
+    private List<Flight> flights;
+
 }
