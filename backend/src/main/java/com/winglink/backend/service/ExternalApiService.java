@@ -3,6 +3,7 @@ package com.winglink.backend.service;
 import com.winglink.backend.dto.googleflightsapi.GoogleFlightsFlightDto;
 import com.winglink.backend.dto.googleflightsapi.GoogleFlightsResponseDto;
 import com.winglink.backend.entity.FlightTrip;
+import com.winglink.backend.exception.ExternalApiEmptyBodyException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
@@ -13,7 +14,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.stream.Stream;
 
 @Service
 public class ExternalApiService {
@@ -36,7 +40,7 @@ public class ExternalApiService {
         this.flightDtoConverterService = flightDtoConverterService;
     }
 
-    public List<FlightTrip> getFlightTrips() {
+    public List<FlightTrip> getFlightTripsTest() {
         System.out.println(apiUrl);
         UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(apiUrl)
                 .queryParam("origin", "JFK") // test data
@@ -71,5 +75,40 @@ public class ExternalApiService {
         return flightTrips;
     }
 
+    public List<FlightTrip> getFlightTrips(String originAirport, String destinationAirport, LocalDateTime date) {
+        String dateString = DateTimeFormatter.ofPattern("yyyy-MM-dd").format(date);
+        System.out.println(apiUrl);
+        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(apiUrl)
+                .queryParam("origin", originAirport) // test data
+                .queryParam("destination", destinationAirport)
+                .queryParam("date", dateString);
 
+        String urlWithParams = builder.toUriString();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("x-rapidapi-key", apiKey);
+        headers.set("x-rapidapi-host", apiHost);
+
+        HttpEntity<?> entity = new HttpEntity<>(headers);
+
+        ResponseEntity<GoogleFlightsResponseDto> response = restTemplate.exchange(
+                urlWithParams,
+                HttpMethod.GET,
+                entity,
+                new ParameterizedTypeReference<GoogleFlightsResponseDto>() {}
+        );
+
+        if (response.getBody() == null) throw new ExternalApiEmptyBodyException();
+        List<GoogleFlightsFlightDto> topFlights = response.getBody().data().topFlights();
+        List<GoogleFlightsFlightDto> otherFlights = response.getBody().data().otherFlights();
+
+        List<FlightTrip> combinedFlightTrips = Stream.concat(
+                topFlights.stream().map(flightDto -> flightDtoConverterService.convertToEntity(flightDto)),
+                otherFlights.stream().map(flightDto -> flightDtoConverterService.convertToEntity(flightDto))
+        ).toList();
+
+        combinedFlightTrips.forEach(flightTrip -> flightTripService.createFlightTrip(flightTrip));
+
+        return combinedFlightTrips;
+    }
 }

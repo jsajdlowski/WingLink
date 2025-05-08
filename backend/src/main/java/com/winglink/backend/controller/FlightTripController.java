@@ -2,6 +2,7 @@ package com.winglink.backend.controller;
 
 import com.winglink.backend.entity.FlightTrip;
 import com.winglink.backend.service.ExternalApiService;
+import com.winglink.backend.service.FlightTripSearchService;
 import com.winglink.backend.service.FlightTripService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,10 +18,12 @@ public class FlightTripController {
 
     private final FlightTripService flightTripService;
     private final ExternalApiService externalApiService;
+    private final FlightTripSearchService flightTripSearchService;
 
-    public FlightTripController(FlightTripService flightTripService, ExternalApiService externalApiService) {
+    public FlightTripController(FlightTripService flightTripService, ExternalApiService externalApiService, FlightTripSearchService flightTripSearchService) {
         this.flightTripService = flightTripService;
         this.externalApiService = externalApiService;
+        this.flightTripSearchService = flightTripSearchService;
     }
 
     @GetMapping
@@ -52,17 +55,17 @@ public class FlightTripController {
     }
 
     @GetMapping("/search")
-    public List<FlightTrip> searchFlightTrips(@RequestParam(required = false) String origin,
-                                      @RequestParam(required = false) String destination,
-                                      @RequestParam(required = false) String originCountry,
-                                      @RequestParam(required = false) String destinationCountry,
+    public List<FlightTrip> searchFlightTrips(@RequestParam(required = true) String origin,
+                                      @RequestParam(required = true) String destination,
+//                                      @RequestParam(required = false) String originCountry,
+//                                      @RequestParam(required = false) String destinationCountry,
                                       @RequestParam(required = false) String date) {
-        LocalDateTime departureDate = date != null ? LocalDateTime.parse(date) : null;
-        return flightTripService.searchFlightTripsCombined(origin, destination, originCountry, destinationCountry, departureDate);
+        LocalDateTime departureDate = date != null ? LocalDateTime.parse(date) : LocalDateTime.now();
+        return flightTripSearchService.searchFlightTrips(origin, destination, departureDate);
     }
 
-    @GetMapping("/fetchfromapi")
-    public List<FlightTrip> fetchFlightsFromApi() {
-        return externalApiService.getFlightTrips();
-    }
+//    @GetMapping("/fetchfromapi")
+//    public List<FlightTrip> fetchFlightsFromApi() {
+//        return externalApiService.getFlightTripsTest();
+//    }
 }
