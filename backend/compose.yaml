@@ -1,7 +1,7 @@
 name: winglink
 services:
   postgres:
-    image: 'postgres:alpine'
+    image: 'postgres:16-alpine'
     env_file:
       - .env
     ports:
@@ -10,3 +10,17 @@ services:
       - type: bind
         source: ./tmp-postgresql-data
         target: /var/lib/postgresql/data
+  backend:
+    build:
+      context: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    environment:
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=create-drop
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/${POSTGRES_DB}
+      - SPRING_DATASOURCE_USERNAME=${POSTGRES_USER}
+      - SPRING_DATASOURCE_PASSWORD=${POSTGRES_PASSWORD}
+    env_file:
+      - .env

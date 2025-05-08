@@ -1,25 +1,25 @@
 -- Insert airports
-INSERT INTO airport (code, name, country, city) VALUES
-('JFK', 'John F. Kennedy International Airport', 'United States', 'New York'),
-('LHR', 'Heathrow Airport', 'United Kingdom', 'London'),
-('DXB', 'Dubai International Airport', 'United Arab Emirates', 'Dubai'),
-('HND', 'Tokyo Haneda Airport', 'Japan', 'Tokyo'),
-('SYD', 'Sydney Kingsford Smith Airport', 'Australia', 'Sydney'),
-('CDG', 'Charles de Gaulle Airport', 'France', 'Paris'),
-('ATL', 'Hartsfield-Jackson Atlanta International Airport', 'United States', 'Atlanta'),
-('SIN', 'Singapore Changi Airport', 'Singapore', 'Singapore'),
-('YYZ', 'Toronto Pearson International Airport', 'Canada', 'Toronto'),
-('FRA', 'Frankfurt Airport', 'Germany', 'Frankfurt'),
-('MAD', 'Adolfo Suárez Madrid–Barajas Airport', 'Spain', 'Madrid'),
-('AMS', 'Amsterdam Schiphol Airport', 'Netherlands', 'Amsterdam'),
-('GRU', 'São Paulo/Guarulhos International Airport', 'Brazil', 'São Paulo'),
-('CPT', 'Cape Town International Airport', 'South Africa', 'Cape Town'),
-('DOH', 'Hamad International Airport', 'Qatar', 'Doha'),
-('ICN', 'Incheon International Airport', 'South Korea', 'Seoul'),
-('MEX', 'Mexico City International Airport', 'Mexico', 'Mexico City'),
-('DEL', 'Indira Gandhi International Airport', 'India', 'New Delhi'),
-('MEL', 'Melbourne Airport', 'Australia', 'Melbourne'),
-('WAW', 'Warsaw Chopin Airport', 'Poland', 'Warsaw');
+-- INSERT INTO airport (code, name, country, city) VALUES
+-- ('JFK', 'John F. Kennedy International Airport', 'United States', 'New York'),
+-- ('LHR', 'Heathrow Airport', 'United Kingdom', 'London'),
+-- ('DXB', 'Dubai International Airport', 'United Arab Emirates', 'Dubai'),
+-- ('HND', 'Tokyo Haneda Airport', 'Japan', 'Tokyo'),
+-- ('SYD', 'Sydney Kingsford Smith Airport', 'Australia', 'Sydney'),
+-- ('CDG', 'Charles de Gaulle Airport', 'France', 'Paris'),
+-- ('ATL', 'Hartsfield-Jackson Atlanta International Airport', 'United States', 'Atlanta'),
+-- ('SIN', 'Singapore Changi Airport', 'Singapore', 'Singapore'),
+-- ('YYZ', 'Toronto Pearson International Airport', 'Canada', 'Toronto'),
+-- ('FRA', 'Frankfurt Airport', 'Germany', 'Frankfurt'),
+-- ('MAD', 'Adolfo Suárez Madrid–Barajas Airport', 'Spain', 'Madrid'),
+-- ('AMS', 'Amsterdam Schiphol Airport', 'Netherlands', 'Amsterdam'),
+-- ('GRU', 'São Paulo/Guarulhos International Airport', 'Brazil', 'São Paulo'),
+-- ('CPT', 'Cape Town International Airport', 'South Africa', 'Cape Town'),
+-- ('DOH', 'Hamad International Airport', 'Qatar', 'Doha'),
+-- ('ICN', 'Incheon International Airport', 'South Korea', 'Seoul'),
+-- ('MEX', 'Mexico City International Airport', 'Mexico', 'Mexico City'),
+-- ('DEL', 'Indira Gandhi International Airport', 'India', 'New Delhi'),
+-- ('MEL', 'Melbourne Airport', 'Australia', 'Melbourne'),
+-- ('WAW', 'Warsaw Chopin Airport', 'Poland', 'Warsaw');
 
 -- -- Insert flights
 -- INSERT INTO flight (flight_number, origin_id, destination_id, departure_time, arrival_time, airline, price) VALUES
