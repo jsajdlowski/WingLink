@@ -1,0 +1,1056 @@
+{
+  "flights": {
+    "status": true,
+    "message": "Success",
+    "timestamp": 1735310271184,
+    "data": {
+      "topFlights": [
+        {
+          "departure_time": "01-02-2025 08:34 AM",
+          "arrival_time": "01-02-2025 08:45 PM",
+          "duration": {
+            "raw": 431,
+            "text": "7 hr 11 min"
+          },
+          "flights": [
+            {
+              "departure_airport": {
+                "airport_name": "John F. Kennedy International Airport",
+                "airport_code": "JFK",
+                "time": "2025-2-1 08:34"
+              },
+              "arrival_airport": {
+                "airport_name": "Heathrow Airport",
+                "airport_code": "LHR",
+                "time": "2025-2-1 20:45"
+              },
+              "duration_label": "7 hr 11 min",
+              "duration": 431,
+              "airline": "JetBlue",
+              "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/B6.png",
+              "flight_number": "B6 1107",
+              "aircraft": "Airbus A321neo",
+              "seat": "Above average legroom",
+              "legroom": "32 in",
+              "extensions": [
+                "Above average legroom (32 in)",
+                "In-seat power & USB outlets",
+                "On-demand video",
+                "Free Wi-Fi",
+                "Wi-Fi for a fee",
+                "Emissions estimate: 661 kg CO2e"
+              ]
+            }
+          ],
+          "layovers": null,
+          "bags": {
+            "carry_on": 1,
+            "checked": null
+          },
+          "carbon_emissions": {
+            "difference_percent": 44,
+            "CO2e": 661000,
+            "typical_for_this_route": 459000,
+            "higher": 202000
+          },
+          "price": 569,
+          "stops": 0,
+          "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/B6.png",
+          "next_token": "W1sxLDEsWyIxIiwwLDAsMF1dLFsiMjAyNS0wMi0wMSIsIkpGSyIsIkxIUiIsW1siSkZLIiwiMjAyNS0yLTEiLCJMSFIiLCJCNiIsIjExMDciXV1dLFsiMjAyNS0wMi0wNSIsIkxIUiIsIkpGSyIsW11dXQ=="
+        },
+        {
+          "departure_time": "01-02-2025 08:20 AM",
+          "arrival_time": "01-02-2025 08:10 PM",
+          "duration": {
+            "raw": 410,
+            "text": "6 hr 50 min"
+          },
+          "flights": [
+            {
+              "departure_airport": {
+                "airport_name": "John F. Kennedy International Airport",
+                "airport_code": "JFK",
+                "time": "2025-2-1 08:20"
+              },
+              "arrival_airport": {
+                "airport_name": "Heathrow Airport",
+                "airport_code": "LHR",
+                "time": "2025-2-1 20:10"
+              },
+              "duration_label": "6 hr 50 min",
+              "duration": 410,
+              "airline": "Virgin Atlantic",
+              "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/VS.png",
+              "flight_number": "VS 26",
+              "aircraft": "Airbus A330-900neo",
+              "seat": "Average legroom",
+              "legroom": "31 in",
+              "extensions": [
+                "Average legroom (31 in)",
+                "In-seat power & USB outlets",
+                "On-demand video",
+                "Free Wi-Fi",
+                "Wi-Fi for a fee",
+                "Emissions estimate: 529 kg CO2e"
+              ]
+            }
+          ],
+          "layovers": null,
+          "bags": {
+            "carry_on": 1,
+            "checked": null
+          },
+          "carbon_emissions": {
+            "difference_percent": 15,
+            "CO2e": 529000,
+            "typical_for_this_route": 459000,
+            "higher": 70000
+          },
+          "price": 579,
+          "stops": 0,
+          "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/VS.png",
+          "next_token": "W1sxLDEsWyIxIiwwLDAsMF1dLFsiMjAyNS0wMi0wMSIsIkpGSyIsIkxIUiIsW1siSkZLIiwiMjAyNS0yLTEiLCJMSFIiLCJWUyIsIjI2Il1dXSxbIjIwMjUtMDItMDUiLCJMSFIiLCJKRksiLFtdXV0="
+        },
+        {
+          "departure_time": "01-02-2025 11:09 PM",
+          "arrival_time": "02-02-2025 11:10 AM",
+          "duration": {
+            "raw": 421,
+            "text": "7 hr 1 min"
+          },
+          "flights": [
+            {
+              "departure_airport": {
+                "airport_name": "John F. Kennedy International Airport",
+                "airport_code": "JFK",
+                "time": "2025-2-1 23:09"
+              },
+              "arrival_airport": {
+                "airport_name": "Heathrow Airport",
+                "airport_code": "LHR",
+                "time": "2025-2-2 11:10"
+              },
+              "duration_label": "7 hr 1 min",
+              "duration": 421,
+              "airline": "Delta",
+              "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/DL.png",
+              "flight_number": "DL 3",
+              "aircraft": "Boeing 767",
+              "seat": "Average legroom",
+              "legroom": "31 in",
+              "extensions": [
+                "Average legroom (31 in)",
+                "In-seat power & USB outlets",
+                "On-demand video",
+                "Free Wi-Fi",
+                "Wi-Fi for a fee",
+                "Emissions estimate: 466 kg CO2e"
+              ]
+            }
+          ],
+          "layovers": null,
+          "bags": {
+            "carry_on": 1,
+            "checked": null
+          },
+          "carbon_emissions": {
+            "difference_percent": 2,
+            "CO2e": 466000,
+            "typical_for_this_route": 459000,
+            "higher": 7000
+          },
+          "price": 609,
+          "stops": 0,
+          "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/DL.png",
+          "next_token": "W1sxLDEsWyIxIiwwLDAsMF1dLFsiMjAyNS0wMi0wMSIsIkpGSyIsIkxIUiIsW1siSkZLIiwiMjAyNS0yLTEiLCJMSFIiLCJETCIsIjMiXV1dLFsiMjAyNS0wMi0wNSIsIkxIUiIsIkpGSyIsW11dXQ=="
+        }
+      ],
+      "otherFlights": [
+        {
+          "departure_time": "01-02-2025 03:55 PM",
+          "arrival_time": "02-02-2025 05:55 AM",
+          "duration": {
+            "raw": 540,
+            "text": "9 hr 0 min"
+          },
+          "flights": [
+            {
+              "departure_airport": {
+                "airport_name": "John F. Kennedy International Airport",
+                "airport_code": "JFK",
+                "time": "2025-2-1 15:55"
+              },
+              "arrival_airport": {
+                "airport_name": "Boston Logan International Airport",
+                "airport_code": "BOS",
+                "time": "2025-2-1 17:12"
+              },
+              "duration_label": "1 hr 17 min",
+              "duration": 77,
+              "airline": "JetBlue",
+              "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/B6.png",
+              "flight_number": "B6 1618",
+              "aircraft": "Airbus A220-300 Passenger",
+              "seat": "Above average legroom",
+              "legroom": "32 in",
+              "extensions": [
+                "Above average legroom (32 in)",
+                "In-seat power & USB outlets",
+                "Live TV",
+                "Free Wi-Fi",
+                "Wi-Fi for a fee",
+                "Emissions estimate: 64 kg CO2e"
+              ]
+            },
+            {
+              "departure_airport": {
+                "airport_name": "Boston Logan International Airport",
+                "airport_code": "BOS",
+                "time": "2025-2-1 18:10"
+              },
+              "arrival_airport": {
+                "airport_name": "Heathrow Airport",
+                "airport_code": "LHR",
+                "time": "2025-2-2 05:55"
+              },
+              "duration_label": "6 hr 45 min",
+              "duration": 405,
+              "airline": "JetBlue",
+              "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/B6.png",
+              "flight_number": "B6 1620",
+              "aircraft": "Airbus A321neo",
+              "seat": "Above average legroom",
+              "legroom": "32 in",
+              "extensions": [
+                "Above average legroom (32 in)",
+                "In-seat power & USB outlets",
+                "On-demand video",
+                "Free Wi-Fi",
+                "Wi-Fi for a fee",
+                "Emissions estimate: 515 kg CO2e"
+              ]
+            }
+          ],
+          "layovers": [
+            {
+              "airport_code": "BOS",
+              "airport_name": "Boston Logan International Airport",
+              "duration_label": "0 hr 58 min",
+              "duration": 58,
+              "city": "Boston"
+            }
+          ],
+          "bags": {
+            "carry_on": 1,
+            "checked": null
+          },
+          "carbon_emissions": {
+            "difference_percent": 26,
+            "CO2e": 578000,
+            "typical_for_this_route": 459000,
+            "higher": 119000
+          },
+          "price": 574,
+          "stops": 0,
+          "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/B6.png",
+          "next_token": "W1sxLDEsWyIxIiwwLDAsMF1dLFsiMjAyNS0wMi0wMSIsIkpGSyIsIkxIUiIsW1siSkZLIiwiMjAyNS0yLTEiLCJCT1MiLCJCNiIsIjE2MTgiXSxbIkJPUyIsIjIwMjUtMi0xIiwiTEhSIiwiQjYiLCIxNjIwIl1dXSxbIjIwMjUtMDItMDUiLCJMSFIiLCJKRksiLFtdXV0="
+        },
+        {
+          "departure_time": "01-02-2025 06:30 PM",
+          "arrival_time": "02-02-2025 06:25 AM",
+          "duration": {
+            "raw": 415,
+            "text": "6 hr 55 min"
+          },
+          "flights": [
+            {
+              "departure_airport": {
+                "airport_name": "John F. Kennedy International Airport",
+                "airport_code": "JFK",
+                "time": "2025-2-1 18:30"
+              },
+              "arrival_airport": {
+                "airport_name": "Heathrow Airport",
+                "airport_code": "LHR",
+                "time": "2025-2-2 06:25"
+              },
+              "duration_label": "6 hr 55 min",
+              "duration": 415,
+              "airline": "Virgin Atlantic",
+              "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/VS.png",
+              "flight_number": "VS 4",
+              "aircraft": "Airbus A330-900neo",
+              "seat": "Average legroom",
+              "legroom": "31 in",
+              "extensions": [
+                "Average legroom (31 in)",
+                "In-seat power & USB outlets",
+                "On-demand video",
+                "Free Wi-Fi",
+                "Wi-Fi for a fee",
+                "Emissions estimate: 529 kg CO2e"
+              ]
+            }
+          ],
+          "layovers": null,
+          "bags": {
+            "carry_on": 1,
+            "checked": null
+          },
+          "carbon_emissions": {
+            "difference_percent": 15,
+            "CO2e": 529000,
+            "typical_for_this_route": 459000,
+            "higher": 70000
+          },
+          "price": 609,
+          "stops": 0,
+          "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/VS.png",
+          "next_token": "W1sxLDEsWyIxIiwwLDAsMF1dLFsiMjAyNS0wMi0wMSIsIkpGSyIsIkxIUiIsW1siSkZLIiwiMjAyNS0yLTEiLCJMSFIiLCJWUyIsIjQiXV1dLFsiMjAyNS0wMi0wNSIsIkxIUiIsIkpGSyIsW11dXQ=="
+        },
+        {
+          "departure_time": "01-02-2025 07:01 PM",
+          "arrival_time": "02-02-2025 06:55 AM",
+          "duration": {
+            "raw": 414,
+            "text": "6 hr 54 min"
+          },
+          "flights": [
+            {
+              "departure_airport": {
+                "airport_name": "John F. Kennedy International Airport",
+                "airport_code": "JFK",
+                "time": "2025-2-1 19:01"
+              },
+              "arrival_airport": {
+                "airport_name": "Heathrow Airport",
+                "airport_code": "LHR",
+                "time": "2025-2-2 06:55"
+              },
+              "duration_label": "6 hr 54 min",
+              "duration": 414,
+              "airline": "Virgin Atlantic",
+              "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/VS.png",
+              "flight_number": "VS 46",
+              "aircraft": "Airbus A350",
+              "seat": "Average legroom",
+              "legroom": "31 in",
+              "extensions": [
+                "Average legroom (31 in)",
+                "In-seat USB outlets",
+                "On-demand video",
+                "Free Wi-Fi",
+                "Wi-Fi for a fee",
+                "Emissions estimate: 425 kg CO2e"
+              ]
+            }
+          ],
+          "layovers": null,
+          "bags": {
+            "carry_on": 1,
+            "checked": null
+          },
+          "carbon_emissions": {
+            "difference_percent": -7,
+            "CO2e": 425000,
+            "typical_for_this_route": 459000,
+            "higher": -34000
+          },
+          "price": 609,
+          "stops": 0,
+          "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/VS.png",
+          "next_token": "W1sxLDEsWyIxIiwwLDAsMF1dLFsiMjAyNS0wMi0wMSIsIkpGSyIsIkxIUiIsW1siSkZLIiwiMjAyNS0yLTEiLCJMSFIiLCJWUyIsIjQ2Il1dXSxbIjIwMjUtMDItMDUiLCJMSFIiLCJKRksiLFtdXV0="
+        },
+        {
+          "departure_time": "01-02-2025 07:47 PM",
+          "arrival_time": "02-02-2025 07:55 AM",
+          "duration": {
+            "raw": 428,
+            "text": "7 hr 8 min"
+          },
+          "flights": [
+            {
+              "departure_airport": {
+                "airport_name": "John F. Kennedy International Airport",
+                "airport_code": "JFK",
+                "time": "2025-2-1 19:47"
+              },
+              "arrival_airport": {
+                "airport_name": "Heathrow Airport",
+                "airport_code": "LHR",
+                "time": "2025-2-2 07:55"
+              },
+              "duration_label": "7 hr 8 min",
+              "duration": 428,
+              "airline": "Delta",
+              "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/DL.png",
+              "flight_number": "DL 1",
+              "aircraft": "Airbus A330",
+              "seat": "Average legroom",
+              "legroom": "31 in",
+              "extensions": [
+                "Average legroom (31 in)",
+                "In-seat power & USB outlets",
+                "On-demand video",
+                "Free Wi-Fi",
+                "Wi-Fi for a fee",
+                "Emissions estimate: 638 kg CO2e"
+              ]
+            }
+          ],
+          "layovers": null,
+          "bags": {
+            "carry_on": 1,
+            "checked": null
+          },
+          "carbon_emissions": {
+            "difference_percent": 39,
+            "CO2e": 638000,
+            "typical_for_this_route": 459000,
+            "higher": 179000
+          },
+          "price": 609,
+          "stops": 0,
+          "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/DL.png",
+          "next_token": "W1sxLDEsWyIxIiwwLDAsMF1dLFsiMjAyNS0wMi0wMSIsIkpGSyIsIkxIUiIsW1siSkZLIiwiMjAyNS0yLTEiLCJMSFIiLCJETCIsIjEiXV1dLFsiMjAyNS0wMi0wNSIsIkxIUiIsIkpGSyIsW11dXQ=="
+        },
+        {
+          "departure_time": "01-02-2025 09:00 PM",
+          "arrival_time": "02-02-2025 09:05 AM",
+          "duration": {
+            "raw": 425,
+            "text": "7 hr 5 min"
+          },
+          "flights": [
+            {
+              "departure_airport": {
+                "airport_name": "John F. Kennedy International Airport",
+                "airport_code": "JFK",
+                "time": "2025-2-1 21:00"
+              },
+              "arrival_airport": {
+                "airport_name": "Heathrow Airport",
+                "airport_code": "LHR",
+                "time": "2025-2-2 09:05"
+              },
+              "duration_label": "7 hr 5 min",
+              "duration": 425,
+              "airline": "Virgin Atlantic",
+              "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/VS.png",
+              "flight_number": "VS 138",
+              "aircraft": "Airbus A350",
+              "seat": "Average legroom",
+              "legroom": "31 in",
+              "extensions": [
+                "Average legroom (31 in)",
+                "In-seat USB outlets",
+                "On-demand video",
+                "Free Wi-Fi",
+                "Wi-Fi for a fee",
+                "Emissions estimate: 425 kg CO2e"
+              ]
+            }
+          ],
+          "layovers": null,
+          "bags": {
+            "carry_on": 1,
+            "checked": null
+          },
+          "carbon_emissions": {
+            "difference_percent": -7,
+            "CO2e": 425000,
+            "typical_for_this_route": 459000,
+            "higher": -34000
+          },
+          "price": 609,
+          "stops": 0,
+          "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/VS.png",
+          "next_token": "W1sxLDEsWyIxIiwwLDAsMF1dLFsiMjAyNS0wMi0wMSIsIkpGSyIsIkxIUiIsW1siSkZLIiwiMjAyNS0yLTEiLCJMSFIiLCJWUyIsIjEzOCJdXV0sWyIyMDI1LTAyLTA1IiwiTEhSIiwiSkZLIixbXV1d"
+        },
+        {
+          "departure_time": "01-02-2025 10:30 PM",
+          "arrival_time": "02-02-2025 10:30 AM",
+          "duration": {
+            "raw": 420,
+            "text": "7 hr 0 min"
+          },
+          "flights": [
+            {
+              "departure_airport": {
+                "airport_name": "John F. Kennedy International Airport",
+                "airport_code": "JFK",
+                "time": "2025-2-1 22:30"
+              },
+              "arrival_airport": {
+                "airport_name": "Heathrow Airport",
+                "airport_code": "LHR",
+                "time": "2025-2-2 10:30"
+              },
+              "duration_label": "7 hr 0 min",
+              "duration": 420,
+              "airline": "Virgin Atlantic",
+              "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/VS.png",
+              "flight_number": "VS 10",
+              "aircraft": "Airbus A350",
+              "seat": "Average legroom",
+              "legroom": "31 in",
+              "extensions": [
+                "Average legroom (31 in)",
+                "In-seat USB outlets",
+                "On-demand video",
+                "Free Wi-Fi",
+                "Wi-Fi for a fee",
+                "Emissions estimate: 425 kg CO2e"
+              ]
+            }
+          ],
+          "layovers": null,
+          "bags": {
+            "carry_on": 1,
+            "checked": null
+          },
+          "carbon_emissions": {
+            "difference_percent": -7,
+            "CO2e": 425000,
+            "typical_for_this_route": 459000,
+            "higher": -34000
+          },
+          "price": 609,
+          "stops": 0,
+          "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/VS.png",
+          "next_token": "W1sxLDEsWyIxIiwwLDAsMF1dLFsiMjAyNS0wMi0wMSIsIkpGSyIsIkxIUiIsW1siSkZLIiwiMjAyNS0yLTEiLCJMSFIiLCJWUyIsIjEwIl1dXSxbIjIwMjUtMDItMDUiLCJMSFIiLCJKRksiLFtdXV0="
+        },
+        {
+          "departure_time": "01-02-2025 08:05 AM",
+          "arrival_time": "01-02-2025 08:00 PM",
+          "duration": {
+            "raw": 415,
+            "text": "6 hr 55 min"
+          },
+          "flights": [
+            {
+              "departure_airport": {
+                "airport_name": "John F. Kennedy International Airport",
+                "airport_code": "JFK",
+                "time": "2025-2-1 08:05"
+              },
+              "arrival_airport": {
+                "airport_name": "Heathrow Airport",
+                "airport_code": "LHR",
+                "time": "2025-2-1 20:00"
+              },
+              "duration_label": "6 hr 55 min",
+              "duration": 415,
+              "airline": "British Airways",
+              "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/BA.png",
+              "flight_number": "BA 178",
+              "aircraft": "Boeing 777",
+              "seat": "Average legroom",
+              "legroom": "31 in",
+              "extensions": [
+                "Average legroom (31 in)",
+                "In-seat USB outlets",
+                "On-demand video",
+                "Free Wi-Fi",
+                "Wi-Fi for a fee",
+                "Emissions estimate: 531 kg CO2e"
+              ]
+            }
+          ],
+          "layovers": null,
+          "bags": {
+            "carry_on": 1,
+            "checked": null
+          },
+          "carbon_emissions": {
+            "difference_percent": 16,
+            "CO2e": 531000,
+            "typical_for_this_route": 459000,
+            "higher": 72000
+          },
+          "price": 632,
+          "stops": 0,
+          "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/BA.png",
+          "next_token": "W1sxLDEsWyIxIiwwLDAsMF1dLFsiMjAyNS0wMi0wMSIsIkpGSyIsIkxIUiIsW1siSkZLIiwiMjAyNS0yLTEiLCJMSFIiLCJCQSIsIjE3OCJdXV0sWyIyMDI1LTAyLTA1IiwiTEhSIiwiSkZLIixbXV1d"
+        },
+        {
+          "departure_time": "01-02-2025 06:30 PM",
+          "arrival_time": "02-02-2025 06:30 AM",
+          "duration": {
+            "raw": 420,
+            "text": "7 hr 0 min"
+          },
+          "flights": [
+            {
+              "departure_airport": {
+                "airport_name": "John F. Kennedy International Airport",
+                "airport_code": "JFK",
+                "time": "2025-2-1 18:30"
+              },
+              "arrival_airport": {
+                "airport_name": "Heathrow Airport",
+                "airport_code": "LHR",
+                "time": "2025-2-2 06:30"
+              },
+              "duration_label": "7 hr 0 min",
+              "duration": 420,
+              "airline": "British Airways",
+              "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/BA.png",
+              "flight_number": "BA 112",
+              "aircraft": "Boeing 777",
+              "seat": "Average legroom",
+              "legroom": "31 in",
+              "extensions": [
+                "Average legroom (31 in)",
+                "In-seat USB outlets",
+                "On-demand video",
+                "Free Wi-Fi",
+                "Wi-Fi for a fee",
+                "Emissions estimate: 485 kg CO2e"
+              ]
+            }
+          ],
+          "layovers": null,
+          "bags": {
+            "carry_on": 1,
+            "checked": null
+          },
+          "carbon_emissions": {
+            "difference_percent": 6,
+            "CO2e": 485000,
+            "typical_for_this_route": 459000,
+            "higher": 26000
+          },
+          "price": 632,
+          "stops": 0,
+          "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/BA.png",
+          "next_token": "W1sxLDEsWyIxIiwwLDAsMF1dLFsiMjAyNS0wMi0wMSIsIkpGSyIsIkxIUiIsW1siSkZLIiwiMjAyNS0yLTEiLCJMSFIiLCJCQSIsIjExMiJdXV0sWyIyMDI1LTAyLTA1IiwiTEhSIiwiSkZLIixbXV1d"
+        },
+        {
+          "departure_time": "01-02-2025 06:45 PM",
+          "arrival_time": "02-02-2025 06:45 AM",
+          "duration": {
+            "raw": 420,
+            "text": "7 hr 0 min"
+          },
+          "flights": [
+            {
+              "departure_airport": {
+                "airport_name": "John F. Kennedy International Airport",
+                "airport_code": "JFK",
+                "time": "2025-2-1 18:45"
+              },
+              "arrival_airport": {
+                "airport_name": "Heathrow Airport",
+                "airport_code": "LHR",
+                "time": "2025-2-2 06:45"
+              },
+              "duration_label": "7 hr 0 min",
+              "duration": 420,
+              "airline": "British Airways",
+              "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/BA.png",
+              "flight_number": "BA 174",
+              "aircraft": "Boeing 787-10",
+              "seat": "Average legroom",
+              "legroom": "31 in",
+              "extensions": [
+                "Average legroom (31 in)",
+                "In-seat power & USB outlets",
+                "On-demand video",
+                "Free Wi-Fi",
+                "Wi-Fi for a fee",
+                "Emissions estimate: 370 kg CO2e"
+              ]
+            }
+          ],
+          "layovers": null,
+          "bags": {
+            "carry_on": 1,
+            "checked": null
+          },
+          "carbon_emissions": {
+            "difference_percent": -19,
+            "CO2e": 370000,
+            "typical_for_this_route": 459000,
+            "higher": -89000
+          },
+          "price": 632,
+          "stops": 0,
+          "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/BA.png",
+          "next_token": "W1sxLDEsWyIxIiwwLDAsMF1dLFsiMjAyNS0wMi0wMSIsIkpGSyIsIkxIUiIsW1siSkZLIiwiMjAyNS0yLTEiLCJMSFIiLCJCQSIsIjE3NCJdXV0sWyIyMDI1LTAyLTA1IiwiTEhSIiwiSkZLIixbXV1d"
+        },
+        {
+          "departure_time": "01-02-2025 07:00 PM",
+          "arrival_time": "02-02-2025 06:50 AM",
+          "duration": {
+            "raw": 410,
+            "text": "6 hr 50 min"
+          },
+          "flights": [
+            {
+              "departure_airport": {
+                "airport_name": "John F. Kennedy International Airport",
+                "airport_code": "JFK",
+                "time": "2025-2-1 19:00"
+              },
+              "arrival_airport": {
+                "airport_name": "Heathrow Airport",
+                "airport_code": "LHR",
+                "time": "2025-2-2 06:50"
+              },
+              "duration_label": "6 hr 50 min",
+              "duration": 410,
+              "airline": "American",
+              "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/AA.png",
+              "flight_number": "AA 100",
+              "aircraft": "Boeing 777",
+              "seat": "Average legroom",
+              "legroom": "31 in",
+              "extensions": [
+                "Average legroom (31 in)",
+                "In-seat power & USB outlets",
+                "On-demand video",
+                "Free Wi-Fi",
+                "Wi-Fi for a fee",
+                "Emissions estimate: 625 kg CO2e"
+              ]
+            }
+          ],
+          "layovers": null,
+          "bags": {
+            "carry_on": 1,
+            "checked": null
+          },
+          "carbon_emissions": {
+            "difference_percent": 36,
+            "CO2e": 625000,
+            "typical_for_this_route": 459000,
+            "higher": 166000
+          },
+          "price": 632,
+          "stops": 0,
+          "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/AA.png",
+          "next_token": "W1sxLDEsWyIxIiwwLDAsMF1dLFsiMjAyNS0wMi0wMSIsIkpGSyIsIkxIUiIsW1siSkZLIiwiMjAyNS0yLTEiLCJMSFIiLCJBQSIsIjEwMCJdXV0sWyIyMDI1LTAyLTA1IiwiTEhSIiwiSkZLIixbXV1d"
+        },
+        {
+          "departure_time": "01-02-2025 07:15 PM",
+          "arrival_time": "02-02-2025 07:10 AM",
+          "duration": {
+            "raw": 415,
+            "text": "6 hr 55 min"
+          },
+          "flights": [
+            {
+              "departure_airport": {
+                "airport_name": "John F. Kennedy International Airport",
+                "airport_code": "JFK",
+                "time": "2025-2-1 19:15"
+              },
+              "arrival_airport": {
+                "airport_name": "Heathrow Airport",
+                "airport_code": "LHR",
+                "time": "2025-2-2 07:10"
+              },
+              "duration_label": "6 hr 55 min",
+              "duration": 415,
+              "airline": "British Airways",
+              "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/BA.png",
+              "flight_number": "BA 176",
+              "aircraft": "Boeing 777",
+              "seat": "Average legroom",
+              "legroom": "31 in",
+              "extensions": [
+                "Average legroom (31 in)",
+                "In-seat USB outlets",
+                "On-demand video",
+                "Free Wi-Fi",
+                "Wi-Fi for a fee",
+                "Emissions estimate: 485 kg CO2e"
+              ]
+            }
+          ],
+          "layovers": null,
+          "bags": {
+            "carry_on": 1,
+            "checked": null
+          },
+          "carbon_emissions": {
+            "difference_percent": 6,
+            "CO2e": 485000,
+            "typical_for_this_route": 459000,
+            "higher": 26000
+          },
+          "price": 632,
+          "stops": 0,
+          "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/BA.png",
+          "next_token": "W1sxLDEsWyIxIiwwLDAsMF1dLFsiMjAyNS0wMi0wMSIsIkpGSyIsIkxIUiIsW1siSkZLIiwiMjAyNS0yLTEiLCJMSFIiLCJCQSIsIjE3NiJdXV0sWyIyMDI1LTAyLTA1IiwiTEhSIiwiSkZLIixbXV1d"
+        },
+        {
+          "departure_time": "01-02-2025 08:05 PM",
+          "arrival_time": "02-02-2025 08:10 AM",
+          "duration": {
+            "raw": 425,
+            "text": "7 hr 5 min"
+          },
+          "flights": [
+            {
+              "departure_airport": {
+                "airport_name": "John F. Kennedy International Airport",
+                "airport_code": "JFK",
+                "time": "2025-2-1 20:05"
+              },
+              "arrival_airport": {
+                "airport_name": "Heathrow Airport",
+                "airport_code": "LHR",
+                "time": "2025-2-2 08:10"
+              },
+              "duration_label": "7 hr 5 min",
+              "duration": 425,
+              "airline": "British Airways",
+              "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/BA.png",
+              "flight_number": "BA 116",
+              "aircraft": "Boeing 777",
+              "seat": "Average legroom",
+              "legroom": "31 in",
+              "extensions": [
+                "Average legroom (31 in)",
+                "In-seat USB outlets",
+                "On-demand video",
+                "Free Wi-Fi",
+                "Wi-Fi for a fee",
+                "Emissions estimate: 531 kg CO2e"
+              ]
+            }
+          ],
+          "layovers": null,
+          "bags": {
+            "carry_on": 1,
+            "checked": null
+          },
+          "carbon_emissions": {
+            "difference_percent": 16,
+            "CO2e": 531000,
+            "typical_for_this_route": 459000,
+            "higher": 72000
+          },
+          "price": 632,
+          "stops": 0,
+          "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/BA.png",
+          "next_token": "W1sxLDEsWyIxIiwwLDAsMF1dLFsiMjAyNS0wMi0wMSIsIkpGSyIsIkxIUiIsW1siSkZLIiwiMjAyNS0yLTEiLCJMSFIiLCJCQSIsIjExNiJdXV0sWyIyMDI1LTAyLTA1IiwiTEhSIiwiSkZLIixbXV1d"
+        },
+        {
+          "departure_time": "01-02-2025 08:35 PM",
+          "arrival_time": "02-02-2025 08:35 AM",
+          "duration": {
+            "raw": 420,
+            "text": "7 hr 0 min"
+          },
+          "flights": [
+            {
+              "departure_airport": {
+                "airport_name": "John F. Kennedy International Airport",
+                "airport_code": "JFK",
+                "time": "2025-2-1 20:35"
+              },
+              "arrival_airport": {
+                "airport_name": "Heathrow Airport",
+                "airport_code": "LHR",
+                "time": "2025-2-2 08:35"
+              },
+              "duration_label": "7 hr 0 min",
+              "duration": 420,
+              "airline": "American",
+              "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/AA.png",
+              "flight_number": "AA 106",
+              "aircraft": "Boeing 777",
+              "seat": "Average legroom",
+              "legroom": "31 in",
+              "extensions": [
+                "Average legroom (31 in)",
+                "In-seat power & USB outlets",
+                "On-demand video",
+                "Free Wi-Fi",
+                "Wi-Fi for a fee",
+                "Emissions estimate: 652 kg CO2e"
+              ]
+            }
+          ],
+          "layovers": null,
+          "bags": {
+            "carry_on": 1,
+            "checked": null
+          },
+          "carbon_emissions": {
+            "difference_percent": 42,
+            "CO2e": 652000,
+            "typical_for_this_route": 459000,
+            "higher": 193000
+          },
+          "price": 632,
+          "stops": 0,
+          "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/AA.png",
+          "next_token": "W1sxLDEsWyIxIiwwLDAsMF1dLFsiMjAyNS0wMi0wMSIsIkpGSyIsIkxIUiIsW1siSkZLIiwiMjAyNS0yLTEiLCJMSFIiLCJBQSIsIjEwNiJdXV0sWyIyMDI1LTAyLTA1IiwiTEhSIiwiSkZLIixbXV1d"
+        },
+        {
+          "departure_time": "01-02-2025 08:40 PM",
+          "arrival_time": "02-02-2025 08:40 AM",
+          "duration": {
+            "raw": 420,
+            "text": "7 hr 0 min"
+          },
+          "flights": [
+            {
+              "departure_airport": {
+                "airport_name": "John F. Kennedy International Airport",
+                "airport_code": "JFK",
+                "time": "2025-2-1 20:40"
+              },
+              "arrival_airport": {
+                "airport_name": "Heathrow Airport",
+                "airport_code": "LHR",
+                "time": "2025-2-2 08:40"
+              },
+              "duration_label": "7 hr 0 min",
+              "duration": 420,
+              "airline": "British Airways",
+              "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/BA.png",
+              "flight_number": "BA 172",
+              "aircraft": "Boeing 777",
+              "seat": "Average legroom",
+              "legroom": "31 in",
+              "extensions": [
+                "Average legroom (31 in)",
+                "In-seat USB outlets",
+                "On-demand video",
+                "Free Wi-Fi",
+                "Wi-Fi for a fee",
+                "Emissions estimate: 485 kg CO2e"
+              ]
+            }
+          ],
+          "layovers": null,
+          "bags": {
+            "carry_on": 1,
+            "checked": null
+          },
+          "carbon_emissions": {
+            "difference_percent": 6,
+            "CO2e": 485000,
+            "typical_for_this_route": 459000,
+            "higher": 26000
+          },
+          "price": 632,
+          "stops": 0,
+          "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/BA.png",
+          "next_token": "W1sxLDEsWyIxIiwwLDAsMF1dLFsiMjAyNS0wMi0wMSIsIkpGSyIsIkxIUiIsW1siSkZLIiwiMjAyNS0yLTEiLCJMSFIiLCJCQSIsIjE3MiJdXV0sWyIyMDI1LTAyLTA1IiwiTEhSIiwiSkZLIixbXV1d"
+        },
+        {
+          "departure_time": "01-02-2025 09:35 PM",
+          "arrival_time": "02-02-2025 09:30 AM",
+          "duration": {
+            "raw": 415,
+            "text": "6 hr 55 min"
+          },
+          "flights": [
+            {
+              "departure_airport": {
+                "airport_name": "John F. Kennedy International Airport",
+                "airport_code": "JFK",
+                "time": "2025-2-1 21:35"
+              },
+              "arrival_airport": {
+                "airport_name": "Heathrow Airport",
+                "airport_code": "LHR",
+                "time": "2025-2-2 09:30"
+              },
+              "duration_label": "6 hr 55 min",
+              "duration": 415,
+              "airline": "British Airways",
+              "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/BA.png",
+              "flight_number": "BA 114",
+              "aircraft": "Boeing 787-10",
+              "seat": "Average legroom",
+              "legroom": "31 in",
+              "extensions": [
+                "Average legroom (31 in)",
+                "In-seat power & USB outlets",
+                "On-demand video",
+                "Free Wi-Fi",
+                "Wi-Fi for a fee",
+                "Emissions estimate: 370 kg CO2e"
+              ]
+            }
+          ],
+          "layovers": null,
+          "bags": {
+            "carry_on": 1,
+            "checked": null
+          },
+          "carbon_emissions": {
+            "difference_percent": -19,
+            "CO2e": 370000,
+            "typical_for_this_route": 459000,
+            "higher": -89000
+          },
+          "price": 632,
+          "stops": 0,
+          "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/BA.png",
+          "next_token": "W1sxLDEsWyIxIiwwLDAsMF1dLFsiMjAyNS0wMi0wMSIsIkpGSyIsIkxIUiIsW1siSkZLIiwiMjAyNS0yLTEiLCJMSFIiLCJCQSIsIjExNCJdXV0sWyIyMDI1LTAyLTA1IiwiTEhSIiwiSkZLIixbXV1d"
+        },
+        {
+          "departure_time": "01-02-2025 09:10 PM",
+          "arrival_time": "02-02-2025 09:30 AM",
+          "duration": {
+            "raw": 440,
+            "text": "7 hr 20 min"
+          },
+          "flights": [
+            {
+              "departure_airport": {
+                "airport_name": "John F. Kennedy International Airport",
+                "airport_code": "JFK",
+                "time": "2025-2-1 21:10"
+              },
+              "arrival_airport": {
+                "airport_name": "Heathrow Airport",
+                "airport_code": "LHR",
+                "time": "2025-2-2 09:30"
+              },
+              "duration_label": "7 hr 20 min",
+              "duration": 440,
+              "airline": "JetBlue",
+              "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/B6.png",
+              "flight_number": "B6 7",
+              "aircraft": "Airbus A321neo",
+              "seat": "Above average legroom",
+              "legroom": "32 in",
+              "extensions": [
+                "Above average legroom (32 in)",
+                "In-seat power & USB outlets",
+                "On-demand video",
+                "Free Wi-Fi",
+                "Wi-Fi for a fee",
+                "Emissions estimate: 661 kg CO2e"
+              ]
+            }
+          ],
+          "layovers": null,
+          "bags": {
+            "carry_on": 1,
+            "checked": null
+          },
+          "carbon_emissions": {
+            "difference_percent": 44,
+            "CO2e": 661000,
+            "typical_for_this_route": 459000,
+            "higher": 202000
+          },
+          "price": 706,
+          "stops": 0,
+          "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/B6.png",
+          "next_token": "W1sxLDEsWyIxIiwwLDAsMF1dLFsiMjAyNS0wMi0wMSIsIkpGSyIsIkxIUiIsW1siSkZLIiwiMjAyNS0yLTEiLCJMSFIiLCJCNiIsIjciXV1dLFsiMjAyNS0wMi0wNSIsIkxIUiIsIkpGSyIsW11dXQ=="
+        }
+      ]
+    }
+  }
+}

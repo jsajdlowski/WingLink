@@ -25,6 +25,10 @@ public class AirportService {
         return airportRepository.findById(id);
     }
 
+    public Optional<Airport> findAirportByCode(String code) {
+        return airportRepository.findByCode(code);
+    }
+
     public Airport saveAirport(Airport airport) {
         return airportRepository.save(airport);
     }

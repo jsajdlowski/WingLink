@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/users")
@@ -46,6 +47,22 @@ public class AppUserController {
     public ResponseEntity<AppUser> updateNames(@RequestBody AppUserNamesDto userNamesDTO) {
         String auth0Id = SecurityUtils.getAuth0UserId();
         return userService.updateUserNamesByAuth0Id(auth0Id, userNamesDTO.getFirstName(), userNamesDTO.getLastName()).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/me/checknames")
+    public ResponseEntity<AppUserNamesDto> checkNames() {
+        String auth0Id = SecurityUtils.getAuth0UserId();
+        Optional<AppUser> userOptional = userService.getUserByAuth0Id(auth0Id);
+        if (userOptional.isPresent()) {
+            AppUser user = userOptional.get();
+            if (user.getFirstName() != null && user.getLastName() != null) {
+                return ResponseEntity.ok(new AppUserNamesDto(user.getFirstName(), user.getLastName()));
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @DeleteMapping("/{id}")
