@@ -23,8 +23,6 @@ public class FlightDtoConverterService {
 
     public FlightTrip convertToEntity(GoogleFlightsFlightDto dto) {
         FlightTrip flightTrip = new FlightTrip();
-//        flightTrip.setFlightNumber(dto.flights().getFirst().flight_number());
-//        flightTrip.setAirline(dto.flights().getFirst().airline());
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy hh:mm a");
 

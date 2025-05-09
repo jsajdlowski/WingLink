@@ -17,18 +17,12 @@ public class Flight {
     private Long id;
     @NotBlank
     private String flightNumber;
-//    @NotNull
     @ManyToOne
     @JoinColumn(name = "origin_id", nullable = false)
     private Airport origin;
-//    @NotNull
     @ManyToOne
     @JoinColumn(name = "destination_id", nullable = false)
     private Airport destination;
-//    @NotNull
-//    @OneToMany(mappedBy = "flight", fetch = FetchType.LAZY)
-//    @JsonManagedReference(value = "flight-ticket")
-//    private List<Ticket> tickets;
     @NotNull
     private LocalDateTime departureTime;
     @NotNull
@@ -36,7 +30,4 @@ public class Flight {
     @NotNull
     private String airline;
     private String airlineLogo;
-//    @NotNull
-//    @Min(value = 1, message = "Price must be at least 1")
-//    private BigDecimal price;
 }

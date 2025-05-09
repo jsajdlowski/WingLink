@@ -22,13 +22,9 @@ public class FlightTrip {
     @ManyToOne
     @JoinColumn(name = "origin_id", nullable = false)
     private Airport origin;
-    //    @NotNull
     @ManyToOne
     @JoinColumn(name = "destination_id", nullable = false)
     private Airport destination;
-//    @OneToMany(mappedBy = "flight_trip", fetch = FetchType.LAZY)
-//    @JsonManagedReference(value = "flight-ticket")
-//    private List<Ticket> tickets;
     @NotNull
     private LocalDateTime departureTime;
     @NotNull
@@ -37,7 +33,6 @@ public class FlightTrip {
     @Min(value = 1, message = "Price must be at least 1")
     private BigDecimal price;
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-//    @JsonManagedReference(value = "flights")
     private List<Flight> flights;
 
 }
