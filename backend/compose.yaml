@@ -7,16 +7,22 @@ services:
     ports:
       - '${POSTGRES_PORT:-5432}:5432'
     volumes:
-      - type: bind
-        source: ./tmp-postgresql-data
-        target: /var/lib/postgresql/data
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}" ]
+      interval: 5s
+      retries: 5
+      start_period: 5s
+      timeout: 10s
   backend:
     build:
       context: .
     ports:
       - "8080:8080"
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
+        restart: true
     environment:
       - SPRING_JPA_HIBERNATE_DDL_AUTO=create-drop
       - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/${POSTGRES_DB}
@@ -24,3 +30,5 @@ services:
       - SPRING_DATASOURCE_PASSWORD=${POSTGRES_PASSWORD}
     env_file:
       - .env
+volumes:
+  postgres-data:
