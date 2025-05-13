@@ -1,22 +1,24 @@
 package com.winglink.backend.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
 @Entity
-public class Flight {
+@Table(name = "flight_trip")
+public class FlightTrip {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private Long id;
-    @NotBlank
-    private String flightNumber;
     @ManyToOne
     @JoinColumn(name = "origin_id", nullable = false)
     private Airport origin;
@@ -28,6 +30,9 @@ public class Flight {
     @NotNull
     private LocalDateTime arrivalTime;
     @NotNull
-    private String airline;
-    private String airlineLogo;
+    @Min(value = 1, message = "Price must be at least 1")
+    private BigDecimal price;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    private List<Flight> flights;
+
 }

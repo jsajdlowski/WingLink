@@ -1,7 +1,7 @@
 name: winglink
 services:
   postgres:
-    image: 'postgres:alpine'
+    image: 'postgres:16-alpine'
     env_file:
       - .env
     ports:
