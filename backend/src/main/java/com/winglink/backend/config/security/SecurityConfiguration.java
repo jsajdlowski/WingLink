@@ -48,18 +48,24 @@ public class SecurityConfiguration {
                         authorizeRequests
                                 // allowing access to one's user data and GET other endpoints for clients,
                                 // and everything else for admin
-                                .requestMatchers(HttpMethod.GET, "/api/users/me").hasAuthority("client")
-                                .requestMatchers(HttpMethod.PATCH, "/api/users/me/updatenames").hasAuthority("client")
-                                .requestMatchers(HttpMethod.GET, "/api/users/me/checknames").hasAuthority("client")
+                                // ** /users
+                                .requestMatchers(HttpMethod.GET, "/api/users/me").authenticated()
+                                .requestMatchers(HttpMethod.PATCH, "/api/users/me/updatenames").authenticated()
+                                .requestMatchers(HttpMethod.GET, "/api/users/me/checknames").authenticated()
                                 .requestMatchers("/api/users/**").hasAuthority("admin")
+                                // ** /flights
                                 // flights data can be requested by anyone
                                 .requestMatchers(HttpMethod.GET, "/api/flights/**").permitAll()
                                 .requestMatchers("/api/flights/**").hasAuthority("admin")
+                                // ** /airports
                                 // airports data can be requested by anyone
                                 .requestMatchers(HttpMethod.GET, "/api/airports/**").permitAll()
                                 .requestMatchers("/api/airports/**").hasAuthority("admin")
-                                .requestMatchers(HttpMethod.GET, "/api/tickets/**").hasAuthority("client")
+                                // ** /tickets
+                                .requestMatchers(HttpMethod.POST, "/api/tickets/**").authenticated()
+                                .requestMatchers(HttpMethod.GET, "/api/tickets/my/**").authenticated()
                                 .requestMatchers("/api/tickets/**").hasAuthority("admin")
+                                // ** any other
                                 .anyRequest().authenticated()
                 )
                 .oauth2ResourceServer(oauth2ResourceServer ->
