@@ -15,9 +15,9 @@ const FlightListItem = ({ flight }: { flight: Flight }) => {
           <Text>{flight.flightNumber}</Text>
         </Group>
         <Group>
-          <Text>{flight.origin.code}</Text>
+          <Text>{'JFK'}</Text>
           <IconArrowRight size={20} />
-          <Text>{flight.destination.code}</Text>
+          <Text>{'GDA'}</Text>
         </Group>
       </Group>
     </Paper>
@@ -28,12 +28,12 @@ export const FlightList = () => {
   const { destination, origin } = useAppSelector(selectSearch)
   const { data, isLoading } = useFlightsSearch(destination, origin)
 
-  if (isLoading)
-    return Array(15)
-      .fill(0)
-      .map((_, index) => (
-        <Skeleton key={index} h={28} mt="sm" animate={false} />
-      ))
+  // if (isLoading)
+  //   return Array(15)
+  //     .fill(0)
+  //     .map((_, index) => (
+  //       <Skeleton key={index} h={28} mt="sm" animate={false} />
+  //     ))
 
   return (
     <>

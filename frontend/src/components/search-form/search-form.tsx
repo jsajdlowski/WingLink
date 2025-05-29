@@ -1,35 +1,57 @@
-import {Button, Container, Group, Paper, Text, TextInput} from '@mantine/core'
-import {Controller, useForm} from 'react-hook-form'
-import {Form} from './types'
-import {selectSearch, setSearch} from '../../store/flightSearchSlice'
-import {getSelectedField, SearchFormFields, setSelectedField} from '../../store/currentlySelectedSearchFieldSlice'
-import {useAppDispatch, useAppSelector} from '../../hooks/storeHooks'
-import {useEffect, useRef} from "react";
+import {
+  Button,
+  Container,
+  Group,
+  Paper,
+  TextInput,
+  Text,
+  NumberInput,
+  Checkbox,
+} from '@mantine/core'
+import { useState, useEffect, useRef } from 'react'
+import { Controller, useForm } from 'react-hook-form'
+import { Form } from './types'
+import {
+  getSelectedField,
+  SearchFormFields,
+  setSelectedField,
+} from '../../store/currentlySelectedSearchFieldSlice'
+import { selectSearch, setSearch } from '../../store/flightSearchSlice'
+import dayjs from 'dayjs'
+import { DateInput } from '@mantine/dates'
+
+import { useAppDispatch, useAppSelector } from '../../hooks/storeHooks'
 
 export const SearchForm = () => {
-  const { control, handleSubmit, formState: { errors }, setValue } = useForm<Form>();
-  const dispatch = useAppDispatch();
-  const {selectedField} = useAppSelector(getSelectedField);
-  const {origin, destination} = useAppSelector(selectSearch);
-  const fromFieldRef = useRef<HTMLInputElement>(null);
-  const toFieldRef = useRef<HTMLInputElement>(null);
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+    setValue,
+  } = useForm<Form>()
+  const dispatch = useAppDispatch()
+  const { selectedField } = useAppSelector(getSelectedField)
+  const { origin, destination } = useAppSelector(selectSearch)
+  const fromFieldRef = useRef<HTMLInputElement>(null)
+  const toFieldRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
     switch (selectedField) {
       case SearchFormFields.FROM:
-        fromFieldRef.current?.focus();
-        break;
+        fromFieldRef.current?.focus()
+        break
       case SearchFormFields.TO:
-        toFieldRef.current?.focus();
-        break;
+        toFieldRef.current?.focus()
+        break
     }
-  }, [selectedField]);
+  }, [selectedField])
 
   useEffect(() => {
-    setValue('origin', origin || ''); // sync with Redux
-    setValue('destination', destination || ''); // sync with Redux
-  }, [origin, destination]);
+    setValue('origin', origin || '') // sync with Redux
+    setValue('destination', destination || '') // sync with Redux
+  }, [origin, destination, setValue])
 
+  const [isOneWay, setIsOneWay] = useState(false)
 
   const onSubmit = (formData: Form) => {
     dispatch(setSearch(formData))
@@ -50,11 +72,17 @@ export const SearchForm = () => {
                 ref={fromFieldRef}
                 value={field.value}
                 onChange={(event) => {
-                  const value = event.currentTarget.value;
-                  field.onChange(value);
-                  dispatch(setSearch({ origin: value, destination: destination || '' })); // update Redux
+                  const value = event.currentTarget.value
+                  field.onChange(value)
+                  dispatch(
+                    setSearch({ origin: value, destination: destination || '' })
+                  ) // update Redux
                 }}
-                onFocus={() => dispatch(setSelectedField({ selectedField: SearchFormFields.FROM }))}
+                onFocus={() =>
+                  dispatch(
+                    setSelectedField({ selectedField: SearchFormFields.FROM })
+                  )
+                }
                 error={errors.origin?.message}
               />
             )}
@@ -70,14 +98,51 @@ export const SearchForm = () => {
                 ref={toFieldRef}
                 value={field.value}
                 onChange={(event) => {
-                  const value = event.currentTarget.value;
-                  field.onChange(value);
-                  dispatch(setSearch({ origin: origin || '', destination: value })); // update Redux
+                  const value = event.currentTarget.value
+                  field.onChange(value)
+                  dispatch(
+                    setSearch({ origin: origin || '', destination: value })
+                  ) // update Redux
                 }}
-                onFocus={() => dispatch(setSelectedField({ selectedField: SearchFormFields.TO }))}
+                onFocus={() =>
+                  dispatch(
+                    setSelectedField({ selectedField: SearchFormFields.TO })
+                  )
+                }
                 error={errors.destination?.message}
               />
             )}
+          />
+
+          <DateInput
+            minDate={new Date()}
+            maxDate={dayjs(new Date()).add(1, 'month').toDate()}
+            label="Departure Date"
+            placeholder="Departure Date"
+          />
+
+          {!isOneWay && (
+            <DateInput
+              mt="md"
+              minDate={new Date()}
+              maxDate={dayjs(new Date()).add(1, 'month').toDate()}
+              label="Return Date"
+              placeholder="Return Date"
+            />
+          )}
+
+          <Checkbox
+            mt="md"
+            label="One Way"
+            checked={isOneWay}
+            onChange={(event) => setIsOneWay(event.currentTarget.checked)}
+          />
+          <NumberInput
+            label="Number of Passangers"
+            placeholder="Number of Passenge"
+            clampBehavior="strict"
+            min={1}
+            max={8}
           />
 
           <Group mt="md">
