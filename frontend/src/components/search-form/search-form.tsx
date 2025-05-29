@@ -1,5 +1,5 @@
 import {Button, Container, Group, Paper, Text, TextInput} from '@mantine/core'
-import {useForm} from 'react-hook-form'
+import {Controller, useForm} from 'react-hook-form'
 import {Form} from './types'
 import {selectSearch, setSearch} from '../../store/flightSearchSlice'
 import {getSelectedField, SearchFormFields, setSelectedField} from '../../store/currentlySelectedSearchFieldSlice'
@@ -7,11 +7,7 @@ import {useAppDispatch, useAppSelector} from '../../hooks/storeHooks'
 import {useEffect, useRef} from "react";
 
 export const SearchForm = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: {errors},
-  } = useForm<Form>()
+  const { control, handleSubmit, formState: { errors }, setValue } = useForm<Form>();
   const dispatch = useAppDispatch();
   const {selectedField} = useAppSelector(getSelectedField);
   const {origin, destination} = useAppSelector(selectSearch);
@@ -29,6 +25,12 @@ export const SearchForm = () => {
     }
   }, [selectedField]);
 
+  useEffect(() => {
+    setValue('origin', origin || ''); // sync with Redux
+    setValue('destination', destination || ''); // sync with Redux
+  }, [origin, destination]);
+
+
   const onSubmit = (formData: Form) => {
     dispatch(setSearch(formData))
   }
@@ -38,24 +40,46 @@ export const SearchForm = () => {
       <Paper shadow="xs" p="lg" radius="md" withBorder>
         <Text>Search Flights</Text>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <TextInput
-            value={origin || ''}
-            // onChange={handleOriginChange}
-            label="From"
-            {...register('origin')}
-            error={errors.origin?.message}
-            ref={fromFieldRef}
-            onFocus={() => dispatch(setSelectedField({selectedField: SearchFormFields.FROM}))}
+          <Controller
+            name="origin"
+            defaultValue={origin} // sync with Redux
+            control={control}
+            render={({ field }) => (
+              <TextInput
+                label="From"
+                ref={fromFieldRef}
+                value={field.value}
+                onChange={(event) => {
+                  const value = event.currentTarget.value;
+                  field.onChange(value);
+                  dispatch(setSearch({ origin: value, destination: destination || '' })); // update Redux
+                }}
+                onFocus={() => dispatch(setSelectedField({ selectedField: SearchFormFields.FROM }))}
+                error={errors.origin?.message}
+              />
+            )}
           />
-          <TextInput
-            value={destination || ''}
-            // onChange={handleDestinationChange}
-            label="To"
-            {...register('destination')}
-            error={errors.destination?.message}
-            onFocus={() => dispatch(setSelectedField({selectedField: SearchFormFields.TO}))}
-            ref={toFieldRef}
+
+          <Controller
+            name="destination"
+            defaultValue={destination} // sync with Redux
+            control={control}
+            render={({ field }) => (
+              <TextInput
+                label="To"
+                ref={toFieldRef}
+                value={field.value}
+                onChange={(event) => {
+                  const value = event.currentTarget.value;
+                  field.onChange(value);
+                  dispatch(setSearch({ origin: origin || '', destination: value })); // update Redux
+                }}
+                onFocus={() => dispatch(setSelectedField({ selectedField: SearchFormFields.TO }))}
+                error={errors.destination?.message}
+              />
+            )}
           />
+
           <Group mt="md">
             <Button type="submit">Search</Button>
           </Group>
