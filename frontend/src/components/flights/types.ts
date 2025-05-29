@@ -4,6 +4,8 @@ export interface Airport {
   name: string
   country: string
   city: string
+  latitude: number
+  longitude: number
 }
 
 export interface Ticket {

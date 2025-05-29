@@ -1,16 +1,39 @@
 //eslint-ignore-file
-import React, { useEffect, useRef } from 'react'
+import React, {useEffect, useRef} from 'react'
 import * as am5 from '@amcharts/amcharts5'
 import * as am5map from '@amcharts/amcharts5/map'
 import am5themes_Animated from '@amcharts/amcharts5/themes/Animated'
 import am4geodata_worldLow from '@amcharts/amcharts5-geodata/worldLow'
+import {useAppDispatch, useAppSelector} from "../../hooks/storeHooks.ts"; // useAppDispatch removed
+import {selectSearch, setSearch} from "../../store/flightSearchSlice.ts";
+import {selectAirports} from "../../store/airportsSlice.ts"; // setAirports removed
+import {useFetchAirports} from "./hooks.ts";
+import {getSelectedField, SearchFormFields, setSelectedField} from "../../store/currentlySelectedSearchFieldSlice.ts";
+import {getSelectedCountry, setSelectedCountry} from "../../store/selectedCountrySlice.ts";
 
 const MapChart = () => {
   const chartRef = useRef('')
+  const {destination, origin} = useAppSelector(selectSearch);
+  const {airports} = useAppSelector(selectAirports);
+  const {selectedField} = useAppSelector(getSelectedField);
+  const dispatch = useAppDispatch();
+  // Call useFetchAirports at the top level.
+  // SWR within useFetchAirports will handle caching and prevent multiple fetches.
+  // The hook itself dispatches to the store.
+  useFetchAirports();
+  const {selectedCountry} = useAppSelector(getSelectedCountry);
+  const countryAirportSeriesRef = useRef(null);
+  const lineSeriesRef = useRef(null); // Use ref to keep the lineSeries accessible in the effect
+
 
   useEffect(() => {
+    // Check if airports are loaded
+    // if (!airports || airports.length === 0) {
+    //   console.log('Airports data is not loaded yet.')
+    //   return
+    // }
+
     // Create root element
-    // @ts-ignore
     const root = am5.Root.new(chartRef.current)
 
     // Set themes
@@ -71,12 +94,59 @@ const MapChart = () => {
     )
 
     // Create main polygon series for countries
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const polygonSeries = chart.series.push(
       am5map.MapPolygonSeries.new(root, {
         geoJSON: am4geodata_worldLow,
+        exclude: ["AQ"] // Exclude Antarctica
       })
     )
+
+    // Add click event to polygons
+    polygonSeries.mapPolygons.template.events.on("click", function (ev) {
+      const dataItem = ev.target.dataItem;
+      let countryName = dataItem.dataContext.name;
+      switch (countryName) {
+        case "United States":
+          countryName = "United States of America"
+          break;
+        case "United Kingdom":
+          countryName = "United Kingdom of Great Britain and Northern Ireland"
+          break;
+        case "Russia":
+          countryName = "Russian Federation"
+          break;
+        default:
+          break;
+      }
+      dispatch(setSelectedCountry({selectedCountry: countryName}));
+      console.log("Selected country:", countryName);
+
+      // Zoom to the clicked country
+      console.log("Attempting to zoom to:", dataItem.dataContext.name, dataItem);
+      // chart.zoomToDataItem(dataItem, 1000, true); // Zoom over 1 second, center it
+
+      // Set active state for clicked polygon and deactivate others
+      polygonSeries.mapPolygons.each(function (polygon) {
+        polygon.set("active", false);
+      });
+      ev.target.set("active", true);
+    });
+
+    // Optional: Add hover state for better UX
+    polygonSeries.mapPolygons.template.setAll({
+      tooltipText: "{name}",
+      interactive: true
+    });
+
+    polygonSeries.mapPolygons.template.states.create("hover", {
+      fill: am5.color(0x014185) // Change color on hover
+    });
+
+    // Optional: Add active state for selected polygon
+    // polygonSeries.mapPolygons.template.states.create("active", {
+    //   fill: am5.color(0x4CAF50) // Change color when active/selected
+    // });
+
 
     const graticuleSeries = chart.series.push(
       am5map.GraticuleSeries.new(root, {})
@@ -89,253 +159,48 @@ const MapChart = () => {
     // Create line series for trajectory lines
     const lineSeries = chart.series.push(am5map.MapLineSeries.new(root, {}))
     lineSeries.mapLines.template.setAll({
-      stroke: root.interfaceColors.get('alternativeBackground'),
-      strokeOpacity: 0.6,
+      // stroke: root.interfaceColors.get('alternativeBackground'), // Original stroke
+      stroke: am5.color(0xf5a142), // Changed for visibility (green)
+      strokeOpacity: 0.8, // Increased opacity
+      // strokeWidth: 2, // Added for thickness
+
     })
 
-    // Create point series for markers
-    const originSeries = chart.series.push(
-      am5map.MapPointSeries.new(root, { idField: 'id' })
-    )
+    lineSeriesRef.current = lineSeries; // Store lineSeries in ref for later use
 
-    originSeries.bullets.push(function () {
-      const circle = am5.Circle.new(root, {
-        radius: 7,
-        tooltipText: '{title} (Click me!)',
-        cursorOverStyle: 'pointer',
-        tooltipY: 0,
-        fill: am5.color(0xffba00),
-        stroke: root.interfaceColors.get('background'),
-        strokeWidth: 2,
-      })
-
-      circle.events.on('click', function (e) {
-        // @ts-ignore
-        selectOrigin(e.target.dataItem.get('id'))
-      })
-      return am5.Bullet.new(root, {
-        sprite: circle,
-      })
-    })
-
-    // destination series
-    const destinationSeries = chart.series.push(
-      am5map.MapPointSeries.new(root, {})
-    )
-
-    destinationSeries.bullets.push(function () {
-      const circle = am5.Circle.new(root, {
-        radius: 5,
-        tooltipText: '{title}',
-        tooltipY: 0,
-        fill: am5.color(0xffba00),
-        stroke: root.interfaceColors.get('background'),
-        strokeWidth: 2,
-      })
-
-      return am5.Bullet.new(root, {
-        sprite: circle,
-      })
-    })
-
-    const button = root.container.children.push(
-      am5.Button.new(root, {
-        x: am5.p50,
-        y: 60,
-        centerX: am5.p50,
-        label: am5.Label.new(root, {
-          text: 'Change origin',
-          centerY: am5.p50,
-        }),
-        icon: am5.Graphics.new(root, {
-          svgPath:
-            'm2,106h28l24,30h72l-44,-133h35l80,132h98c21,0 21,34 0,34l-98,0 -80,134h-35l43,-133h-71l-24,30h-28l15,-47',
-          scale: 0.1,
-          centerY: am5.p50,
-          centerX: am5.p50,
-          fill: am5.color(0xffffff),
-        }),
-      })
-    )
-
-    button.events.on('click', function () {
-      if (currentId === 'vilnius') {
-        selectOrigin('london')
-      } else {
-        selectOrigin('vilnius')
-      }
-    })
-
-    const originCities = [
-      {
-        id: 'london',
-        title: 'London',
-        destinations: [
-          'vilnius',
-          'reykjavik',
-          'lisbon',
-          'moscow',
-          'belgrade',
-          'ljublana',
-          'madrid',
-          'stockholm',
-          'bern',
-          'kiev',
-          'new york',
-        ],
-        geometry: { type: 'Point', coordinates: [-0.1262, 51.5002] },
-        zoomLevel: 2.74,
-        zoomPoint: { longitude: -20.1341, latitude: 49.1712 },
-      },
-      {
-        id: 'vilnius',
-        title: 'Vilnius',
-        destinations: [
-          'london',
-          'brussels',
-          'prague',
-          'athens',
-          'dublin',
-          'oslo',
-          'moscow',
-          'bratislava',
-          'belgrade',
-          'madrid',
-        ],
-        geometry: { type: 'Point', coordinates: [25.2799, 54.6896] },
-        zoomLevel: 4.92,
-        zoomPoint: { longitude: 15.4492, latitude: 50.2631 },
-      },
-    ]
-
-    const destinationCities = [
-      {
-        id: 'brussels',
-        title: 'Brussels',
-        geometry: { type: 'Point', coordinates: [4.3676, 50.8371] },
-      },
-      {
-        id: 'prague',
-        title: 'Prague',
-        geometry: { type: 'Point', coordinates: [14.4205, 50.0878] },
-      },
-      {
-        id: 'athens',
-        title: 'Athens',
-        geometry: { type: 'Point', coordinates: [23.7166, 37.9792] },
-      },
-      {
-        id: 'reykjavik',
-        title: 'Reykjavik',
-        geometry: { type: 'Point', coordinates: [-21.8952, 64.1353] },
-      },
-      {
-        id: 'dublin',
-        title: 'Dublin',
-        geometry: { type: 'Point', coordinates: [-6.2675, 53.3441] },
-      },
-      {
-        id: 'oslo',
-        title: 'Oslo',
-        geometry: { type: 'Point', coordinates: [10.7387, 59.9138] },
-      },
-      {
-        id: 'lisbon',
-        title: 'Lisbon',
-        geometry: { type: 'Point', coordinates: [-9.1355, 38.7072] },
-      },
-      {
-        id: 'moscow',
-        title: 'Moscow',
-        geometry: { type: 'Point', coordinates: [37.6176, 55.7558] },
-      },
-      {
-        id: 'belgrade',
-        title: 'Belgrade',
-        geometry: { type: 'Point', coordinates: [20.4781, 44.8048] },
-      },
-      {
-        id: 'bratislava',
-        title: 'Bratislava',
-        geometry: { type: 'Point', coordinates: [17.1547, 48.2116] },
-      },
-      {
-        id: 'ljublana',
-        title: 'Ljubljana',
-        geometry: { type: 'Point', coordinates: [14.506, 46.0514] },
-      },
-      {
-        id: 'madrid',
-        title: 'Madrid',
-        geometry: { type: 'Point', coordinates: [-3.7033, 40.4167] },
-      },
-      {
-        id: 'stockholm',
-        title: 'Stockholm',
-        geometry: { type: 'Point', coordinates: [18.0645, 59.3328] },
-      },
-      {
-        id: 'bern',
-        title: 'Bern',
-        geometry: { type: 'Point', coordinates: [7.4481, 46.948] },
-      },
-      {
-        id: 'kiev',
-        title: 'Kiev',
-        geometry: { type: 'Point', coordinates: [30.5367, 50.4422] },
-      },
-      {
-        id: 'paris',
-        title: 'Paris',
-        geometry: { type: 'Point', coordinates: [2.351, 48.8567] },
-      },
-      {
-        id: 'new york',
-        title: 'New York',
-        geometry: { type: 'Point', coordinates: [-74, 40.43] },
-      },
-    ]
-
-    originSeries.data.setAll(originCities)
-    destinationSeries.data.setAll(destinationCities)
-
-    function selectOrigin(id) {
-      currentId = id
-      const dataItem = originSeries.getDataItemById(id)
-      const dataContext = dataItem.dataContext
-      chart.zoomToGeoPoint(dataContext.zoomPoint, dataContext.zoomLevel, true)
-
-      const destinations = dataContext.destinations
-      const lineSeriesData = []
-      const originLongitude = dataItem.get('longitude')
-      const originLatitude = dataItem.get('latitude')
-
-      am5.array.each(destinations, function (did) {
-        let destinationDataItem = destinationSeries.getDataItemById(did)
-        if (!destinationDataItem) {
-          destinationDataItem = originSeries.getDataItemById(did)
+    // Create point series for airports in the selected country
+    countryAirportSeriesRef.current = chart.series.push(
+      am5map.MapPointSeries.new(root, {idField: "id"}) // Added idField for potential use
+    );
+    countryAirportSeriesRef.current.bullets.push(function () {
+      const airportCircle = am5.Circle.new(root, {
+        radius: 4, // Smaller radius
+        tooltipText: "{title}",
+        fill: am5.color(0xffba00), // Orange color for these airports
+        stroke: root.interfaceColors.get("background"),
+        strokeWidth: 1
+      });
+      airportCircle.events.on('click', function (e) {
+        // selectOrigin(e.target.dataItem.get('id'))
+        console.log(e.target.dataItem.dataContext.id)
+        console.log('selectedField', selectedField)
+        switch (selectedField) {
+          case SearchFormFields.FROM:
+            dispatch(setSearch({origin: e.target.dataItem.dataContext.id, destination: destination}));
+            dispatch(setSelectedField({selectedField: SearchFormFields.TO}))
+            break;
+          case SearchFormFields.TO:
+            dispatch(setSearch({origin: origin, destination: e.target.dataItem.dataContext.id}));
+            break;
         }
-        lineSeriesData.push({
-          geometry: {
-            type: 'LineString',
-            coordinates: [
-              [originLongitude, originLatitude],
-              [
-                destinationDataItem.get('longitude'),
-                destinationDataItem.get('latitude'),
-              ],
-            ],
-          },
-        })
+        dispatch(setSelectedCountry({selectedCountry: ''}));
       })
-      lineSeries.data.setAll(lineSeriesData)
-    }
+      return am5.Bullet.new(root, {
+        sprite: airportCircle
+      });
+    });
 
-    let currentId = 'london'
-
-    destinationSeries.events.on('datavalidated', function () {
-      selectOrigin(currentId)
-    })
+    let currentId = ''
 
     // Make stuff animate on load
     chart.appear(1000, 100)
@@ -344,9 +209,104 @@ const MapChart = () => {
     return () => {
       root.dispose()
     }
-  }, [])
+  }, [airports, dispatch, selectedField]) // Main chart setup dependencies
 
-  return <div ref={chartRef} style={{ width: '100%', height: '500px' }}></div>
+  // Effect to update airports based on selectedCountry
+  useEffect(() => {
+    if (countryAirportSeriesRef.current && airports && airports.length > 0) {
+      console.log('Updating airports based on selected country:', selectedCountry);
+      if (selectedCountry) {
+        const filteredAirports = airports.filter(
+          (airport) => airport.country.toLowerCase() === selectedCountry.toLowerCase()
+        );
+        const filteredSelectedAirports = airports.filter((airport) => airport.code === origin || airport.code === destination);
+        // Combine filtered airports with selected origin and destination airports
+        const combinedAirports = [...filteredAirports, ...filteredSelectedAirports];
+        const countryAirportData = combinedAirports.map(airport => ({
+          id: airport.code, // Use airport code as ID
+          title: airport.name,
+          geometry: {
+            type: "Point",
+            coordinates: [airport.longitude, airport.latitude]
+          }
+        }));
+        countryAirportSeriesRef.current.data.setAll(countryAirportData);
+      } else {
+        const filteredSelectedAirports = airports.filter((airport) => airport.code === origin || airport.code === destination);
+        const countryAirportData = filteredSelectedAirports.map(airport => ({
+          id: airport.code, // Use airport code as ID
+          title: airport.name,
+          geometry: {
+            type: "Point",
+            coordinates: [airport.longitude, airport.latitude]
+          }
+        }));
+        countryAirportSeriesRef.current.data.setAll(countryAirportData);
+      }
+    }
+  }, [selectedCountry, airports, origin, destination]); // Rerun when selectedCountry or airports list changes
+
+  useEffect(() => {
+    function drawLineBetweenAirports(originAirport, destinationAirport) {
+      // lineSeries is accessible from the outer scope
+      if (!originAirport || !destinationAirport) {
+        console.error('Origin or destination airport not found for drawing line.');
+        if (lineSeriesRef.current) { // Check if lineSeries is initialized
+          lineSeriesRef.current.data.setAll([]); // Clear lines if airports are not valid
+        }
+        return;
+      }
+
+      const lineData = {
+        geometry: {
+          type: 'LineString',
+          coordinates: [
+            [originAirport.longitude, originAirport.latitude],
+            [destinationAirport.longitude, destinationAirport.latitude],
+          ],
+        },
+      };
+
+      lineSeriesRef.current.data.setAll([lineData]);
+    }
+
+    // Ensure lineSeries is initialized before trying to use it
+    if (!lineSeriesRef.current) {
+      return; // lineSeries not ready, do nothing
+    }
+    // Ensure airports are loaded
+    if (!airports || airports.length === 0) {
+      lineSeriesRef.current.data.setAll([]); // Clear lines if airports not ready
+      return;
+    }
+
+    if (origin && destination) {
+      const originAirport = airports.find(
+        (airport) => airport.code === origin
+      );
+      const destinationAirport = airports.find(
+        (airport) => airport.code === destination
+      );
+
+      if (originAirport && destinationAirport) {
+        // Call the drawLineBetweenAirports function defined in the outer scope
+        drawLineBetweenAirports(originAirport, destinationAirport);
+      } else {
+        // If one of the airports is not found
+        lineSeriesRef.current.data.setAll([]);
+        if (!originAirport && origin) console.warn(`MapChart: Origin airport with code "${origin}" not found.`);
+        if (!destinationAirport && destination) console.warn(`MapChart: Destination airport with code "${destination}" not found.`);
+      }
+    } else {
+      // If either origin or destination is not set, clear the lines
+      lineSeriesRef.current.data.setAll([]);
+    }
+  }, [origin, destination]); // Dependencies
+
+  // The useEffect for fetching airports has been removed.
+  // useFetchAirports() is now called at the top level of the component.
+
+  return <div ref={chartRef} style={{width: '100%', height: '500px'}}></div>
 }
 
 export default MapChart
