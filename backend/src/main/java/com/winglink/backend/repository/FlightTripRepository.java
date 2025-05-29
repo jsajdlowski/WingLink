@@ -14,4 +14,6 @@ public interface FlightTripRepository extends JpaRepository<FlightTrip, Long> {
   List<FlightTrip> findByOrigin_CodeAndDestination_CodeAndDepartureTimeBetweenAndOrigin_CountryAndDestination_Country(
           String originCode, String destinationCode, LocalDateTime start, LocalDateTime end,
           String originCountry, String destinationCountry);
+
+  List<FlightTrip> findAllByOrigin_CodeAndDestination_CodeAndDepartureTimeBetween(String originCode, String destinationCode, LocalDateTime departureTimeAfter, LocalDateTime departureTimeBefore);
 }
