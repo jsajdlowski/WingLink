@@ -65,8 +65,8 @@ public class ExternalApiService {
         );
 
         assert response.getBody() != null;
-        List<GoogleFlightsFlightDto> topFlights = response.getBody().data().topFlights();
-        List<GoogleFlightsFlightDto> otherFlights = response.getBody().data().otherFlights();
+        List<GoogleFlightsFlightDto> topFlights = response.getBody().data().itineraries().topFlights();
+        List<GoogleFlightsFlightDto> otherFlights = response.getBody().data().itineraries().otherFlights();
 
         // TODO: include otherFlights as well
         List<FlightTrip> flightTrips = topFlights.stream().map(flightDto -> flightDtoConverterService.convertToEntity(flightDto)).toList();
@@ -79,9 +79,11 @@ public class ExternalApiService {
         String dateString = DateTimeFormatter.ofPattern("yyyy-MM-dd").format(date);
         System.out.println(apiUrl);
         UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(apiUrl)
-                .queryParam("origin", originAirport) // test data
-                .queryParam("destination", destinationAirport)
-                .queryParam("date", dateString);
+                .queryParam("departure_id", originAirport) // test data
+                .queryParam("arrival_id", destinationAirport)
+                .queryParam("outbound_date", dateString)
+                .queryParam("currency", "PLN")
+                .queryParam("country_code", "PL");
 
         String urlWithParams = builder.toUriString();
 
@@ -99,8 +101,8 @@ public class ExternalApiService {
         );
 
         if (response.getBody() == null) throw new ExternalApiEmptyBodyException();
-        List<GoogleFlightsFlightDto> topFlights = response.getBody().data().topFlights();
-        List<GoogleFlightsFlightDto> otherFlights = response.getBody().data().otherFlights();
+        List<GoogleFlightsFlightDto> topFlights = response.getBody().data().itineraries().topFlights();
+        List<GoogleFlightsFlightDto> otherFlights = response.getBody().data().itineraries().otherFlights();
 
         List<FlightTrip> combinedFlightTrips = Stream.concat(
                 topFlights.stream().map(flightDto -> flightDtoConverterService.convertToEntity(flightDto)),

@@ -4,5 +4,5 @@ public record GoogleFlightsResponseDto(
         boolean status,
         String message,
         long timestamp,
-        DataWrapper data
+        ItineraryDataWrapper data
 ) {}

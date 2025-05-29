@@ -63,6 +63,11 @@ public class FlightTripService {
     }
 
     public List<FlightTrip> searchFlightTripsWithAirportsAndDate(String originCode, String destinationCode, LocalDateTime departureDate) {
-        return flightTripRepository.findByOrigin_CodeAndDestination_CodeAndDepartureTimeBetween(originCode.toUpperCase(), destinationCode.toUpperCase(), departureDate.withHour(0).withMinute(0), departureDate.withHour(23).withMinute(59));
+        return flightTripRepository.findAllByOrigin_CodeAndDestination_CodeAndDepartureTimeBetween(
+                originCode.toUpperCase(),
+                destinationCode.toUpperCase(),
+                departureDate.withHour(0).withMinute(0),
+                departureDate.withHour(23).withMinute(59)
+        );
     }
 }

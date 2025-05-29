@@ -48,24 +48,18 @@ public class SecurityConfiguration {
                         authorizeRequests
                                 // allowing access to one's user data and GET other endpoints for clients,
                                 // and everything else for admin
-                                // ** /users
                                 .requestMatchers(HttpMethod.GET, "/api/users/me").authenticated()
                                 .requestMatchers(HttpMethod.PATCH, "/api/users/me/updatenames").authenticated()
                                 .requestMatchers(HttpMethod.GET, "/api/users/me/checknames").authenticated()
                                 .requestMatchers("/api/users/**").hasAuthority("admin")
-                                // ** /flights
                                 // flights data can be requested by anyone
-                                .requestMatchers(HttpMethod.GET, "/api/flights/**").permitAll()
                                 .requestMatchers("/api/flights/**").hasAuthority("admin")
-                                // ** /airports
+                                .requestMatchers(HttpMethod.GET, "/api/flights/**").permitAll()
                                 // airports data can be requested by anyone
                                 .requestMatchers(HttpMethod.GET, "/api/airports/**").permitAll()
                                 .requestMatchers("/api/airports/**").hasAuthority("admin")
-                                // ** /tickets
-                                .requestMatchers(HttpMethod.POST, "/api/tickets/**").authenticated()
-                                .requestMatchers(HttpMethod.GET, "/api/tickets/my/**").authenticated()
+                                .requestMatchers(HttpMethod.GET, "/api/tickets/**").authenticated()
                                 .requestMatchers("/api/tickets/**").hasAuthority("admin")
-                                // ** any other
                                 .anyRequest().authenticated()
                 )
                 .oauth2ResourceServer(oauth2ResourceServer ->

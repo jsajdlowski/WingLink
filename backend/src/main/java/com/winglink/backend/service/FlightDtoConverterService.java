@@ -39,7 +39,7 @@ public class FlightDtoConverterService {
         // If price is part of DTO
         flightTrip.setPrice(dto.price());
 
-        System.out.println(dto.flights());
+//        System.out.println(dto.flights());
         List<Flight> flights = dto.flights()
                 .stream()
                 .map(flightDto -> flightService.findFlightByNumber(flightDto.flight_number()).orElse(convertSingleFlightToEntity(flightDto)))
