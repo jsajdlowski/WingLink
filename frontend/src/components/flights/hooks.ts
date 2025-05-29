@@ -15,7 +15,5 @@ export const useFlightsSearch = (
 ) => {
   const fetcher = useFetcher()
 
-  console.log('DUpa')
-
   return useSWR<Flight[]>([`/flights/search`, { destination, origin }], fetcher)
 }

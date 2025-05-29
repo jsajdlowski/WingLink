@@ -6,7 +6,7 @@ import { useAuth0 } from '@auth0/auth0-react'
 
 import MapChart from './map/map.tsx'
 import { SearchForm } from './search-form/search-form'
-import { SignIn } from './auth/SignIn'
+import { LoginButton } from './auth/LoginButton'
 
 export const App = () => {
   const { isLoading, isAuthenticated } = useAuth0()
@@ -14,17 +14,10 @@ export const App = () => {
 
   if (isLoading) return <Loader />
 
-  if (!isAuthenticated) return <SignIn />
-
   return (
     <AppShell
       header={{ height: 60 }}
       navbar={{ width: 300, breakpoint: 'sm', collapsed: { mobile: !opened } }}
-      aside={{
-        width: 300,
-        breakpoint: 'md',
-        collapsed: { desktop: false, mobile: true },
-      }}
       padding="md"
     >
       <AppShell.Header>
@@ -37,8 +30,8 @@ export const App = () => {
           >
             WingLink
           </Text>
+          {isAuthenticated ? <UserAvatar /> : <LoginButton />}
 
-          <UserAvatar />
           <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
         </Group>
       </AppShell.Header>
@@ -47,10 +40,8 @@ export const App = () => {
       </AppShell.Navbar>
       <AppShell.Main>
         <MapChart></MapChart>
-      </AppShell.Main>
-      <AppShell.Aside p="md" style={{ overflow: 'auto' }}>
         <FlightList />
-      </AppShell.Aside>
+      </AppShell.Main>
     </AppShell>
   )
 }
