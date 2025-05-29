@@ -20,4 +20,8 @@ public class Airport {
     private String country;
     @NotBlank
     private String city;
+    @NotBlank
+    private Double latitude;
+    @NotBlank
+    private Double longitude;
 }
