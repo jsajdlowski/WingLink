@@ -14,12 +14,21 @@ export interface Ticket {
 
 export interface Flight {
   id: number
-  airline: string
-  arrivalTime: Date
-  departureTime: Date
-  destination: Airport
   flightNumber: string
   origin: Airport
+  destination: Airport
+  departureTime: Date
+  arrivalTime: Date
+  airline: string
+  airlineLogo: string
+}
+
+export interface Trip {
+  id: number
+  origin: Airport
+  destination: Airport
+  departureTime: Date
+  arrivalTime: Date
   price: number
-  tickets: Ticket[]
+  flights: Flight[]
 }
