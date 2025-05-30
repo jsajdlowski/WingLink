@@ -44,6 +44,7 @@ const MapChart = () => {
       am5map.MapChart.new(root, {
         panX: 'translateX',
         panY: 'translateY',
+        minZoomLevel: 0.97,
         projection: am5map.geoMercator(),
       })
     )
@@ -199,8 +200,6 @@ const MapChart = () => {
         sprite: airportCircle
       });
     });
-
-    let currentId = ''
 
     // Make stuff animate on load
     chart.appear(1000, 100)
