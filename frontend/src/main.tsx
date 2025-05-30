@@ -8,6 +8,7 @@ import {
 } from '@auth0/auth0-react'
 import { BrowserRouter } from 'react-router-dom'
 import '@mantine/core/styles.css'
+import '@mantine/dates/styles.css'
 import { Provider } from 'react-redux'
 import { store } from './store/store'
 import { App } from './components/app'

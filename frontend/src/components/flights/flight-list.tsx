@@ -1,23 +1,46 @@
-import { Group, Paper, Skeleton, Stack, Text, Title } from '@mantine/core'
-import { IconArrowRight, IconPlane } from '@tabler/icons-react'
+import {
+  Group,
+  Paper,
+  Skeleton,
+  Stack,
+  Text,
+  Title,
+  NumberFormatter,
+  Image,
+} from '@mantine/core'
+import { IconArrowRight } from '@tabler/icons-react'
 
-import { useFlightsSearch } from './hooks'
-import { Flight } from './types'
+import { useFlight, useFlightsSearch } from './hooks'
+import { Trip } from './types'
 import { selectSearch } from '../../store/flightSearchSlice'
 import { useAppSelector } from '../../hooks/storeHooks'
+import dayjs from 'dayjs'
 
-const FlightListItem = ({ flight }: { flight: Flight }) => {
+const FlightListItem = ({ flight }: { flight: Trip }) => {
+  // console.log(flight)
+  const flight70 = useFlight(70)
+
+  console.log('flight70', flight70)
+
   return (
     <Paper p={'xs'} withBorder>
       <Group justify={'space-between'}>
         <Group gap={2}>
-          <IconPlane size={20} />
-          <Text>{flight.flightNumber}</Text>
+          <Image src={flight.flights[0].airlineLogo} />
+          {/* <IconPlane size={20} /> */}
+          <Text>{flight.origin.code}</Text>
+          <IconArrowRight size={20} />
+          <Text>{flight.destination.code}</Text>
         </Group>
         <Group>
-          <Text>{'JFK'}</Text>
-          <IconArrowRight size={20} />
-          <Text>{'GDA'}</Text>
+          <Text>{dayjs(flight.departureTime).format('HH:mm DD/MM')}</Text>
+          <Text>
+            {flight.flights.length > 2
+              ? 'Non-Stop'
+              : `transfers ${flight.flights.length - 1}`}
+          </Text>
+
+          <NumberFormatter value={flight.price} suffix=" PLN" />
         </Group>
       </Group>
     </Paper>
@@ -25,21 +48,26 @@ const FlightListItem = ({ flight }: { flight: Flight }) => {
 }
 
 export const FlightList = () => {
-  const { destination, origin } = useAppSelector(selectSearch)
-  const { data, isLoading } = useFlightsSearch(destination, origin)
+  const { destination, origin, departureDate } = useAppSelector(selectSearch)
+  const { data, isLoading } = useFlightsSearch(
+    destination,
+    origin,
+    departureDate
+  )
 
-  // if (isLoading)
-  //   return Array(15)
-  //     .fill(0)
-  //     .map((_, index) => (
-  //       <Skeleton key={index} h={28} mt="sm" animate={false} />
-  //     ))
+  if (isLoading)
+    return Array(15)
+      .fill(0)
+      .map((_, index) => (
+        <Skeleton key={index} h={28} mt="sm" animate={false} />
+      ))
 
   return (
     <>
       <Title order={2} mb={'sm'}>
         Flights
       </Title>
+
       <Stack gap={'sm'}>
         {data?.map((flight) => (
           <FlightListItem key={flight.id} flight={flight} />
