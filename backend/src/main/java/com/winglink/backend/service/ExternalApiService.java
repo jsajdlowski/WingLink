@@ -101,6 +101,9 @@ public class ExternalApiService {
         );
 
         if (response.getBody() == null) throw new ExternalApiEmptyBodyException();
+        if (response.getBody().data().itineraries().topFlights().isEmpty() && response.getBody().data().itineraries().otherFlights().isEmpty()) {
+            return List.of();
+        }
         List<GoogleFlightsFlightDto> topFlights = response.getBody().data().itineraries().topFlights();
         List<GoogleFlightsFlightDto> otherFlights = response.getBody().data().itineraries().otherFlights();
 
