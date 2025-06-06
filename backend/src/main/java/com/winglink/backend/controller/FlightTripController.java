@@ -6,6 +6,7 @@ import com.winglink.backend.service.FlightTripService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 import java.time.LocalDateTime;
@@ -55,7 +56,7 @@ public class FlightTripController {
     public List<FlightTrip> searchFlightTrips(@RequestParam(required = true) String origin,
                                       @RequestParam(required = true) String destination,
                                       @RequestParam(required = false) String date) {
-        LocalDateTime departureDate = date != null ? LocalDateTime.parse(date) : LocalDateTime.now();
+        LocalDateTime departureDate = date != null ? LocalDateTime.parse(date, DateTimeFormatter.ISO_DATE_TIME) : LocalDateTime.now();
         return flightTripSearchService.searchFlightTrips(origin, destination, departureDate);
     }
 }
