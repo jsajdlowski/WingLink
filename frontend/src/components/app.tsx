@@ -4,8 +4,7 @@ import { UserAvatar } from './users/UserAvatar'
 import { FlightList } from './flights/flight-list'
 import { useAuth0 } from '@auth0/auth0-react'
 
-// @ts-ignore
-import MapChart from './map/map.jsx'
+import MapChart from './map/map.tsx'
 import { SearchForm } from './search-form/search-form'
 import { SignIn } from './auth/SignIn'
 
