@@ -42,7 +42,7 @@ public class FlightDtoConverterService {
 //        System.out.println(dto.flights());
         List<Flight> flights = dto.flights()
                 .stream()
-                .map(flightDto -> flightService.findFlightByNumber(flightDto.flight_number()).orElse(convertSingleFlightToEntity(flightDto)))
+                .map(this::convertSingleFlightToEntity) // Convert each flight detail to Flight entity
                 .toList();
         flightTrip.setFlights(flights);
 
