@@ -32,3 +32,10 @@ export interface Trip {
   price: number
   flights: Flight[]
 }
+
+export interface Destination {
+  image: string
+  name: string
+  text: string
+  airport: string
+}

@@ -7,21 +7,20 @@ import {
   Title,
   NumberFormatter,
   Image,
+  SimpleGrid,
 } from '@mantine/core'
 import { IconArrowRight } from '@tabler/icons-react'
 
 import { useFlight, useFlightsSearch } from './hooks'
 import { Trip } from './types'
-import { selectSearch } from '../../store/flightSearchSlice'
-import { useAppSelector } from '../../hooks/storeHooks'
+import { selectSearch, setSearch } from '../../store/flightSearchSlice'
+import { useAppDispatch, useAppSelector } from '../../hooks/storeHooks'
 import dayjs from 'dayjs'
+import { popularDestinations } from '../../data/destinations-data'
+import { PopularDestinations } from './popularDesinations'
+import { selectFlights } from '../../store/flightsSlice'
 
 const FlightListItem = ({ flight }: { flight: Trip }) => {
-  // console.log(flight)
-  const flight70 = useFlight(70)
-
-  console.log('flight70', flight70)
-
   return (
     <Paper p={'xs'} withBorder>
       <Group justify={'space-between'}>
@@ -49,30 +48,54 @@ const FlightListItem = ({ flight }: { flight: Trip }) => {
 
 export const FlightList = () => {
   const { destination, origin, departureDate } = useAppSelector(selectSearch)
+  // const { flights, returnFlights, isLoading, error } =
+  //   useAppSelector(selectFlights)
   const { data, isLoading } = useFlightsSearch(
     destination,
     origin,
     departureDate
   )
 
-  if (isLoading)
-    return Array(15)
-      .fill(0)
-      .map((_, index) => (
-        <Skeleton key={index} h={28} mt="sm" animate={false} />
-      ))
+  if (isLoading) {
+    return (
+      <>
+        {Array(15)
+          .fill(0)
+          .map((_, index) => (
+            <Skeleton key={index} h={28} mt="sm" animate={false} />
+          ))}
+      </>
+    )
+  }
+
+  if (data && data.length > 0) {
+    return (
+      <>
+        <Title order={2} mb="sm">
+          Flights
+        </Title>
+        <Stack gap="sm">
+          {data.map((flight) => (
+            <FlightListItem key={flight.id} flight={flight} />
+          ))}
+        </Stack>
+      </>
+    )
+  }
 
   return (
     <>
-      <Title order={2} mb={'sm'}>
-        Flights
+      <Title order={2} mb="sm">
+        Popular Destinations
       </Title>
-
-      <Stack gap={'sm'}>
-        {data?.map((flight) => (
-          <FlightListItem key={flight.id} flight={flight} />
+      <SimpleGrid cols={3}>
+        {popularDestinations.map((destination) => (
+          <PopularDestinations
+            key={destination.name}
+            destination={destination}
+          />
         ))}
-      </Stack>
+      </SimpleGrid>
     </>
   )
 }
