@@ -17,23 +17,24 @@ import {
   setSelectedField,
 } from '../../store/currentlySelectedSearchFieldSlice'
 import { selectSearch, setSearch } from '../../store/flightSearchSlice'
+import { setFormData } from '../../store/searchFormSlice'
 import dayjs from 'dayjs'
 import { DateInput } from '@mantine/dates'
 import { useAppDispatch, useAppSelector } from '../../hooks/storeHooks'
 
 export const SearchForm = () => {
   const dispatch = useAppDispatch()
-  const { selectedField } = useAppSelector(getSelectedField)
+
   const searchState = useAppSelector(selectSearch) // full state from Redux
 
   const form = useForm<Form>({
     initialValues: {
-      origin: searchState.origin || '',
-      destination: searchState.destination || '',
-      departureDate: searchState.departureDate || null,
-      returnDate: searchState.returnDate || null,
-      isOneWay: searchState.isOneWay || false,
-      numberOfPassengers: searchState.numberOfPassengers || 1,
+      origin: '',
+      destination: '',
+      departureDate: null,
+      returnDate: null,
+      isOneWay: false,
+      numberOfPassengers: 1,
     },
 
     validate: {
@@ -48,32 +49,30 @@ export const SearchForm = () => {
   const fromFieldRef = useRef<HTMLInputElement>(null)
   const toFieldRef = useRef<HTMLInputElement>(null)
 
-  useEffect(() => {
-    switch (selectedField) {
-      case SearchFormFields.FROM:
-        fromFieldRef.current?.focus()
-        break
-      case SearchFormFields.TO:
-        toFieldRef.current?.focus()
-        break
-    }
-  }, [selectedField])
-
-  useEffect(() => {
-    form.setValues({
-      origin: searchState.origin || '',
-      destination: searchState.destination || '',
-      departureDate: searchState.departureDate || null,
-      returnDate: searchState.returnDate || null,
-      isOneWay: searchState.isOneWay || false,
-      numberOfPassengers: searchState.numberOfPassengers || 1,
-    })
-  }, [searchState])
+  // useEffect(() => {
+  //   switch (selectedField) {
+  //     case SearchFormFields.FROM:
+  //       fromFieldRef.current?.focus()
+  //       break
+  //     case SearchFormFields.TO:
+  //       toFieldRef.current?.focus()
+  //       break
+  //   }
+  // }, [selectedField])
 
   const onSubmit = (formData: Form) => {
-    // console.log('Submitting full form', formData)
-    dispatch(setSearch(formData))
-    // useFlightsSearch(formData.destination,formData.origin)
+    dispatch(
+      setFormData({
+        ...formData,
+        departureDate: dayjs(formData.departureDate).format(
+          'YYYY-MM-DDTHH:mm:ss'
+        ),
+        returnDate: !formData.isOneWay
+          ? dayjs(formData.returnDate).format('YYYY-MM-DDTHH:mm:ss')
+          : null,
+        isSubmitted: true,
+      })
+    )
   }
 
   return (
@@ -129,7 +128,6 @@ export const SearchForm = () => {
             value={form.values.departureDate}
             onChange={(value) => {
               form.setFieldValue('departureDate', value)
-              dispatch(setSearch({ ...searchState, departureDate: value }))
             }}
             error={form.errors.departureDate}
           />
@@ -144,7 +142,6 @@ export const SearchForm = () => {
             value={form.values.returnDate}
             onChange={(value) => {
               form.setFieldValue('returnDate', value)
-              dispatch(setSearch({ ...searchState, returnDate: value }))
             }}
             error={form.errors.returnDate}
           />
@@ -156,7 +153,6 @@ export const SearchForm = () => {
             onChange={(e) => {
               const value = e.currentTarget.checked
               form.setFieldValue('isOneWay', value)
-              dispatch(setSearch({ ...searchState, isOneWay: value }))
             }}
           />
 
@@ -166,10 +162,7 @@ export const SearchForm = () => {
             max={8}
             value={form.values.numberOfPassengers}
             onChange={(value) => {
-              form.setFieldValue('numberOfPassengers', value ?? 1)
-              dispatch(
-                setSearch({ ...searchState, numberOfPassengers: value ?? 1 })
-              )
+              form.setFieldValue('numberOfPassengers', value)
             }}
             error={form.errors.numberOfPassengers}
           />

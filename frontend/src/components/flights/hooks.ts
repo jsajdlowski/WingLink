@@ -16,14 +16,15 @@ export const useFlights = () => {
 }
 
 export const useFlightsSearch = (
+  shouldFetch: boolean | undefined,
   destination: string | undefined,
   origin: string | undefined,
-  departureDate: Date | undefined
+  date: string | null
 ) => {
   const fetcher = useFetcher()
 
   return useSWR<Flight[]>(
-    [`/flights/search`, { destination, origin, departureDate }],
+    shouldFetch ? [`/flights/search`, { destination, origin, date }] : null,
     fetcher
   )
 }

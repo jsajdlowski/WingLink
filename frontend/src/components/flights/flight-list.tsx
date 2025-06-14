@@ -11,14 +11,15 @@ import {
 } from '@mantine/core'
 import { IconArrowRight } from '@tabler/icons-react'
 
-import { useFlight, useFlightsSearch } from './hooks'
+import { useFlightsSearch } from './hooks'
 import { Trip } from './types'
-import { selectSearch, setSearch } from '../../store/flightSearchSlice'
-import { useAppDispatch, useAppSelector } from '../../hooks/storeHooks'
+
+import { useAppSelector } from '../../hooks/storeHooks'
 import dayjs from 'dayjs'
 import { popularDestinations } from '../../data/destinations-data'
 import { PopularDestinations } from './popularDesinations'
-import { selectFlights } from '../../store/flightsSlice'
+
+import { selectSearchForm } from '../../store/searchFormSlice'
 
 const FlightListItem = ({ flight }: { flight: Trip }) => {
   return (
@@ -47,10 +48,11 @@ const FlightListItem = ({ flight }: { flight: Trip }) => {
 }
 
 export const FlightList = () => {
-  const { destination, origin, departureDate } = useAppSelector(selectSearch)
-  // const { flights, returnFlights, isLoading, error } =
-  //   useAppSelector(selectFlights)
+  const { destination, origin, departureDate, isSubmitted } =
+    useAppSelector(selectSearchForm)
+
   const { data, isLoading } = useFlightsSearch(
+    isSubmitted,
     destination,
     origin,
     departureDate
