@@ -14,6 +14,7 @@ import { store } from './store/store'
 import { App } from './components/app'
 import { getConfig } from './auth/config'
 import { BookTrip } from './components/trip/book-trip'
+import { AfterBuy } from './components/trip/afterBuy'
 
 const onRedirectCallback = (appState?: AppState) => {
   console.log(appState)
@@ -40,6 +41,7 @@ createRoot(document.getElementById('root')!).render(
             <Routes>
               <Route path="/" element={<App />} />
               <Route path="book-trip" element={<BookTrip />} />
+              <Route path="thank-you-page" element={<AfterBuy />} />
             </Routes>
           </BrowserRouter>
         </MantineProvider>

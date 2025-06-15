@@ -19,16 +19,17 @@ import { useAppDispatch, useAppSelector } from '../../hooks/storeHooks'
 import dayjs from 'dayjs'
 import { popularDestinations } from '../../data/destinations-data'
 import { PopularDestinations } from './popularDesinations'
-
+import { useNavigate } from 'react-router'
 import { selectSearchForm } from '../../store/searchFormSlice'
 import { setDepartureFlight } from '../../store/tripSlice'
 
 const FlightListItem = ({ flight }: { flight: Trip }) => {
+  const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const { isOneWay } = useAppSelector(selectSearchForm)
   const onClick = (flight: Trip, isOneWay: boolean) => {
-    // isOneWay ? dispatch(setDepartureFlight(flight))
-
+    dispatch(setDepartureFlight(flight))
+    navigate('/book-trip')
     console.log(flight)
     console.log(isOneWay)
   }

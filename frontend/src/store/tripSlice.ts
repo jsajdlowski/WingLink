@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { RootState } from './store'
 
 export interface Airport {
   id: number
@@ -59,5 +60,5 @@ const tripSlice = createSlice({
 
 export const { setDepartureFlight, setReturnFlight, clearTrip } =
   tripSlice.actions
-
+export const selectTrip = (state: RootState) => state.trip
 export default tripSlice.reducer
