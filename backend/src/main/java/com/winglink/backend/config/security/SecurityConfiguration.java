@@ -53,8 +53,8 @@ public class SecurityConfiguration {
                                 .requestMatchers(HttpMethod.GET, "/api/users/me/checknames").authenticated()
                                 .requestMatchers("/api/users/**").hasAuthority("admin")
                                 // flights data can be requested by anyone
-                                .requestMatchers("/api/flights/**").hasAuthority("admin")
                                 .requestMatchers(HttpMethod.GET, "/api/flights/**").permitAll()
+                                .requestMatchers("/api/flights/**").hasAuthority("admin")
                                 // airports data can be requested by anyone
                                 .requestMatchers(HttpMethod.GET, "/api/airports/**").permitAll()
                                 .requestMatchers("/api/airports/**").hasAuthority("admin")
