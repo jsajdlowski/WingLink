@@ -8,20 +8,31 @@ import {
   NumberFormatter,
   Image,
   SimpleGrid,
+  Button,
 } from '@mantine/core'
 import { IconArrowRight } from '@tabler/icons-react'
 
 import { useFlightsSearch } from './hooks'
 import { Trip } from './types'
 
-import { useAppSelector } from '../../hooks/storeHooks'
+import { useAppDispatch, useAppSelector } from '../../hooks/storeHooks'
 import dayjs from 'dayjs'
 import { popularDestinations } from '../../data/destinations-data'
 import { PopularDestinations } from './popularDesinations'
 
 import { selectSearchForm } from '../../store/searchFormSlice'
+import { setDepartureFlight } from '../../store/tripSlice'
 
 const FlightListItem = ({ flight }: { flight: Trip }) => {
+  const dispatch = useAppDispatch()
+  const { isOneWay } = useAppSelector(selectSearchForm)
+  const onClick = (flight: Trip, isOneWay: boolean) => {
+    // isOneWay ? dispatch(setDepartureFlight(flight))
+
+    console.log(flight)
+    console.log(isOneWay)
+  }
+
   return (
     <Paper p={'xs'} withBorder>
       <Group justify={'space-between'}>
@@ -35,12 +46,14 @@ const FlightListItem = ({ flight }: { flight: Trip }) => {
         <Group>
           <Text>{dayjs(flight.departureTime).format('HH:mm DD/MM')}</Text>
           <Text>
-            {flight.flights.length > 2
+            {flight.flights.length > 1
               ? 'Non-Stop'
-              : `transfers ${flight.flights.length - 1}`}
+              : `transfers ${flight.flights.length}`}
           </Text>
-
+        </Group>
+        <Group>
           <NumberFormatter value={flight.price} suffix=" PLN" />
+          <Button onClick={() => onClick(flight, isOneWay)}>Select</Button>
         </Group>
       </Group>
     </Paper>
@@ -74,7 +87,7 @@ export const FlightList = () => {
     return (
       <>
         <Title order={2} mb="sm">
-          Flights
+          Departure Flights
         </Title>
         <Stack gap="sm">
           {data.map((flight) => (

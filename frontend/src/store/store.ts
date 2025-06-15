@@ -4,10 +4,12 @@ import airportsReducer from './airportsSlice'
 import selectedFieldReducer from './currentlySelectedSearchFieldSlice'
 import selectedCountryReducer from './selectedCountrySlice'
 import searchFormReducer from './searchFormSlice'
+import tripReducer from './tripSlice'
 
 export const store = configureStore({
   reducer: {
     flightSearch: flightSearchReducer,
+    trip: tripReducer,
     airports: airportsReducer,
     searchFrom: searchFormReducer,
     selectedField: selectedFieldReducer,
