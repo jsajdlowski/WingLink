@@ -2,7 +2,6 @@ package com.winglink.backend.controller;
 
 import com.winglink.backend.dto.TicketDto;
 import com.winglink.backend.dto.TicketResponseDto;
-import com.winglink.backend.entity.Ticket;
 import com.winglink.backend.service.AppUserService;
 import com.winglink.backend.service.TicketService;
 import org.springframework.http.HttpStatus;
@@ -42,7 +41,7 @@ public class TicketController {
     @PostMapping
     public ResponseEntity<TicketResponseDto> addTicket(@RequestBody TicketDto ticketDto) {
         TicketResponseDto ticketSaved = ticketService.buyTicket(ticketDto);
-        return new ResponseEntity<>(ticketSaved,HttpStatus.CREATED);
+        return new ResponseEntity<>(ticketSaved, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
@@ -51,7 +50,7 @@ public class TicketController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Ticket> deleteTicket(@PathVariable long id) {
+    public ResponseEntity<Void> deleteTicket(@PathVariable long id) {
         ticketService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
