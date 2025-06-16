@@ -15,6 +15,7 @@ import { App } from './components/app'
 import { getConfig } from './auth/config'
 import { BookTrip } from './components/trip/book-trip'
 import { AfterBuy } from './components/trip/afterBuy'
+import { TripHistory } from './components/trip/tripHistory'
 
 const onRedirectCallback = (appState?: AppState) => {
   console.log(appState)
@@ -40,8 +41,11 @@ createRoot(document.getElementById('root')!).render(
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<App />} />
-              <Route path="book-trip" element={<BookTrip />} />
-              <Route path="thank-you-page" element={<AfterBuy />} />
+              <Route path="book-trip">
+                <Route index element={<BookTrip />} />
+                <Route path="thank-you-page" element={<AfterBuy />} />
+              </Route>
+              <Route path="my-trip-history" element={<TripHistory />} />
             </Routes>
           </BrowserRouter>
         </MantineProvider>

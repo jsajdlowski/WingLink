@@ -8,6 +8,9 @@ import {
   Group,
   ThemeIcon,
   Divider,
+  Image,
+  Flex,
+  Grid,
 } from '@mantine/core'
 import { useAppSelector } from '../../hooks/storeHooks'
 import { Outlet } from 'react-router'
@@ -34,7 +37,6 @@ export const BookTrip = () => {
   const hours = Math.floor(totalMinutes / 60)
   const minutes = totalMinutes % 60
 
-  // calculate dynamic price
   const finalPrice = useMemo(() => {
     switch (seatClass) {
       case 'PREMIUM_ECONOMY':
@@ -57,7 +59,6 @@ export const BookTrip = () => {
       price: finalPrice,
     })
     navigate('thank-you-page')
-    // Handle submit logic here
   }
 
   return (
@@ -70,14 +71,14 @@ export const BookTrip = () => {
         </Card.Section>
 
         <Card.Section p="md">
-          <Group position="apart" mb="xs">
+          <Group mb="xs">
+            <Image src={tripState.departureFlight?.flights[0].airlineLogo} />
             <Text fw={700} size="lg">
-              SAS
-            </Text>{' '}
-            {/* Airline hardcoded for demo */}
+              {tripState.departureFlight?.flights[0].airline}
+            </Text>
           </Group>
 
-          <Group position="apart" mb="xs">
+          <Group mb="xs">
             <Text size="xl" fw={700}>
               {tripState.departureFlight?.departureTime}
             </Text>
@@ -89,20 +90,15 @@ export const BookTrip = () => {
             </Text>
           </Group>
 
-          <Group position="apart" mb="xs">
+          <Group mb="xs">
             <Text fw={600}>{tripState.departureFlight?.origin.code}</Text>
             <ThemeIcon variant="light" color="blue" radius="xl"></ThemeIcon>
             <Text fw={600}>{tripState.departureFlight?.destination.code}</Text>
           </Group>
 
           <Divider my="sm" />
-
-          <Text align="center" size="sm" color="red">
-            {layovers > 0
-              ? `${layovers} przesiadka${layovers > 1 ? 'i' : ''}`
-              : 'Bez przesiadek'}
-          </Text>
-          <Stack spacing="md">
+          <Text fw={'bold'}>Passenger Info</Text>
+          <Stack>
             <TextInput
               label="First Name"
               placeholder="Enter your first name"
@@ -133,7 +129,7 @@ export const BookTrip = () => {
               required
             />
 
-            <Text fw={600}>Price: ${finalPrice.toFixed(2)}</Text>
+            <Text fw={600}>Price: {finalPrice.toFixed(2)} PLN</Text>
 
             <Button onClick={handleSubmit} disabled={!seatClass}>
               Buy Ticket

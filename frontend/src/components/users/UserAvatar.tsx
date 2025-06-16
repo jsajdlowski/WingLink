@@ -10,8 +10,10 @@ import { IconChevronRight } from '@tabler/icons-react'
 
 import { useMe } from './hooks'
 import { useAuth0 } from '@auth0/auth0-react'
+import { useNavigate } from 'react-router'
 
 export const UserAvatar = () => {
+  const navigate = useNavigate()
   const { logout } = useAuth0()
   const { data, isLoading } = useMe()
 
@@ -48,6 +50,9 @@ export const UserAvatar = () => {
       </Menu.Target>
       <Menu.Dropdown>
         <Menu.Item onClick={() => logout()}>Logout</Menu.Item>
+        <Menu.Item onClick={() => navigate('my-trip-history')}>
+          Trip hisotry
+        </Menu.Item>
       </Menu.Dropdown>
     </Menu>
   )
