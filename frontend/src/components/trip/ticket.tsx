@@ -1,15 +1,8 @@
-import {
-  Card,
-  Group,
-  Image,
-  Text,
-  Divider,
-  ThemeIcon,
-  Select,
-  Stack,
-} from '@mantine/core'
+import { Card, Group, Image, Text, Divider, Select, Stack } from '@mantine/core'
 import { Trip } from './types'
 import { useState, useEffect } from 'react'
+import { IconPlane } from '@tabler/icons-react'
+import dayjs from 'dayjs'
 
 interface TicketProps {
   flight: Trip
@@ -40,9 +33,18 @@ export const Ticket = ({ flight, title, onPriceChange }: TicketProps) => {
     onPriceChange(calculatePrice(seatClass), seatClass)
   }, [seatClass])
 
-  const totalMinutes = 200 // stub duration
+  const departure = dayjs(flight.departureTime)
+  const arrival = dayjs(flight.arrivalTime)
+  const totalMinutes = arrival.diff(departure, 'minute')
+
   const hours = Math.floor(totalMinutes / 60)
   const minutes = totalMinutes % 60
+  const transfers = flight.flights.length
+
+  const formattedDepartureTime = dayjs(flight.departureTime).format(
+    'DD/MM HH:mm'
+  )
+  const formattedArrivalTime = dayjs(flight.arrivalTime).format('DD/MM HH:mm')
 
   return (
     <Card shadow="sm" padding="md" radius="md" withBorder mb="md">
@@ -59,19 +61,27 @@ export const Ticket = ({ flight, title, onPriceChange }: TicketProps) => {
 
       <Group mb="xs">
         <Text size="xl" fw={700}>
-          {flight.departureTime}
+          {formattedDepartureTime}
         </Text>
-        <Text size="sm" color="gray">
-          {hours} godz. {minutes} min
-        </Text>
+        <Group>
+          <Text size="sm" color="gray">
+            {hours} godz. {minutes} min
+          </Text>
+          <Text size="sm" color="gray">
+            {transfers > 0
+              ? `${transfers} Transfer${transfers > 1 ? 's' : ''}`
+              : 'Non-Stop'}
+          </Text>
+        </Group>
+
         <Text size="xl" fw={700}>
-          {flight.arrivalTime}
+          {formattedArrivalTime}
         </Text>
       </Group>
 
       <Group mb="xs">
         <Text fw={600}>{flight.origin.code}</Text>
-        <ThemeIcon variant="light" color="blue" radius="xl" />
+        <IconPlane />
         <Text fw={600}>{flight.destination.code}</Text>
       </Group>
 

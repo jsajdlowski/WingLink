@@ -74,7 +74,7 @@ export const BookTrip = () => {
           <Stack mb="md">
             <Ticket
               flight={tripState.departureFlight!}
-              title="Departure Flight"
+              title={'Departure Flight'}
               onPriceChange={(price, seatClass) => {
                 setDeparturePrice(price)
                 setDepartureClass(seatClass)

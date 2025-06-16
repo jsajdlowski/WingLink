@@ -36,10 +36,17 @@ export interface Destination {
   airport: string
 }
 
+enum SeatClass {
+  ECONOMY,
+  PREMIUM_ECONOMY,
+  BUSINESS,
+  FIRST_CLASS,
+}
+
 export interface Ticket {
   id: number
-  flightId: number
+  flight: Flight
   firstName: string
   lastName: string
-  seatClass: 'ECONOMY' | 'BUSINESS' | 'FIRST CLASS' | 'PREMIUM ECONOMY'
+  seatClass: SeatClass
 }

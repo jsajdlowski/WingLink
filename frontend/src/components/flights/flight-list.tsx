@@ -42,8 +42,8 @@ const FlightListItem = ({
           <Text>{dayjs(flight.departureTime).format('HH:mm DD/MM')}</Text>
           <Text>
             {flight.flights.length > 1
-              ? 'Non-Stop'
-              : `transfers ${flight.flights.length}`}
+              ? `transfers ${flight.flights.length - 1}`
+              : 'Non-Stop'}
           </Text>
         </Group>
         <Group>
@@ -70,12 +70,12 @@ export const FlightList = () => {
   const navigate = useNavigate()
 
   const { data: departureData, isLoading: isDepartureLoading } =
-    useFlightsSearch(isSubmitted, origin, destination, departureDate)
+    useFlightsSearch(isSubmitted, destination, origin, departureDate)
 
   const { data: returnData, isLoading: isReturnLoading } = useFlightsSearch(
     isSubmitted && step === 'return' && !isOneWay,
-    destination,
     origin,
+    destination,
     returnDate
   )
 
@@ -147,7 +147,7 @@ export const FlightList = () => {
           <Title order={2} mb="sm">
             Select Departure Flight
           </Title>
-          <Text>No flights found</Text>
+          <Text>No flights found! Choose another date.</Text>
         </>
       )
     }
@@ -177,7 +177,7 @@ export const FlightList = () => {
           <Title order={2} mb="sm">
             Select Return Flight
           </Title>
-          <Text>No flights found</Text>
+          <Text>No flights found! Choose another date.</Text>
         </>
       )
     }
