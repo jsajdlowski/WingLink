@@ -1,102 +1,99 @@
-import {
-  Card,
-  Text,
-  TextInput,
-  Select,
-  Button,
-  Stack,
-  Group,
-  ThemeIcon,
-  Divider,
-  Image,
-  Flex,
-  Grid,
-} from '@mantine/core'
+import { Card, Text, TextInput, Button, Stack } from '@mantine/core'
 import { useAppSelector } from '../../hooks/storeHooks'
 import { Outlet } from 'react-router'
 import { selectTrip } from '../../store/tripSlice'
 import { useState, useMemo } from 'react'
 import { useNavigate } from 'react-router'
+import { Ticket } from './Ticket'
 
 export const BookTrip = () => {
   const tripState = useAppSelector(selectTrip)
   const navigate = useNavigate()
-  // Form state
+
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
-  const [seatClass, setSeatClass] = useState('')
 
-  const basePrice = tripState.departureFlight?.price ?? 0
+  // Track seat class & price per ticket
+  const [departurePrice, setDeparturePrice] = useState(0)
+  const [departureClass, setDepartureClass] = useState('ECONOMY')
 
-  const layovers = 1
+  const [returnPrice, setReturnPrice] = useState(0)
+  const [returnClass, setReturnClass] = useState('ECONOMY')
 
-  // calculate trip duration
-  // const durationMs =
-  //   tripState.departureFlight?.getTime() - trip.departureTime.getTime()
-  const totalMinutes = 200
-  const hours = Math.floor(totalMinutes / 60)
-  const minutes = totalMinutes % 60
+  const isOneWay = !tripState.returnFlight
 
-  const finalPrice = useMemo(() => {
-    switch (seatClass) {
-      case 'PREMIUM_ECONOMY':
-        return basePrice * 1.5
-      case 'BUSINESS':
-        return basePrice * 2.5
-      case 'FIRST_CLASS':
-        return basePrice * 3.5
-      case 'ECONOMY':
-      default:
-        return basePrice
-    }
-  }, [basePrice, seatClass])
+  const totalPrice = useMemo(() => {
+    return isOneWay ? departurePrice : departurePrice + returnPrice
+  }, [departurePrice, returnPrice, isOneWay])
 
   const handleSubmit = () => {
-    // console.log({
-    //   firstName,
-    //   lastName,
-    //   seatClass,
-    //   price: finalPrice,
-    // })
+    if (isOneWay) {
+      const payload = {
+        flightId: tripState.departureFlight?.id,
+        seatClass: departureClass,
+        firstName,
+        lastName,
+      }
+      console.log(payload)
+    } else {
+      const payload = [
+        {
+          flightId: tripState.departureFlight?.id,
+          seatClass: departureClass,
+          firstName,
+          lastName,
+        },
+        {
+          flightId: tripState.returnFlight?.id,
+          seatClass: returnClass,
+          firstName,
+          lastName,
+        },
+      ]
+      console.log(payload)
+    }
+
     navigate('thank-you-page')
   }
+
+  const isFormValid =
+    firstName.trim() !== '' &&
+    lastName.trim() !== '' &&
+    departureClass &&
+    (isOneWay || returnClass)
 
   return (
     <>
       <Card shadow="sm" padding="lg" radius="md" withBorder>
         <Card.Section>
           <Text size="lg" fw={500} p="md">
-            Book your trip
+            Flights info
           </Text>
         </Card.Section>
 
         <Card.Section p="md">
-          <Group mb="xs">
-            <Image src={tripState.departureFlight?.flights[0].airlineLogo} />
-            <Text fw={700} size="lg">
-              {tripState.departureFlight?.flights[0].airline}
-            </Text>
-          </Group>
+          <Stack mb="md">
+            <Ticket
+              flight={tripState.departureFlight!}
+              title="Departure Flight"
+              onPriceChange={(price, seatClass) => {
+                setDeparturePrice(price)
+                setDepartureClass(seatClass)
+              }}
+            />
 
-          <Group mb="xs">
-            <Text size="xl" fw={700}>
-              {tripState.departureFlight?.departureTime}
-            </Text>
-            <Text size="sm" color="gray">
-              {hours} godz. {minutes} min
-            </Text>
-            <Text size="xl" fw={700}>
-              {tripState.departureFlight?.arrivalTime}
-            </Text>
-          </Group>
+            {!isOneWay && (
+              <Ticket
+                flight={tripState.returnFlight!}
+                title="Return Flight"
+                onPriceChange={(price, seatClass) => {
+                  setReturnPrice(price)
+                  setReturnClass(seatClass)
+                }}
+              />
+            )}
+          </Stack>
 
-          <Group mb="xs">
-            <Text fw={600}>{tripState.departureFlight?.origin.code}</Text>
-            <ThemeIcon variant="light" color="blue" radius="xl"></ThemeIcon>
-            <Text fw={600}>{tripState.departureFlight?.destination.code}</Text>
-          </Group>
-
-          <Divider my="sm" />
           <Text fw={'bold'}>Passenger Info</Text>
           <Stack>
             <TextInput
@@ -115,23 +112,9 @@ export const BookTrip = () => {
               required
             />
 
-            <Select
-              label="Seat Class"
-              placeholder="Pick one"
-              data={[
-                { value: 'ECONOMY', label: 'Economy' },
-                { value: 'PREMIUM_ECONOMY', label: 'Premium Economy' },
-                { value: 'BUSINESS', label: 'Business' },
-                { value: 'FIRST_CLASS', label: 'First Class' },
-              ]}
-              value={seatClass}
-              onChange={(value) => setSeatClass(value || '')}
-              required
-            />
+            <Text fw={600}>Total Price: {totalPrice.toFixed(2)} PLN</Text>
 
-            <Text fw={600}>Price: {finalPrice.toFixed(2)} PLN</Text>
-
-            <Button onClick={handleSubmit} disabled={!seatClass}>
+            <Button onClick={handleSubmit} disabled={!isFormValid}>
               Buy Ticket
             </Button>
           </Stack>

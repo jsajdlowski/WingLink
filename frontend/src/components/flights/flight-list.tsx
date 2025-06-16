@@ -93,7 +93,6 @@ export const FlightList = () => {
     navigate('/book-trip')
   }
 
-  // SHOW POPULAR DESTINATIONS BEFORE SEARCH
   if (!isSubmitted) {
     return (
       <>
