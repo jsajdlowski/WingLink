@@ -35,3 +35,11 @@ export interface Destination {
   text: string
   airport: string
 }
+
+export interface Ticket {
+  id: number
+  flightId: number
+  firstName: string
+  lastName: string
+  seatClass: 'ECONOMY' | 'BUSINESS' | 'FIRST CLASS' | 'PREMIUM ECONOMY'
+}

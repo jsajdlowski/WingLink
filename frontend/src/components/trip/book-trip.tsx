@@ -13,7 +13,6 @@ export const BookTrip = () => {
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
 
-  // Track seat class & price per ticket
   const [departurePrice, setDeparturePrice] = useState(0)
   const [departureClass, setDepartureClass] = useState('ECONOMY')
 

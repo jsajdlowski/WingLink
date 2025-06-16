@@ -46,6 +46,7 @@ createRoot(document.getElementById('root')!).render(
                 <Route path="thank-you-page" element={<AfterBuy />} />
               </Route>
               <Route path="my-trip-history" element={<TripHistory />} />
+              <Route path="admin-panel" element={<TripHistory />} />
             </Routes>
           </BrowserRouter>
         </MantineProvider>
