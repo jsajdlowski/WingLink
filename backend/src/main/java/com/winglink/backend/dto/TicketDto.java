@@ -7,5 +7,6 @@ import jakarta.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public record TicketDto(@NotNull Long flightId, @NotNull SeatClass seatClass, String firstName, String lastName) implements Serializable {
+public record TicketDto(@NotNull Long flightId, @NotNull SeatClass seatClass, String firstName,
+                        String lastName) implements Serializable {
 }

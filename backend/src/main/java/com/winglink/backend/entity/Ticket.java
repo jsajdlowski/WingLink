@@ -5,7 +5,10 @@ import com.winglink.backend.enums.SeatClass;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Setter
@@ -26,9 +29,9 @@ public class Ticket {
     private SeatClass seatClass;
     @NotNull
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "flight_id")
+    @JoinColumn(name = "flight_trip_id", nullable = false)
     @JsonBackReference(value = "flight-ticket")
-    private Flight flight;
+    private FlightTrip flightTrip;
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "app_user_id", nullable = false)
