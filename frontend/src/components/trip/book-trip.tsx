@@ -52,12 +52,12 @@ export const BookTrip = () => {
   }, [basePrice, seatClass])
 
   const handleSubmit = () => {
-    console.log({
-      firstName,
-      lastName,
-      seatClass,
-      price: finalPrice,
-    })
+    // console.log({
+    //   firstName,
+    //   lastName,
+    //   seatClass,
+    //   price: finalPrice,
+    // })
     navigate('thank-you-page')
   }
 
