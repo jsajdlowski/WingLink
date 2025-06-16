@@ -10,6 +10,7 @@ import {
   SimpleGrid,
   Button,
 } from '@mantine/core'
+import { IconPlaneDeparture, IconPlaneArrival } from '@tabler/icons-react'
 import { IconArrowRight } from '@tabler/icons-react'
 import { useFlightsSearch } from './hooks'
 import { Trip } from './types'
@@ -29,23 +30,41 @@ const FlightListItem = ({
   flight: Trip
   onSelect: (flight: Trip) => void
 }) => {
+  const departure = dayjs(flight.departureTime)
+  const arrival = dayjs(flight.arrivalTime)
+  const totalMinutes = arrival.diff(departure, 'minute')
+  const hours = Math.floor(totalMinutes / 60)
+  const minutes = totalMinutes % 60
+  const transfers = flight.flights.length - 1
+
+  const formattedDeparture = departure.format('HH:mm DD/MM')
+  const formattedArrival = arrival.format('HH:mm DD/MM')
+
   return (
-    <Paper p={'xs'} withBorder>
-      <Group justify={'space-between'}>
+    <Paper p="xs" withBorder>
+      <Group justify="space-between" align="center">
         <Group gap={2}>
-          <Image src={flight.flights[0].airlineLogo} />
-          <Text>{flight.origin.code}</Text>
+          <Image src={flight.flights[0].airlineLogo} height={24} />
+          <Text fw={600}>{flight.origin.code}</Text>
           <IconArrowRight size={20} />
-          <Text>{flight.destination.code}</Text>
+          <Text fw={600}>{flight.destination.code}</Text>
         </Group>
+
         <Group>
-          <Text>{dayjs(flight.departureTime).format('HH:mm DD/MM')}</Text>
+          <IconPlaneDeparture stroke={1} />
+          <Text>{formattedDeparture}</Text>
+          <Text color="gray">
+            {hours}h {minutes}m
+          </Text>
           <Text>
-            {flight.flights.length > 1
-              ? `transfers ${flight.flights.length - 1}`
+            {transfers > 0
+              ? `${transfers} Transfer${transfers > 1 ? 's' : ''}`
               : 'Non-Stop'}
           </Text>
+          <IconPlaneArrival stroke={1} />
+          <Text>{formattedArrival}</Text>
         </Group>
+
         <Group>
           <NumberFormatter value={flight.price} suffix=" PLN" />
           <Button onClick={() => onSelect(flight)}>Select</Button>

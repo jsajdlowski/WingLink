@@ -15,7 +15,7 @@ import { App } from './components/app'
 import { getConfig } from './auth/config'
 import { BookTrip } from './components/trip/book-trip'
 import { AfterBuy } from './components/trip/afterBuy'
-import { TripHistory } from './components/trip/tripHistory'
+import { TripHistory } from './components/history/tripHistory'
 
 const onRedirectCallback = (appState?: AppState) => {
   console.log(appState)
