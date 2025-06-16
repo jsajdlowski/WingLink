@@ -1,6 +1,6 @@
 import { Center, Loader } from '@mantine/core'
 import { useMyTickets } from './hooks'
-import { TicketHistoryCard } from './TicketHistoryCard'
+import { TicketHistoryCard } from './ticketHistoryCard'
 
 export const TripHistory = () => {
   const { data, isLoading } = useMyTickets()
@@ -19,7 +19,7 @@ export const TripHistory = () => {
         {data?.map((ticket) => (
           <TicketHistoryCard
             key={ticket.id}
-            flight={ticket.flight}
+            trip={ticket.flight}
             title="Booked Flight"
             price={ticket.price}
             seatClass={ticket.seatClass}

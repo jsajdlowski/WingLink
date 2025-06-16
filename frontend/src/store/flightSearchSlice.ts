@@ -17,10 +17,16 @@ const flightSearchSlice = createSlice({
   reducers: {
     setSearch: (
       state,
-      action: PayloadAction<{ destination: string; origin: string }>
+      action: PayloadAction<{ destination?: string; origin?: string }>
     ) => {
-      state.destination = action.payload.destination || undefined
-      state.origin = action.payload.origin || undefined
+      const { destination, origin } = action.payload
+      if (destination) {
+        state.destination = action.payload.destination || undefined
+      }
+
+      if (origin) {
+        state.origin = action.payload.origin || undefined
+      }
     },
 
     resetSearch: () => initialState,

@@ -1,4 +1,4 @@
-export interface Form {
+export interface SearchFormType {
   departureDate: Date | null
   returnDate: Date | null
   destination: string

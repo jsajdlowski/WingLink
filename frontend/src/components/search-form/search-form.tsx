@@ -3,29 +3,27 @@ import {
   Container,
   Group,
   Paper,
-  TextInput,
   Text,
   Checkbox,
+  Select,
 } from '@mantine/core'
-import { useRef } from 'react'
+import { useEffect, useMemo } from 'react'
 import { useForm } from '@mantine/form'
-import { Form } from './types'
-import {
-  getSelectedField,
-  SearchFormFields,
-  setSelectedField,
-} from '../../store/currentlySelectedSearchFieldSlice'
+import { SearchFormType } from './types'
 import { selectSearch, setSearch } from '../../store/flightSearchSlice'
 import { setFormData } from '../../store/searchFormSlice'
 import dayjs from 'dayjs'
 import { DateInput } from '@mantine/dates'
 import { useAppDispatch, useAppSelector } from '../../hooks/storeHooks'
+import { selectAirports } from '../../store/airportsSlice'
 
 export const SearchForm = () => {
   const dispatch = useAppDispatch()
-  const searchState = useAppSelector(selectSearch)
+  const { destination: storeDestination, origin: storeOrigin } =
+    useAppSelector(selectSearch)
+  const { airports } = useAppSelector(selectAirports)
 
-  const form = useForm<Form>({
+  const form = useForm<SearchFormType>({
     initialValues: {
       origin: '',
       destination: '',
@@ -46,16 +44,30 @@ export const SearchForm = () => {
     },
   })
 
-  const fromFieldRef = useRef<HTMLInputElement>(null)
-  const toFieldRef = useRef<HTMLInputElement>(null)
+  useEffect(() => {
+    if (storeDestination && storeDestination !== form.getValues().destination) {
+      form.setFieldValue('destination', storeDestination)
+    }
 
-  const handleInputChange = (field: keyof Form, value: string) => {
-    const upperValue = value.toUpperCase()
-    form.setFieldValue(field, upperValue)
-    dispatch(setSearch({ ...searchState, [field]: upperValue }))
-  }
+    if (storeOrigin && storeOrigin !== form.getValues().origin) {
+      form.setFieldValue('destination', storeOrigin)
+    }
+  }, [storeOrigin, storeDestination, form])
 
-  const onSubmit = (formData: Form) => {
+  form.watch('origin', ({ value }) => {
+    dispatch(setSearch({ origin: value }))
+  })
+
+  form.watch('destination', ({ value }) => {
+    dispatch(setSearch({ destination: value }))
+  })
+
+  const airportCodes = useMemo(
+    () => airports?.map((airport) => airport.code),
+    [airports]
+  )
+
+  const onSubmit = (formData: SearchFormType) => {
     dispatch(
       setFormData({
         ...formData,
@@ -76,30 +88,21 @@ export const SearchForm = () => {
         <Text size="lg">Search Flights</Text>
 
         <form onSubmit={form.onSubmit(onSubmit)}>
-          <TextInput
-            maxLength={3}
+          <Select
             label="From"
-            ref={fromFieldRef}
+            limit={10}
+            maxDropdownHeight={280}
+            data={airportCodes}
+            searchable
             {...form.getInputProps('origin')}
-            onChange={(e) => handleInputChange('origin', e.currentTarget.value)}
-            onFocus={() =>
-              dispatch(
-                setSelectedField({ selectedField: SearchFormFields.FROM })
-              )
-            }
           />
-
-          <TextInput
-            maxLength={3}
+          <Select
             label="To"
-            ref={toFieldRef}
+            limit={10}
+            maxDropdownHeight={280}
+            data={airportCodes}
+            searchable
             {...form.getInputProps('destination')}
-            onChange={(e) =>
-              handleInputChange('destination', e.currentTarget.value)
-            }
-            onFocus={() =>
-              dispatch(setSelectedField({ selectedField: SearchFormFields.TO }))
-            }
           />
 
           <DateInput
@@ -113,7 +116,7 @@ export const SearchForm = () => {
           <DateInput
             mt="md"
             label="Return Date"
-            minDate={new Date()}
+            minDate={form.values.departureDate ?? new Date()}
             maxDate={dayjs().add(1, 'month').toDate()}
             placeholder="Return Date"
             disabled={form.values.isOneWay}

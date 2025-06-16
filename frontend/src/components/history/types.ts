@@ -36,7 +36,7 @@ export interface Destination {
   airport: string
 }
 
-enum SeatClass {
+export enum SeatClass {
   ECONOMY,
   PREMIUM_ECONOMY,
   BUSINESS,

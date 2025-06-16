@@ -1,22 +1,22 @@
 import { Card, Group, Image, Text, Divider, Stack } from '@mantine/core'
-import { Trip } from './types'
+import { SeatClass, Trip } from './types'
 import { IconPlane } from '@tabler/icons-react'
 import dayjs from 'dayjs'
 
 interface TicketHistoryCardProps {
-  flight: Trip
+  trip: Trip
   title: string
   price: number
-  seatClass: string
+  seatClass: SeatClass
 }
 
 export const TicketHistoryCard = ({
-  flight,
+  trip,
   title,
   seatClass,
 }: TicketHistoryCardProps) => {
-  const departure = dayjs(flight.departureTime)
-  const arrival = dayjs(flight.arrivalTime)
+  const departure = dayjs(trip.departureTime)
+  const arrival = dayjs(trip.arrivalTime)
   const totalMinutes = arrival.diff(departure, 'minute')
 
   const hours = Math.floor(totalMinutes / 60)
@@ -25,9 +25,9 @@ export const TicketHistoryCard = ({
   const formattedDepartureTime = departure.format('DD/MM HH:mm')
   const formattedArrivalTime = arrival.format('DD/MM HH:mm')
 
-  const firstFlight = flight.flights?.[0]
+  const firstFlight = trip.flights?.[0]
 
-  const transfers = (flight.flights?.length || 1) - 1
+  const transfers = (trip.flights?.length || 1) - 1
 
   return (
     <Card shadow="sm" padding="md" radius="md" withBorder mb="md">
@@ -63,9 +63,9 @@ export const TicketHistoryCard = ({
       </Group>
 
       <Group mb="xs">
-        <Text fw={600}>{flight.origin?.code || '???'}</Text>
+        <Text fw={600}>{trip.origin?.code || '???'}</Text>
         <IconPlane />
-        <Text fw={600}>{flight.destination?.code || '???'}</Text>
+        <Text fw={600}>{trip.destination?.code || '???'}</Text>
       </Group>
 
       <Divider my="sm" />
