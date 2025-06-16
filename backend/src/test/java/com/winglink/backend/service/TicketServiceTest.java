@@ -1,5 +1,7 @@
 package com.winglink.backend.service;
 
+import com.winglink.backend.dto.TicketDtoConverter;
+import com.winglink.backend.dto.TicketResponseDto;
 import com.winglink.backend.entity.Ticket;
 import com.winglink.backend.repository.TicketRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,14 +30,18 @@ class TicketServiceTest {
 
     private Ticket ticket1;
     private Ticket ticket2;
+    private TicketResponseDto ticket1ResponseDto;
+    private TicketResponseDto ticket2ResponseDto;
 
     @BeforeEach
     void setUp() {
         ticket1 = new Ticket();
         ticket1.setId(1L);
+        ticket1ResponseDto = TicketDtoConverter.convertToTicketDto(ticket1);
 
         ticket2 = new Ticket();
         ticket2.setId(2L);
+        ticket2ResponseDto = TicketDtoConverter.convertToTicketDto(ticket2);
     }
 
     @Test
@@ -58,11 +64,11 @@ class TicketServiceTest {
         when(ticketRepository.findById(ticketId)).thenReturn(Optional.of(ticket1));
 
         // When
-        Optional<Ticket> result = ticketService.findById(ticketId);
+        Optional<TicketResponseDto> result = ticketService.findById(ticketId);
 
         // Then
         assertTrue(result.isPresent());
-        assertEquals(ticket1, result.get());
+        assertEquals(ticket1ResponseDto, result.get());
         verify(ticketRepository, times(1)).findById(ticketId);
     }
 
@@ -73,7 +79,7 @@ class TicketServiceTest {
         when(ticketRepository.findById(ticketId)).thenReturn(Optional.empty());
 
         // When
-        Optional<Ticket> result = ticketService.findById(ticketId);
+        Optional<TicketResponseDto> result = ticketService.findById(ticketId);
 
         // Then
         assertFalse(result.isPresent());
@@ -84,14 +90,15 @@ class TicketServiceTest {
     void findAll_ShouldReturnAllTickets() {
         // Given
         List<Ticket> expectedTickets = Arrays.asList(ticket1, ticket2);
+        List<TicketResponseDto> expectedTicketDtos = Arrays.asList(ticket1ResponseDto, ticket2ResponseDto);
         when(ticketRepository.findAll()).thenReturn(expectedTickets);
 
         // When
-        List<Ticket> actualTickets = ticketService.findAll();
+        List<TicketResponseDto> actualTickets = ticketService.findAll();
 
         // Then
         assertEquals(2, actualTickets.size());
-        assertEquals(expectedTickets, actualTickets);
+        assertEquals(expectedTicketDtos, actualTickets);
         verify(ticketRepository, times(1)).findAll();
     }
 

@@ -1,8 +1,9 @@
 package com.winglink.backend.service;
 
 import com.winglink.backend.config.security.SecurityUtils;
+import com.winglink.backend.dto.TicketDtoConverter;
+import com.winglink.backend.dto.TicketResponseDto;
 import com.winglink.backend.entity.AppUser;
-import com.winglink.backend.entity.Ticket;
 import com.winglink.backend.enums.UserRole;
 import com.winglink.backend.exception.Auth0UserNotFoundInDbException;
 import com.winglink.backend.repository.AppUserRepository;
@@ -63,13 +64,15 @@ public class AppUserService {
         userRepository.deleteById(id);
     }
 
-    public List<Ticket> findUserTickets() {
+    public List<TicketResponseDto> findUserTickets() {
         String auth0Id = SecurityUtils.getAuth0UserId();
         AppUser user = getUserByAuth0Id(auth0Id).orElseThrow(Auth0UserNotFoundInDbException::new);
-        return user.getTickets();
+        return user.getTickets().stream()
+                .map(TicketDtoConverter::convertToTicketDto)
+                .toList();
     }
 
-    public Optional<Ticket> findUserTicketById(int id) {
-        return findUserTickets().stream().filter(t -> t.getId() == id).findFirst();
+    public Optional<TicketResponseDto> findUserTicketById(int id) {
+        return findUserTickets().stream().filter(t -> t.id() == id).findFirst();
     }
 }
