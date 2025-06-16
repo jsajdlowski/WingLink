@@ -4,20 +4,23 @@ import { Outlet } from 'react-router'
 import { selectTrip } from '../../store/tripSlice'
 import { useState, useMemo } from 'react'
 import { useNavigate } from 'react-router'
-import { Ticket } from './Ticket'
+import { Ticket } from './ticket'
+import { useBuyTicket } from './hooks'
+import { SeatClass } from '../history/types'
 
 export const BookTrip = () => {
   const tripState = useAppSelector(selectTrip)
   const navigate = useNavigate()
+  const buyTicket = useBuyTicket()
 
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
 
   const [departurePrice, setDeparturePrice] = useState(0)
-  const [departureClass, setDepartureClass] = useState('ECONOMY')
+  const [departureClass, setDepartureClass] = useState(SeatClass.ECONOMY)
 
   const [returnPrice, setReturnPrice] = useState(0)
-  const [returnClass, setReturnClass] = useState('ECONOMY')
+  const [returnClass, setReturnClass] = useState(SeatClass.ECONOMY)
 
   const isOneWay = !tripState.returnFlight
 
@@ -28,28 +31,27 @@ export const BookTrip = () => {
   const handleSubmit = () => {
     if (isOneWay) {
       const payload = {
-        flightId: tripState.departureFlight?.id,
+        flightId: tripState.departureFlight!.id,
         seatClass: departureClass,
         firstName,
         lastName,
       }
-      console.log(payload)
+
+      buyTicket(payload)
     } else {
-      const payload = [
-        {
-          flightId: tripState.departureFlight?.id,
-          seatClass: departureClass,
-          firstName,
-          lastName,
-        },
-        {
-          flightId: tripState.returnFlight?.id,
-          seatClass: returnClass,
-          firstName,
-          lastName,
-        },
-      ]
-      console.log(payload)
+      buyTicket({
+        flightId: tripState.departureFlight!.id,
+        seatClass: departureClass,
+        firstName,
+        lastName,
+      })
+
+      buyTicket({
+        flightId: tripState.returnFlight!.id,
+        seatClass: returnClass,
+        firstName,
+        lastName,
+      })
     }
 
     navigate('thank-you-page')
@@ -77,7 +79,7 @@ export const BookTrip = () => {
               title={'Departure Flight'}
               onPriceChange={(price, seatClass) => {
                 setDeparturePrice(price)
-                setDepartureClass(seatClass)
+                setDepartureClass(seatClass as unknown as SeatClass)
               }}
             />
 
@@ -87,7 +89,7 @@ export const BookTrip = () => {
                 title="Return Flight"
                 onPriceChange={(price, seatClass) => {
                   setReturnPrice(price)
-                  setReturnClass(seatClass)
+                  setReturnClass(seatClass as unknown as SeatClass)
                 }}
               />
             )}

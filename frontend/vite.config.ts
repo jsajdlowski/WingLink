@@ -10,4 +10,10 @@ export default defineConfig({
       '@tabler/icons-react': '@tabler/icons-react/dist/esm/icons/index.mjs',
     },
   },
+  test: {
+    environment: 'jsdom',
+    globals: true,
+    css: true,
+    setupFiles: './src/setupTests.ts',
+  },
 })
