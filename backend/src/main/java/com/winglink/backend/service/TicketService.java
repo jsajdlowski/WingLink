@@ -6,6 +6,7 @@ import com.winglink.backend.dto.TicketDtoConverter;
 import com.winglink.backend.dto.TicketResponseDto;
 import com.winglink.backend.entity.AppUser;
 import com.winglink.backend.entity.Flight;
+import com.winglink.backend.entity.FlightTrip;
 import com.winglink.backend.entity.Ticket;
 import com.winglink.backend.exception.Auth0UserNotFoundInDbException;
 import com.winglink.backend.exception.FlightNotFoundException;
@@ -19,13 +20,13 @@ import java.util.Optional;
 @Service
 public class TicketService {
     private final TicketRepository ticketRepository;
-    private final FlightService flightService;
     private final AppUserService appUserService;
+    private final FlightTripService flightTripService;
 
-    public TicketService(TicketRepository ticketRepository, FlightService flightService, AppUserService appUserService) {
+    public TicketService(TicketRepository ticketRepository, AppUserService appUserService, FlightTripService flightTripService) {
         this.ticketRepository = ticketRepository;
-        this.flightService = flightService;
         this.appUserService = appUserService;
+        this.flightTripService = flightTripService;
     }
 
     public Ticket save(Ticket ticket) {
@@ -47,11 +48,13 @@ public class TicketService {
     public TicketResponseDto buyTicket(TicketDto ticketDto) {
         String auth0Id = SecurityUtils.getAuth0UserId();
         AppUser user = appUserService.getUserByAuth0Id(auth0Id).orElseThrow(Auth0UserNotFoundInDbException::new);
-        Flight flight = flightService.findFlightById(ticketDto.flightId()).orElseThrow(FlightNotFoundException::new);
-        if (!isUnderSeatLimit(flight)) throw new FlightSeatLimitReached();
+        FlightTrip flightTrip = flightTripService.getFlightTripById(ticketDto.flightId()).orElseThrow(FlightNotFoundException::new);
+        flightTrip.getFlights().forEach(flight -> {
+            if (!isUnderSeatLimit(flight)) throw new FlightSeatLimitReached();
+        });
         String firstName = ticketDto.firstName() == null ? user.getFirstName() : ticketDto.firstName();
         String lastName = ticketDto.lastName() == null ? user.getLastName() : ticketDto.lastName();
-        Ticket ticket = new Ticket(null, firstName, lastName, ticketDto.seatClass(), flight, user);
+        Ticket ticket = new Ticket(null, firstName, lastName, ticketDto.seatClass(), flightTrip, user);
         return TicketDtoConverter.convertToTicketDto(ticketRepository.save(ticket));
     }
 
@@ -60,6 +63,6 @@ public class TicketService {
     }
 
     private int getAmountOfReservedSeatsOnFlight(Long flightId) {
-        return ticketRepository.findAllByFlight_Id(flightId).size();
+        return ticketRepository.findAllByFlightTrip_Id(flightId).size();
     }
 }
