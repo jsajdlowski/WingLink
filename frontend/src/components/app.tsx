@@ -7,7 +7,7 @@ import { useAuth0 } from '@auth0/auth0-react'
 import MapChart from './map/map.tsx'
 import { SearchForm } from './search-form/search-form'
 import { LoginButton } from './auth/LoginButton'
-import { Route, Routes } from 'react-router'
+import { Route, Routes, useLocation } from 'react-router'
 import { BookTrip } from './trip/book-trip.tsx'
 import { AfterBuy } from './trip/afterBuy.tsx'
 import { TripHistory } from './history/tripHistory.tsx'
@@ -17,7 +17,8 @@ import { Logo } from './ui/logo.tsx'
 export const App = () => {
   const { isLoading, isAuthenticated } = useAuth0()
   const [opened, { toggle }] = useDisclosure()
-
+  const location = useLocation() // ← Get current route
+  const isMainPage = location.pathname === '/'
   if (isLoading) return <PageLoader />
 
   return (
@@ -34,9 +35,11 @@ export const App = () => {
           <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
         </Group>
       </AppShell.Header>
-      <AppShell.Navbar p="md">
-        <SearchForm />
-      </AppShell.Navbar>
+      {isMainPage && (
+        <AppShell.Navbar p="md">
+          <SearchForm />
+        </AppShell.Navbar>
+      )}
       <AppShell.Main>
         <Routes>
           <Route

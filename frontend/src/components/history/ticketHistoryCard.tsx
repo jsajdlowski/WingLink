@@ -6,13 +6,13 @@ import dayjs from 'dayjs'
 interface TicketHistoryCardProps {
   trip: Trip
   title: string
-  price: number
+  price: number // base price
   seatClass: SeatClass
 }
 
 export const TicketHistoryCard = ({
   trip,
-  title,
+  price: basePrice, // alias for clarity
   seatClass,
 }: TicketHistoryCardProps) => {
   const departure = dayjs(trip.departureTime)
@@ -26,15 +26,26 @@ export const TicketHistoryCard = ({
   const formattedArrivalTime = arrival.format('DD/MM HH:mm')
 
   const firstFlight = trip.flights?.[0]
-
   const transfers = (trip.flights?.length || 1) - 1
+
+  const calculatePrice = (seatClass: SeatClass): number => {
+    switch (seatClass) {
+      case 'PREMIUM_ECONOMY':
+        return basePrice * 1.5
+      case 'BUSINESS':
+        return basePrice * 2.5
+      case 'FIRST_CLASS':
+        return basePrice * 3.5
+      case 'ECONOMY':
+      default:
+        return basePrice
+    }
+  }
+
+  const finalPrice = calculatePrice(seatClass)
 
   return (
     <Card shadow="sm" padding="md" radius="md" withBorder mb="md">
-      <Text size="lg" fw={500} mb="sm">
-        {title}
-      </Text>
-
       <Group mb="xs">
         {firstFlight?.airlineLogo && <Image src={firstFlight.airlineLogo} />}
         <Text fw={700} size="lg">
@@ -50,13 +61,7 @@ export const TicketHistoryCard = ({
           <Text size="sm" color="gray">
             {hours} godz. {minutes} min
           </Text>
-          <Text size="sm" color="gray">
-            {transfers > 0
-              ? `${transfers} Transfer${transfers > 1 ? 's' : ''}`
-              : 'Non-Stop'}
-          </Text>
         </Group>
-
         <Text size="xl" fw={700}>
           {formattedArrivalTime}
         </Text>
@@ -66,12 +71,19 @@ export const TicketHistoryCard = ({
         <Text fw={600}>{trip.origin?.code || '???'}</Text>
         <IconPlane />
         <Text fw={600}>{trip.destination?.code || '???'}</Text>
+
+        <Text size="sm" color="gray">
+          {transfers > 0
+            ? `${transfers} Transfer${transfers > 1 ? 's' : ''}`
+            : 'Non-Stop'}
+        </Text>
       </Group>
 
       <Divider my="sm" />
 
       <Stack>
         <Text fw={600}>Seat Class: {seatClass}</Text>
+        <Text>Price {finalPrice.toFixed(2)} PLN</Text>
       </Stack>
     </Card>
   )

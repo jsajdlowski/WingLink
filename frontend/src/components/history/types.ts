@@ -45,8 +45,8 @@ export enum SeatClass {
 
 export interface Ticket {
   id: number
-  flight: Flight
   firstName: string
   lastName: string
   seatClass: SeatClass
+  flightTrip: Trip
 }

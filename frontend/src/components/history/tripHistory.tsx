@@ -19,9 +19,9 @@ export const TripHistory = () => {
         {data?.map((ticket) => (
           <TicketHistoryCard
             key={ticket.id}
-            trip={ticket.flight}
+            trip={ticket.flightTrip}
             title="Booked Flight"
-            price={ticket.price}
+            price={ticket.flightTrip.price}
             seatClass={ticket.seatClass}
           />
         ))}
