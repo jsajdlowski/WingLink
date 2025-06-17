@@ -1,4 +1,4 @@
-import { Center, Text, Stack } from '@mantine/core'
+import { Center, Text } from '@mantine/core'
 
 export const TripHistory = () => {
   return (

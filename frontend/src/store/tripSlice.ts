@@ -51,10 +51,7 @@ const tripSlice = createSlice({
     setReturnFlight(state, action: PayloadAction<Trip>) {
       state.returnFlight = action.payload
     },
-    clearTrip(state) {
-      state.departureFlight = null
-      state.returnFlight = null
-    },
+    clearTrip: () => initialState,
   },
 })
 
