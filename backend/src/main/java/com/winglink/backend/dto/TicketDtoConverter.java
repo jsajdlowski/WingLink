@@ -12,7 +12,7 @@ public class TicketDtoConverter {
                 ticket.getFirstName(),
                 ticket.getLastName(),
                 ticket.getSeatClass().name(),
-                ticket.getFlight()
+                ticket.getFlightTrip()
         );
     }
 }
