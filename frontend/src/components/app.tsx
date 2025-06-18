@@ -13,18 +13,24 @@ import { AfterBuy } from './trip/afterBuy.tsx'
 import { TripHistory } from './history/tripHistory.tsx'
 import { PageLoader } from './ui/pageLoader.tsx'
 import { Logo } from './ui/logo.tsx'
+import { AdminPage } from './admin/admin.tsx'
 
 export const App = () => {
-  const { isLoading, isAuthenticated } = useAuth0()
+  const { isLoading, isAuthenticated, user } = useAuth0()
   const [opened, { toggle }] = useDisclosure()
-  const location = useLocation() // ← Get current route
+  const location = useLocation()
   const isMainPage = location.pathname === '/'
   if (isLoading) return <PageLoader />
+  console.log(user)
 
   return (
     <AppShell
       header={{ height: 60 }}
-      navbar={{ width: 300, breakpoint: 'sm', collapsed: { mobile: !opened } }}
+      navbar={{
+        width: isMainPage ? 300 : 0,
+        breakpoint: 'sm',
+        collapsed: { mobile: !opened },
+      }}
       padding="md"
     >
       <AppShell.Header>
@@ -56,7 +62,7 @@ export const App = () => {
             <Route path="thank-you-page" element={<AfterBuy />} />
           </Route>
           <Route path="my-trip-history" element={<TripHistory />} />
-          <Route path="admin-panel" element={<TripHistory />} />
+          <Route path="admin" element={<AdminPage />} />
         </Routes>
       </AppShell.Main>
     </AppShell>

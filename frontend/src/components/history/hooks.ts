@@ -5,5 +5,5 @@ import { Ticket } from './types'
 export const useMyTickets = () => {
   const fetcher = useFetcher()
 
-  return useSWR<Ticket[]>('http://localhost:8080/api/tickets/my', fetcher)
+  return useSWR<Ticket[]>('tickets/my', fetcher)
 }

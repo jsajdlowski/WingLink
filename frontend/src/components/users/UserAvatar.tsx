@@ -14,8 +14,13 @@ import { useNavigate } from 'react-router'
 
 export const UserAvatar = () => {
   const navigate = useNavigate()
-  const { logout } = useAuth0()
+  const { logout, user } = useAuth0()
   const { data, isLoading } = useMe()
+
+  const isAdmin = (user: any) => {
+    const roles = user?.['https://winglink.api/roles'] || []
+    return roles.includes('admin')
+  }
 
   if (isLoading) return <Loader size={'sm'} />
 
@@ -51,8 +56,11 @@ export const UserAvatar = () => {
       <Menu.Dropdown>
         <Menu.Item onClick={() => logout()}>Logout</Menu.Item>
         <Menu.Item onClick={() => navigate('my-trip-history')}>
-          Trip hisotry
+          Trip history
         </Menu.Item>
+        {isAdmin(user) && (
+          <Menu.Item onClick={() => navigate('/admin')}>Admin Panel</Menu.Item>
+        )}
       </Menu.Dropdown>
     </Menu>
   )
