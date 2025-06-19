@@ -8,7 +8,7 @@ import { useAuth0 } from '@auth0/auth0-react'
 export const useMyTickets = () => {
   const fetcher = useFetcher()
 
-  return useSWR<Ticket[]>('http://localhost:8080/api/tickets/my', fetcher)
+  return useSWR<Ticket[]>('/tickets/my', fetcher)
 }
 
 export type CreateTicket = Omit<Ticket, 'id' | 'flight'> & {

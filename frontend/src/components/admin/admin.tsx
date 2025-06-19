@@ -8,9 +8,12 @@ import {
   Paper,
   Badge,
   Flex,
+  Modal,
 } from '@mantine/core'
+import { useDisclosure } from '@mantine/hooks'
 import { useState } from 'react'
-import { useTickets, useUsers } from './hooks'
+import { mutate } from 'swr'
+import { useTickets, useUsers, useDeleteTicket } from './hooks'
 
 enum SeatClass {
   ECONOMY,
@@ -21,6 +24,8 @@ enum SeatClass {
 
 export const AdminPage = () => {
   const [active, setActive] = useState<'users' | 'tickets'>('users')
+  const [modalOpened, { open, close }] = useDisclosure(false)
+  const [selectedTicketId, setSelectedTicketId] = useState<number | null>(null)
 
   const {
     data: users,
@@ -33,6 +38,22 @@ export const AdminPage = () => {
     isLoading: loadingTickets,
     error: errorTickets,
   } = useTickets()
+
+  const deleteTicket = useDeleteTicket()
+
+  const handleDelete = async () => {
+    if (selectedTicketId !== null) {
+      try {
+        await deleteTicket(selectedTicketId)
+        mutate(['/tickets'])
+      } catch (error) {
+        console.error('Failed to delete ticket:', error)
+      } finally {
+        close()
+        setSelectedTicketId(null)
+      }
+    }
+  }
 
   const seatClassMap = {
     [SeatClass.ECONOMY]: 'Economy',
@@ -50,11 +71,29 @@ export const AdminPage = () => {
         collapsed: { mobile: false },
       }}
     >
+      {/* Confirmation Modal */}
+      <Modal
+        opened={modalOpened}
+        onClose={close}
+        title="Confirm Deletion"
+        centered
+      >
+        <Text mb="md">Are you sure you want to delete this ticket?</Text>
+        <Group justify="flex-end">
+          <Button variant="default" onClick={close}>
+            Cancel
+          </Button>
+          <Button color="red" onClick={handleDelete}>
+            Delete
+          </Button>
+        </Group>
+      </Modal>
+
+      {/* Sidebar */}
       <AppShell.Navbar p="md">
         <Text size="xl" fw={700} mb="md">
           Admin Panel Options
         </Text>
-
         <Group grow>
           <Button
             variant={active === 'users' ? 'filled' : 'light'}
@@ -72,6 +111,7 @@ export const AdminPage = () => {
       </AppShell.Navbar>
 
       <AppShell.Main style={{ height: '100%' }}>
+        {/* USERS */}
         {active === 'users' && (
           <Flex direction="column" justify="center" align="center" h="100%">
             <Text size="xl" fw={700} mb="md">
@@ -102,7 +142,6 @@ export const AdminPage = () => {
                     <Text size="sm" c="dimmed" mb="sm">
                       {user.email}
                     </Text>
-
                     <Group justify="space-between" mb={4}>
                       <Text size="sm" fw={500}>
                         Role:
@@ -111,7 +150,6 @@ export const AdminPage = () => {
                         {user.role ?? 'No Role'}
                       </Badge>
                     </Group>
-
                     <Group justify="space-between">
                       <Text size="sm" fw={500}>
                         Tickets:
@@ -127,6 +165,7 @@ export const AdminPage = () => {
           </Flex>
         )}
 
+        {/* TICKETS */}
         {active === 'tickets' && (
           <Flex direction="column" justify="center" align="center" h="100%">
             <Text size="xl" fw={700} mb="md">
@@ -156,6 +195,19 @@ export const AdminPage = () => {
                         position: 'relative',
                       }}
                     >
+                      {/* DELETE BUTTON */}
+                      <Button
+                        color="red"
+                        size="xs"
+                        style={{ position: 'absolute', top: 16, right: 16 }}
+                        onClick={() => {
+                          setSelectedTicketId(ticket.id)
+                          open()
+                        }}
+                      >
+                        Delete
+                      </Button>
+
                       <Group align="center" justify="space-between" mb="md">
                         <Group align="center">
                           <img
@@ -170,7 +222,6 @@ export const AdminPage = () => {
                       </Group>
 
                       <Group justify="space-between" mb="xs">
-                        <Stack></Stack>
                         <Text fw={500} size="sm">
                           Passenger:
                         </Text>

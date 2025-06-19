@@ -1,4 +1,4 @@
-import { Card, Group, Image, Text, Divider, Stack, Box } from '@mantine/core'
+import { Card, Group, Image, Text, Divider, Stack } from '@mantine/core'
 import { SeatClass, Trip } from './types'
 import { IconPlane } from '@tabler/icons-react'
 import dayjs from 'dayjs'
@@ -62,7 +62,6 @@ export const TicketHistoryCard = ({
         backgroundColor: '#f9f9fc',
       }}
     >
-      {/* Airline and logo */}
       <Group align="center" justify="space-between" mb="md">
         <Group align="center" gap="xs">
           {firstFlight?.airlineLogo && (
@@ -85,7 +84,6 @@ export const TicketHistoryCard = ({
         </Text>
       </Group>
 
-      {/* Flight times */}
       <Group align="center" justify="space-between" mb="xs">
         <Text size="lg" fw={700}>
           {formattedDepartureTime}
@@ -98,7 +96,6 @@ export const TicketHistoryCard = ({
         </Text>
       </Group>
 
-      {/* Route */}
       <Group align="center" justify="center" mb="md">
         <Text fw={600}>{trip.origin?.code || '???'}</Text>
         <IconPlane size={20} />
@@ -107,7 +104,6 @@ export const TicketHistoryCard = ({
 
       <Divider my="sm" />
 
-      {/* Seat & Price */}
       <Stack gap="xs">
         <Group justify="space-between">
           <Text fw={500} size="sm">

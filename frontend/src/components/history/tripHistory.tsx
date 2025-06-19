@@ -1,4 +1,4 @@
-import { Center, Loader, px, Text } from '@mantine/core'
+import { Loader, Text, Stack, Box, Center } from '@mantine/core'
 import { useMyTickets } from './hooks'
 import { TicketHistoryCard } from './ticketHistoryCard'
 
@@ -7,36 +7,54 @@ export const TripHistory = () => {
 
   if (isLoading) {
     return (
-      <Center style={{ minHeight: '100vh' }}>
+      <div
+        style={{
+          minHeight: '100vh',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
         <Loader size="lg" />
-      </Center>
+      </div>
     )
   }
 
   if (!data || data.length === 0) {
     return (
-      <Center style={{ minHeight: '100vh', flexDirection: 'column' }}>
+      <div
+        style={{
+          minHeight: '100vh',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
         <Text size="xl">No flights yet</Text>
         <Text size="md" color="dimmed">
           Go book some!
         </Text>
-      </Center>
+      </div>
     )
   }
 
   return (
-    <Center style={{ minHeight: '100vh' }}>
-      <div>
-        {data?.map((ticket) => (
-          <TicketHistoryCard
-            key={ticket.id}
-            trip={ticket.flightTrip}
-            price={ticket.flightTrip.price}
-            seatClass={ticket.seatClass}
-            padding="md"
-          />
+    <Box p="2rem">
+      <Text size="xl" fw={700} mb="lg">
+        Your trip history
+      </Text>
+      <Stack>
+        {data.map((ticket) => (
+          <Center key={ticket.id}>
+            <TicketHistoryCard
+              trip={ticket.flightTrip}
+              price={ticket.flightTrip.price}
+              seatClass={ticket.seatClass}
+            />
+          </Center>
         ))}
-      </div>
-    </Center>
+      </Stack>
+    </Box>
   )
 }
