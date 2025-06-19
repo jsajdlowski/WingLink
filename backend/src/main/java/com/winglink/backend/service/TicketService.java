@@ -12,6 +12,7 @@ import com.winglink.backend.exception.Auth0UserNotFoundInDbException;
 import com.winglink.backend.exception.FlightNotFoundException;
 import com.winglink.backend.exception.FlightSeatLimitReached;
 import com.winglink.backend.repository.TicketRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -42,6 +43,9 @@ public class TicketService {
     }
 
     public void deleteById(Long id) {
+        Ticket ticket = ticketRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Ticket not found"));
+        AppUser user = ticket.getBoughtBy();
+        user.getTickets().remove(ticket);
         ticketRepository.deleteById(id);
     }
 
