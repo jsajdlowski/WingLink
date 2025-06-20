@@ -14,6 +14,8 @@ import { TripHistory } from './history/tripHistory.tsx'
 import { PageLoader } from './ui/pageLoader.tsx'
 import { Logo } from './ui/logo.tsx'
 import { AdminPage } from './admin/admin.tsx'
+import { ProtectedRoute } from './routes/ProtectedRoute'
+import { AdminRoute } from './routes/AdminRoute'
 
 export const App = () => {
   const { isLoading, isAuthenticated, user } = useAuth0()
@@ -57,12 +59,41 @@ export const App = () => {
               </>
             }
           />
-          <Route path="book-trip">
-            <Route index element={<BookTrip />} />
-            <Route path="thank-you-page" element={<AfterBuy />} />
-          </Route>
-          <Route path="my-trip-history" element={<TripHistory />} />
-          <Route path="admin" element={<AdminPage />} />
+
+          <Route
+            path="book-trip"
+            element={
+              <ProtectedRoute>
+                <BookTrip />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="book-trip/thank-you-page"
+            element={
+              <ProtectedRoute>
+                <AfterBuy />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="my-trip-history"
+            element={
+              <ProtectedRoute>
+                <TripHistory />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="admin"
+            element={
+              <AdminRoute>
+                <AdminPage />
+              </AdminRoute>
+            }
+          />
         </Routes>
       </AppShell.Main>
     </AppShell>

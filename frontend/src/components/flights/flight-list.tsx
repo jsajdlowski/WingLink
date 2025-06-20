@@ -37,8 +37,8 @@ const FlightListItem = ({
   const minutes = totalMinutes % 60
   const transfers = flight.flights.length - 1
 
-  const formattedDeparture = departure.format('HH:mm DD/MM')
-  const formattedArrival = arrival.format('HH:mm DD/MM')
+  const formattedDeparture = departure.format('HH:mm DD/MM/YY')
+  const formattedArrival = arrival.format('HH:mm DD/MM/YY')
 
   return (
     <Paper p="xs" withBorder>

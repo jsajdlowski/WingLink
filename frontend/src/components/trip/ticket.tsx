@@ -12,6 +12,7 @@ interface TicketProps {
 
 export const Ticket = ({ flight, title, onPriceChange }: TicketProps) => {
   const [seatClass, setSeatClass] = useState<string>('ECONOMY')
+  console.log(flight)
 
   const basePrice = flight.price
 
@@ -68,9 +69,23 @@ export const Ticket = ({ flight, title, onPriceChange }: TicketProps) => {
             {hours} godz. {minutes} min
           </Text>
           <Text size="sm" color="gray">
-            {transfers > 0
-              ? `${transfers} Transfer${transfers > 1 ? 's' : ''}`
-              : 'Non-Stop'}
+            {flight.flights.length > 1 && (
+              <Stack mb="xs">
+                <Text fw={600} size="sm" color="dimmed">
+                  {flight.flights.length > 1 ? 'Transfers:' : 'Flight Type:'}
+                </Text>
+
+                {flight.flights.length > 1 ? (
+                  flight.flights.slice(0, -1).map((f) => (
+                    <Text size="sm" key={f.id}>
+                      {f.destination.city} ({f.destination.code})
+                    </Text>
+                  ))
+                ) : (
+                  <Text size="sm">Non-stop</Text>
+                )}
+              </Stack>
+            )}
           </Text>
         </Group>
 
