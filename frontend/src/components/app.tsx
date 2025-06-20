@@ -18,12 +18,11 @@ import { ProtectedRoute } from './routes/ProtectedRoute'
 import { AdminRoute } from './routes/AdminRoute'
 
 export const App = () => {
-  const { isLoading, isAuthenticated, user } = useAuth0()
+  const { isLoading, isAuthenticated } = useAuth0()
   const [opened, { toggle }] = useDisclosure()
   const location = useLocation()
   const isMainPage = location.pathname === '/'
   if (isLoading) return <PageLoader />
-  console.log(user)
 
   return (
     <AppShell

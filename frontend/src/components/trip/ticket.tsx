@@ -12,7 +12,6 @@ interface TicketProps {
 
 export const Ticket = ({ flight, title, onPriceChange }: TicketProps) => {
   const [seatClass, setSeatClass] = useState<string>('ECONOMY')
-  console.log(flight)
 
   const basePrice = flight.price
 

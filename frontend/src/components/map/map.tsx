@@ -122,9 +122,6 @@ const MapChart = () => {
           break
       }
       dispatch(setSelectedCountry({ selectedCountry: countryName }))
-      console.log('Selected country:', countryName)
-
-      console.log('Attempting to zoom to:', dataContext?.name, dataItem)
 
       polygonSeries.mapPolygons.each(function (polygon) {
         polygon.set('active', false)
@@ -171,8 +168,7 @@ const MapChart = () => {
       airportCircle.events.on('click', function (e) {
         const dataItem = e.target.dataItem
         const dataContext = dataItem?.dataContext as AirportDataContext
-        console.log(dataContext.id)
-        console.log('selectedField', selectedField)
+
         switch (selectedField) {
           case SearchFormFields.FROM:
             dispatch(
@@ -208,10 +204,6 @@ const MapChart = () => {
 
   useEffect(() => {
     if (countryAirportSeriesRef.current && airports && airports.length > 0) {
-      console.log(
-        'Updating airports based on selected country:',
-        selectedCountry
-      )
       if (selectedCountry) {
         const filteredAirports = airports.filter(
           (airport) =>

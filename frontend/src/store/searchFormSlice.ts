@@ -30,8 +30,6 @@ const searchFormSlice = createSlice({
     },
     clearForm: () => initialState,
     setFormSubmitted: (state, action: PayloadAction<boolean>) => {
-      console.log('cos', action.payload)
-
       state.isSubmitted = action.payload
     },
   },
