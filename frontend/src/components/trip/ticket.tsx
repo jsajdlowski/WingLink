@@ -66,25 +66,23 @@ export const Ticket = ({ flight, title, onPriceChange }: TicketProps) => {
           <Text size="sm" color="gray">
             {hours} godz. {minutes} min
           </Text>
-          <Text size="sm" color="gray">
-            {flight.flights.length > 1 && (
-              <Stack mb="xs">
-                <Text fw={600} size="sm" color="dimmed">
-                  {flight.flights.length > 1 ? 'Transfers:' : 'Flight Type:'}
-                </Text>
 
-                {flight.flights.length > 1 ? (
-                  flight.flights.slice(0, -1).map((f) => (
-                    <Text size="sm" key={f.id}>
-                      {f.destination.city} ({f.destination.code})
-                    </Text>
-                  ))
-                ) : (
-                  <Text size="sm">Non-stop</Text>
-                )}
-              </Stack>
-            )}
-          </Text>
+          {flight.flights.length > 1 ? (
+            <Stack mb="xs">
+              <Text fw={600} size="sm" color="dimmed">
+                Transfers:
+              </Text>
+              {flight.flights.slice(0, -1).map((f) => (
+                <Text size="sm" key={f.id}>
+                  {f.destination.city} ({f.destination.code})
+                </Text>
+              ))}
+            </Stack>
+          ) : (
+            <Text size="sm" color="gray">
+              Non-stop
+            </Text>
+          )}
         </Group>
 
         <Text size="xl" fw={700}>

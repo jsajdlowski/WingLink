@@ -13,7 +13,7 @@ import {
 import { IconPlaneDeparture, IconPlaneArrival } from '@tabler/icons-react'
 import { IconArrowRight } from '@tabler/icons-react'
 import { useFlightsSearch } from './hooks'
-import {  Trip } from './types'
+import { Trip } from './types'
 import { useAppDispatch, useAppSelector } from '../../hooks/storeHooks'
 import dayjs from 'dayjs'
 import { popularDestinations } from '../../data/destinations-data'
@@ -143,8 +143,6 @@ export const FlightList = () => {
   }
 
   if (step === 'departure') {
-    console.log(departureData)
-
     if (departureData && departureData.length > 0) {
       return (
         <>

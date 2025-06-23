@@ -50,13 +50,16 @@ export const UserAvatar = () => {
         </UnstyledButton>
       </Menu.Target>
       <Menu.Dropdown>
-        <Menu.Item onClick={() => logout()}>Logout</Menu.Item>
         <Menu.Item onClick={() => navigate('my-trip-history')}>
           Trip history
         </Menu.Item>
         {user && isAdmin(user as User) && (
           <Menu.Item onClick={() => navigate('/admin')}>Admin Panel</Menu.Item>
         )}
+        <Menu.Divider />
+        <Menu.Item color="red" onClick={() => logout()}>
+          Logout
+        </Menu.Item>
       </Menu.Dropdown>
     </Menu>
   )

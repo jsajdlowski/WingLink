@@ -108,7 +108,7 @@ export const SearchForm = () => {
           <DateInput
             label="Departure Date"
             minDate={new Date()}
-            maxDate={dayjs().add(1, 'month').toDate()}
+            maxDate={dayjs().add(8, 'month').toDate()}
             placeholder="Departure Date"
             {...form.getInputProps('departureDate')}
           />
@@ -117,7 +117,7 @@ export const SearchForm = () => {
             mt="md"
             label="Return Date"
             minDate={form.values.departureDate ?? new Date()}
-            maxDate={dayjs().add(1, 'month').toDate()}
+            maxDate={dayjs().add(8, 'month').toDate()}
             placeholder="Return Date"
             disabled={form.values.isOneWay}
             {...form.getInputProps('returnDate')}

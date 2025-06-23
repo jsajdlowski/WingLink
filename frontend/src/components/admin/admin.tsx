@@ -6,7 +6,6 @@ import {
   Loader,
   Stack,
   Paper,
-  Badge,
   Flex,
   Modal,
 } from '@mantine/core'
@@ -147,19 +146,12 @@ export const AdminPage = () => {
                     <Text size="sm" c="dimmed" mb="sm">
                       {user.email}
                     </Text>
-                    <Group justify="space-between" mb={4}>
-                      <Text size="sm" fw={500}>
-                        Role:
-                      </Text>
-                      <Badge size="sm" color="blue" variant="light">
-                        {user.role ?? 'No Role'}
-                      </Badge>
-                    </Group>
+
                     <Group justify="space-between">
                       <Text size="sm" fw={500}>
                         Tickets:
                       </Text>
-                      <Text size="sm" c="gray">
+                      <Text size="sm" c="black">
                         {user.tickets.length}
                       </Text>
                     </Group>
