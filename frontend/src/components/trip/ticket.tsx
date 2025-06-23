@@ -39,7 +39,6 @@ export const Ticket = ({ flight, title, onPriceChange }: TicketProps) => {
 
   const hours = Math.floor(totalMinutes / 60)
   const minutes = totalMinutes % 60
-  const transfers = flight.flights.length
 
   const formattedDepartureTime = dayjs(flight.departureTime).format(
     'DD/MM HH:mm'

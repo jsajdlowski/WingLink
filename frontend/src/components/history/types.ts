@@ -37,10 +37,10 @@ export interface Destination {
 }
 
 export enum SeatClass {
-  ECONOMY,
-  PREMIUM_ECONOMY,
-  BUSINESS,
-  FIRST_CLASS,
+  ECONOMY = 'ECONOMY',
+  PREMIUM_ECONOMY = 'PREMIUM_ECONOMY',
+  BUSINESS = 'BUSINESS',
+  FIRST_CLASS = 'FIRST_CLASS',
 }
 
 export interface Ticket {

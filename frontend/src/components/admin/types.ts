@@ -16,11 +16,11 @@ export interface Ticket {
   flightTrip: Trip
 }
 
-enum SeatClass {
-  ECONOMY,
-  PREMIUM_ECONOMY,
-  BUSINESS,
-  FIRST_CLASS,
+export enum SeatClass {
+  ECONOMY = 'ECONOMY',
+  PREMIUM_ECONOMY = 'PREMIUM_ECONOMY',
+  BUSINESS = 'BUSINESS',
+  FIRST_CLASS = 'FIRST_CLASS',
 }
 
 export interface Flight {

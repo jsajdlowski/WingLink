@@ -21,6 +21,7 @@ export interface Flight {
   arrivalTime: Date
   airline: string
   airlineLogo: string
+  price: number
 }
 
 export interface Trip {

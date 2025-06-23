@@ -59,14 +59,7 @@ export const App = () => {
             }
           />
 
-          <Route
-            path="book-trip"
-            element={
-              <ProtectedRoute>
-                <BookTrip />
-              </ProtectedRoute>
-            }
-          />
+          <Route path="book-trip" element={<BookTrip />} />
           <Route
             path="book-trip/thank-you-page"
             element={

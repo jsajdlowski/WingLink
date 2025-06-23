@@ -14,13 +14,7 @@ import { useDisclosure } from '@mantine/hooks'
 import { useState } from 'react'
 import { mutate } from 'swr'
 import { useTickets, useUsers, useDeleteTicket } from './hooks'
-
-enum SeatClass {
-  ECONOMY,
-  PREMIUM_ECONOMY,
-  BUSINESS,
-  FIRST_CLASS,
-}
+import { SeatClass } from './types'
 
 export const AdminPage = () => {
   const [active, setActive] = useState<'users' | 'tickets'>('users')
@@ -55,11 +49,25 @@ export const AdminPage = () => {
     }
   }
 
-  const seatClassMap = {
-    [SeatClass.ECONOMY]: 'Economy',
-    [SeatClass.PREMIUM_ECONOMY]: 'Premium Economy',
-    [SeatClass.BUSINESS]: 'Business',
-    [SeatClass.FIRST_CLASS]: 'First Class',
+  const seatClassMap: Record<SeatClass, string> = {
+    ECONOMY: 'Economy',
+    PREMIUM_ECONOMY: 'Premium Economy',
+    BUSINESS: 'Business',
+    FIRST_CLASS: 'First Class',
+  }
+
+  const calculatePrice = (seatClass: SeatClass, basePrice: number): number => {
+    switch (seatClass) {
+      case 'PREMIUM_ECONOMY':
+        return basePrice * 1.5
+      case 'BUSINESS':
+        return basePrice * 2.5
+      case 'FIRST_CLASS':
+        return basePrice * 3.5
+      case 'ECONOMY':
+      default:
+        return basePrice
+    }
   }
 
   return (
@@ -71,7 +79,6 @@ export const AdminPage = () => {
         collapsed: { mobile: false },
       }}
     >
-      {/* Confirmation Modal */}
       <Modal
         opened={modalOpened}
         onClose={close}
@@ -89,7 +96,6 @@ export const AdminPage = () => {
         </Group>
       </Modal>
 
-      {/* Sidebar */}
       <AppShell.Navbar p="md">
         <Text size="xl" fw={700} mb="md">
           Admin Panel Options
@@ -111,7 +117,6 @@ export const AdminPage = () => {
       </AppShell.Navbar>
 
       <AppShell.Main style={{ height: '100%' }}>
-        {/* USERS */}
         {active === 'users' && (
           <Flex direction="column" justify="center" align="center" h="100%">
             <Text size="xl" fw={700} mb="md">
@@ -165,7 +170,6 @@ export const AdminPage = () => {
           </Flex>
         )}
 
-        {/* TICKETS */}
         {active === 'tickets' && (
           <Flex direction="column" justify="center" align="center" h="100%">
             <Text size="xl" fw={700} mb="md">
@@ -179,6 +183,10 @@ export const AdminPage = () => {
               <Stack gap="sm" align="center">
                 {tickets?.map((ticket) => {
                   const flight = ticket.flightTrip.flights[0]
+                  const finalPrice = calculatePrice(
+                    ticket.seatClass,
+                    ticket.flightTrip.price
+                  )
 
                   return (
                     <Paper
@@ -195,7 +203,6 @@ export const AdminPage = () => {
                         position: 'relative',
                       }}
                     >
-                      {/* DELETE BUTTON */}
                       <Button
                         color="red"
                         size="xs"
@@ -229,7 +236,7 @@ export const AdminPage = () => {
                           {ticket.firstName} {ticket.lastName}
                         </Text>
                         <Text size="sm" fw={500}>
-                          Seat Class: {ticket.seatClass}
+                          Seat Class: {seatClassMap[ticket.seatClass]}
                         </Text>
                       </Group>
 
@@ -266,7 +273,7 @@ export const AdminPage = () => {
                           Price:
                         </Text>
                         <Text size="sm" c="green" fw={700}>
-                          {ticket.flightTrip.price} PLN
+                          {finalPrice} PLN
                         </Text>
                       </Group>
                     </Paper>

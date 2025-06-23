@@ -3,7 +3,7 @@ import useSWR from 'swr'
 import { useFetcher } from '../../hooks/useFetcher'
 import { usePublicFetcher } from '../../hooks/usePublicFetcher'
 import { useAuth0 } from '@auth0/auth0-react'
-import { Flight } from './types'
+import { Trip } from './types'
 
 export const useFlightsSearch = (
   shouldFetch: boolean | undefined,
@@ -17,7 +17,7 @@ export const useFlightsSearch = (
 
   const fetcher = isAuthenticated ? authFetcher : publicFetcher
 
-  return useSWR<Flight[]>(
+  return useSWR<Trip[]>(
     shouldFetch ? [`/flights/search`, { destination, origin, date }] : null,
     fetcher
   )
