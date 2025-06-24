@@ -48,8 +48,12 @@ const MapChart = () => {
       am5map.MapChart.new(root, {
         panX: 'translateX',
         panY: 'translateY',
-        minZoomLevel: 0.97,
         projection: am5map.geoMercator(),
+        minZoomLevel: 1.5,
+        maxZoomLevel: 10,
+        zoomLevel: 2.5,
+        centerMapOnZoomOut: true,
+        homeGeoPoint: { longitude: 10, latitude: 20 },
       })
     )
 

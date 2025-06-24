@@ -50,7 +50,7 @@ export const SearchForm = () => {
     }
 
     if (storeOrigin && storeOrigin !== form.getValues().origin) {
-      form.setFieldValue('destination', storeOrigin)
+      form.setFieldValue('origin', storeOrigin)
     }
   }, [storeOrigin, storeDestination, form])
 
