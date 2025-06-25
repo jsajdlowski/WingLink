@@ -6,18 +6,26 @@ import {
   Text,
   Checkbox,
   Select,
+  ActionIcon,
 } from '@mantine/core'
+import { IconArrowsUpDown } from '@tabler/icons-react'
 import { useEffect, useMemo } from 'react'
 import { useForm } from '@mantine/form'
 import { SearchFormType } from './types'
 import { selectSearch, setSearch } from '../../store/flightSearchSlice'
 import { setFormData } from '../../store/searchFormSlice'
-import dayjs from 'dayjs'
+import { dayjs } from '../../i18n/dayjs-config'
 import { DateInput } from '@mantine/dates'
 import { useAppDispatch, useAppSelector } from '../../hooks/storeHooks'
 import { selectAirports } from '../../store/airportsSlice'
+import { useTranslation } from 'react-i18next'
 
-export const SearchForm = () => {
+interface SearchFormProps {
+  onSearch?: () => void
+}
+
+export const SearchForm = ({ onSearch }: SearchFormProps) => {
+  const { t, i18n } = useTranslation()
   const dispatch = useAppDispatch()
   const { destination: storeDestination, origin: storeOrigin } =
     useAppSelector(selectSearch)
@@ -34,23 +42,41 @@ export const SearchForm = () => {
     },
 
     validate: {
-      origin: (value) => (value ? null : 'Origin is required'),
-      destination: (value) => (value ? null : 'Destination is required'),
-      departureDate: (value) => (value ? null : 'Departure date is required'),
-      returnDate: (value, values) =>
-        values.isOneWay || value ? null : 'Return date is required',
+      origin: (value) =>
+        value ? null : t('searchForm.validation.originRequired'),
+      destination: (value) =>
+        value ? null : t('searchForm.validation.destinationRequired'),
+      departureDate: (value) =>
+        value ? null : t('searchForm.validation.departureDateRequired'),
+      returnDate: (value, values) => {
+        if (values.isOneWay) {
+          return null
+        }
+        if (!value) {
+          return t('searchForm.validation.returnDateRequired')
+        }
+        return null
+      },
       numberOfPassengers: (value) =>
-        value >= 1 && value <= 8 ? null : 'Between 1 and 8 passengers',
+        value >= 1 && value <= 8
+          ? null
+          : t('searchForm.validation.passengersLimit'),
     },
   })
 
   useEffect(() => {
-    if (storeDestination && storeDestination !== form.getValues().destination) {
-      form.setFieldValue('destination', storeDestination)
+    const currentOrigin = form.getValues().origin
+    const currentDestination = form.getValues().destination
+
+    if (storeOrigin !== undefined && storeOrigin !== currentOrigin) {
+      form.setFieldValue('origin', storeOrigin)
     }
 
-    if (storeOrigin && storeOrigin !== form.getValues().origin) {
-      form.setFieldValue('origin', storeOrigin)
+    if (
+      storeDestination !== undefined &&
+      storeDestination !== currentDestination
+    ) {
+      form.setFieldValue('destination', storeDestination)
     }
   }, [storeOrigin, storeDestination, form])
 
@@ -62,10 +88,32 @@ export const SearchForm = () => {
     dispatch(setSearch({ destination: value }))
   })
 
-  const airportCodes = useMemo(
-    () => airports?.map((airport) => airport.code),
-    [airports]
-  )
+  form.watch('departureDate', ({ value }) => {
+    if (
+      value &&
+      form.values.returnDate &&
+      dayjs(form.values.returnDate).isBefore(dayjs(value), 'day')
+    ) {
+      form.setFieldValue('returnDate', null)
+    }
+  })
+
+  const airportOptions = useMemo(() => {
+    if (!airports) return []
+
+    return airports.map((airport) => ({
+      value: airport.code,
+      label: `${airport.city}, ${airport.country} (${airport.code}) - ${airport.name}`,
+    }))
+  }, [airports])
+
+  const handleSwapAirports = () => {
+    const currentOrigin = form.values.origin
+    const currentDestination = form.values.destination
+
+    form.setFieldValue('origin', currentDestination)
+    form.setFieldValue('destination', currentOrigin)
+  }
 
   const onSubmit = (formData: SearchFormType) => {
     dispatch(
@@ -80,57 +128,113 @@ export const SearchForm = () => {
         isSubmitted: true,
       })
     )
+
+    if (onSearch) {
+      onSearch()
+    }
   }
 
   return (
-    <Container size="sm">
+    <Container size="sm" mb="md">
       <Paper shadow="xs" p="lg" radius="md" withBorder>
-        <Text size="lg">Search Flights</Text>
+        <Text size="lg" mb="md">
+          {t('searchForm.title')}
+        </Text>
 
         <form onSubmit={form.onSubmit(onSubmit)}>
           <Select
-            label="From"
+            label={t('searchForm.from')}
+            placeholder={t('searchForm.placeholders.selectOrigin')}
             limit={10}
             maxDropdownHeight={280}
-            data={airportCodes}
+            data={airportOptions}
             searchable
-            {...form.getInputProps('origin')}
+            clearable
+            value={form.values.origin}
+            onChange={(value) => {
+              form.setFieldValue('origin', value || '')
+              dispatch(setSearch({ origin: value || '' }))
+            }}
+            onClear={() => {
+              form.setFieldValue('origin', '')
+              dispatch(setSearch({ origin: '' }))
+            }}
+            error={form.errors.origin}
+            styles={{
+              input: { paddingRight: '36px' },
+              section: { paddingRight: '8px' },
+            }}
           />
+
+          <Group justify="center" mt="xs">
+            <ActionIcon
+              variant="light"
+              size="lg"
+              radius="xl"
+              onClick={handleSwapAirports}
+              disabled={!form.values.origin || !form.values.destination}
+              title={t('searchForm.swapAirports')}
+            >
+              <IconArrowsUpDown size={18} />
+            </ActionIcon>
+          </Group>
+
           <Select
-            label="To"
+            label={t('searchForm.to')}
+            placeholder={t('searchForm.placeholders.selectDestination')}
             limit={10}
             maxDropdownHeight={280}
-            data={airportCodes}
+            data={airportOptions}
             searchable
-            {...form.getInputProps('destination')}
+            clearable
+            value={form.values.destination}
+            onChange={(value) => {
+              form.setFieldValue('destination', value || '')
+              dispatch(setSearch({ destination: value || '' }))
+            }}
+            onClear={() => {
+              form.setFieldValue('destination', '')
+              dispatch(setSearch({ destination: '' }))
+            }}
+            error={form.errors.destination}
+            styles={{
+              input: { paddingRight: '36px' },
+              section: { paddingRight: '8px' },
+            }}
           />
 
           <DateInput
-            label="Departure Date"
+            mt="md"
+            label={t('searchForm.departureDate')}
             minDate={new Date()}
             maxDate={dayjs().add(8, 'month').toDate()}
-            placeholder="Departure Date"
+            placeholder={t('searchForm.placeholders.departureDate')}
+            locale={i18n.language}
             {...form.getInputProps('departureDate')}
           />
 
           <DateInput
             mt="md"
-            label="Return Date"
+            label={t('searchForm.returnDate')}
             minDate={form.values.departureDate ?? new Date()}
             maxDate={dayjs().add(8, 'month').toDate()}
-            placeholder="Return Date"
-            disabled={form.values.isOneWay}
+            placeholder={t('searchForm.placeholders.returnDate')}
+            disabled={form.values.isOneWay || !form.values.departureDate}
+            locale={i18n.language}
             {...form.getInputProps('returnDate')}
           />
 
           <Checkbox
             mt="md"
-            label="One Way"
+            mb="md"
+            label={t('searchForm.oneWay')}
             {...form.getInputProps('isOneWay', { type: 'checkbox' })}
           />
 
-          <Group mt="md">
-            <Button type="submit">Search</Button>
+          <Group mt="lg" mb="md">
+            <Button type="submit" size="md">
+              {t('searchForm.search')}
+            </Button>
           </Group>
         </form>
       </Paper>
