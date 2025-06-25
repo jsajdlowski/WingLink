@@ -1,5 +1,5 @@
 import { Text } from '@mantine/core'
-import { useNavigate } from 'react-router'
+import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { clearForm } from '../../store/searchFormSlice'
 import { resetSearch } from '../../store/flightSearchSlice'
