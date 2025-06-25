@@ -1,8 +1,10 @@
 import { Loader, Text, Stack, Box, Center } from '@mantine/core'
 import { useMyTickets } from './hooks'
 import { TicketHistoryCard } from './ticketHistoryCard'
+import { useTranslation } from 'react-i18next'
 
 export const TripHistory = () => {
+  const { t } = useTranslation()
   const { data, isLoading } = useMyTickets()
 
   if (isLoading) {
@@ -31,9 +33,9 @@ export const TripHistory = () => {
           alignItems: 'center',
         }}
       >
-        <Text size="xl">No flights yet</Text>
+        <Text size="xl">{t('tripHistory.noTrips')}</Text>
         <Text size="md" color="dimmed">
-          Go book some!
+          {t('tripHistory.bookFlights')}
         </Text>
       </div>
     )
@@ -42,7 +44,7 @@ export const TripHistory = () => {
   return (
     <Box p="2rem">
       <Text size="xl" fw={700} mb="lg">
-        Your trip history
+        {t('tripHistory.title')}
       </Text>
       <Stack>
         {data.map((ticket) => (

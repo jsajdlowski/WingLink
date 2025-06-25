@@ -1,16 +1,18 @@
 import { Card, Text, TextInput, Button, Stack } from '@mantine/core'
 import { useAppSelector } from '../../hooks/storeHooks'
-import { Outlet } from 'react-router'
+import { Outlet } from 'react-router-dom'
 import { selectTrip } from '../../store/tripSlice'
 import { useState, useMemo } from 'react'
-import { useNavigate } from 'react-router'
+import { useNavigate } from 'react-router-dom'
 import { Ticket } from './ticket'
 import { useBuyTicket } from './hooks'
 import { SeatClass } from '../history/types'
 import { useAuth0 } from '@auth0/auth0-react'
 import { useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 
 export const BookTrip = () => {
+  const { t } = useTranslation()
   const tripState = useAppSelector(selectTrip)
   const navigate = useNavigate()
   const buyTicket = useBuyTicket()
@@ -77,7 +79,7 @@ export const BookTrip = () => {
       <Card shadow="sm" padding="lg" radius="md" withBorder>
         <Card.Section>
           <Text size="lg" fw={500} p="md">
-            Flights info
+            {t('bookTrip.flightsInfo')}
           </Text>
         </Card.Section>
 
@@ -85,7 +87,7 @@ export const BookTrip = () => {
           <Stack mb="md">
             <Ticket
               flight={tripState.departureFlight!}
-              title={'Departure Flight'}
+              title={t('bookTrip.departureFlight')}
               onPriceChange={(price, seatClass) => {
                 setDeparturePrice(price)
                 setDepartureClass(seatClass as unknown as SeatClass)
@@ -95,7 +97,7 @@ export const BookTrip = () => {
             {!isOneWay && (
               <Ticket
                 flight={tripState.returnFlight!}
-                title="Return Flight"
+                title={t('bookTrip.returnFlight')}
                 onPriceChange={(price, seatClass) => {
                   setReturnPrice(price)
                   setReturnClass(seatClass as unknown as SeatClass)
@@ -106,34 +108,36 @@ export const BookTrip = () => {
 
           {isAuthenticated ? (
             <>
-              <Text fw="bold">Passenger Info</Text>
+              <Text fw="bold">{t('bookTrip.passengerInfo')}</Text>
               <Stack>
                 <TextInput
-                  label="First Name"
-                  placeholder="Enter your first name"
+                  label={t('bookTrip.firstName')}
+                  placeholder={t('bookTrip.enterFirstName')}
                   value={firstName}
                   onChange={(e) => setFirstName(e.currentTarget.value)}
                   required
                 />
 
                 <TextInput
-                  label="Last Name"
-                  placeholder="Enter your last name"
+                  label={t('bookTrip.lastName')}
+                  placeholder={t('bookTrip.enterLastName')}
                   value={lastName}
                   onChange={(e) => setLastName(e.currentTarget.value)}
                   required
                 />
 
-                <Text fw={600}>Total Price: {totalPrice.toFixed(2)} PLN</Text>
+                <Text fw={600}>
+                  {t('bookTrip.totalPrice')}: {totalPrice.toFixed(2)} PLN
+                </Text>
 
                 <Button onClick={handleSubmit} disabled={!isFormValid}>
-                  Buy Ticket
+                  {t('bookTrip.buyTicket')}
                 </Button>
               </Stack>
             </>
           ) : (
             <Text c="red" fw={600}>
-              Please log in to complete your booking.
+              {t('bookTrip.loginRequired')}
             </Text>
           )}
         </Card.Section>

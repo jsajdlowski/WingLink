@@ -1,7 +1,8 @@
 import { Card, Group, Image, Text, Divider, Stack } from '@mantine/core'
 import { SeatClass, Trip } from './types'
 import { IconPlane } from '@tabler/icons-react'
-import dayjs from 'dayjs'
+import { dayjs } from '../../i18n/dayjs-config'
+import { useTranslation } from 'react-i18next'
 
 interface TicketHistoryCardProps {
   trip: Trip
@@ -14,6 +15,7 @@ export const TicketHistoryCard = ({
   price: basePrice,
   seatClass,
 }: TicketHistoryCardProps) => {
+  const { t } = useTranslation()
   const departure = dayjs(trip.departureTime)
   const arrival = dayjs(trip.arrivalTime)
   const totalMinutes = arrival.diff(departure, 'minute')
@@ -21,17 +23,17 @@ export const TicketHistoryCard = ({
   const hours = Math.floor(totalMinutes / 60)
   const minutes = totalMinutes % 60
 
-  const formattedDepartureTime = departure.format('DD/MM HH:mm')
-  const formattedArrivalTime = arrival.format('DD/MM HH:mm')
+  const formattedDepartureTime = departure.format('L HH:mm')
+  const formattedArrivalTime = arrival.format('L HH:mm')
 
   const firstFlight = trip.flights?.[0]
   const transfers = (trip.flights?.length || 1) - 1
 
   const seatClassMap: Record<SeatClass, string> = {
-    ECONOMY: 'Economy',
-    PREMIUM_ECONOMY: 'Premium Economy',
-    BUSINESS: 'Business',
-    FIRST_CLASS: 'First Class',
+    ECONOMY: t('bookTrip.seatClasses.economy'),
+    PREMIUM_ECONOMY: t('bookTrip.seatClasses.premiumEconomy'),
+    BUSINESS: t('bookTrip.seatClasses.business'),
+    FIRST_CLASS: t('bookTrip.seatClasses.firstClass'),
   }
 
   const calculatePrice = (seatClass: SeatClass): number => {
@@ -79,8 +81,8 @@ export const TicketHistoryCard = ({
 
         <Text fw={500} size="sm" c="dimmed">
           {transfers > 0
-            ? `${transfers} Transfer${transfers > 1 ? 's' : ''}`
-            : 'Non-Stop'}
+            ? t('tripHistory.transfers.transfer', { count: transfers })
+            : t('tripHistory.transfers.nonStop')}
         </Text>
       </Group>
 
@@ -89,7 +91,8 @@ export const TicketHistoryCard = ({
           {formattedDepartureTime}
         </Text>
         <Text size="sm" c="gray">
-          {hours}h {minutes}m
+          {hours} {t('bookTrip.duration.hours')} {minutes}{' '}
+          {t('bookTrip.duration.minutes')}
         </Text>
         <Text size="lg" fw={700}>
           {formattedArrivalTime}
@@ -107,14 +110,14 @@ export const TicketHistoryCard = ({
       <Stack gap="xs">
         <Group justify="space-between">
           <Text fw={500} size="sm">
-            Seat Class:
+            {t('tripHistory.seatClass')}:
           </Text>
           <Text size="sm">{seatClassMap[seatClass]}</Text>
         </Group>
 
         <Group justify="space-between">
           <Text fw={500} size="sm">
-            Price:
+            {t('tripHistory.price')}:
           </Text>
           <Text fw={700} size="sm" c="green">
             {finalPrice.toFixed(2)} PLN
