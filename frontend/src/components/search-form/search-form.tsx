@@ -137,13 +137,13 @@ export const SearchForm = ({ onSearch }: SearchFormProps) => {
   return (
     <Container size="sm" mb="md">
       <Paper shadow="xs" p="lg" radius="md" withBorder>
-        <Text size="lg" mb="md">
+        <Text size="lg" mb="md" fw="bold">
           {t('searchForm.title')}
         </Text>
 
         <form onSubmit={form.onSubmit(onSubmit)}>
           <Select
-            label={t('searchForm.from')}
+            label={`${t('searchForm.from')}:`}
             placeholder={t('searchForm.placeholders.selectOrigin')}
             limit={10}
             maxDropdownHeight={280}
@@ -180,7 +180,7 @@ export const SearchForm = ({ onSearch }: SearchFormProps) => {
           </Group>
 
           <Select
-            label={t('searchForm.to')}
+            label={`${t('searchForm.to')}:`}
             placeholder={t('searchForm.placeholders.selectDestination')}
             limit={10}
             maxDropdownHeight={280}
@@ -205,7 +205,7 @@ export const SearchForm = ({ onSearch }: SearchFormProps) => {
 
           <DateInput
             mt="md"
-            label={t('searchForm.departureDate')}
+            label={`${t('searchForm.departureDate')}:`}
             minDate={new Date()}
             maxDate={dayjs().add(8, 'month').toDate()}
             placeholder={t('searchForm.placeholders.departureDate')}
@@ -215,7 +215,7 @@ export const SearchForm = ({ onSearch }: SearchFormProps) => {
 
           <DateInput
             mt="md"
-            label={t('searchForm.returnDate')}
+            label={`${t('searchForm.returnDate')}:`}
             minDate={form.values.departureDate ?? new Date()}
             maxDate={dayjs().add(8, 'month').toDate()}
             placeholder={t('searchForm.placeholders.returnDate')}
