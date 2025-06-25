@@ -13,15 +13,22 @@ import {
 import { IconPlaneDeparture, IconPlaneArrival } from '@tabler/icons-react'
 import { IconArrowRight } from '@tabler/icons-react'
 import { useFlightsSearch } from './hooks'
-import { Trip } from './types'
+import { Trip, FlightFilters } from './types'
 import { useAppDispatch, useAppSelector } from '../../hooks/storeHooks'
-import dayjs from 'dayjs'
+import { dayjs } from '../../i18n/dayjs-config'
 import { popularDestinations } from '../../data/destinations-data'
 import { PopularDestinations } from './popularDesinations'
-import { useNavigate } from 'react-router'
+import { useNavigate } from 'react-router-dom'
 import { selectSearchForm } from '../../store/searchFormSlice'
 import { setDepartureFlight, setReturnFlight } from '../../store/tripSlice'
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
+import { FlightFiltersComponent } from './FlightFilters'
+import {
+  applyFlightFilters,
+  getDefaultFilters,
+  getFlightStats,
+} from './filterUtils'
 
 const FlightListItem = ({
   flight,
@@ -30,6 +37,7 @@ const FlightListItem = ({
   flight: Trip
   onSelect: (flight: Trip) => void
 }) => {
+  const { t } = useTranslation()
   const departure = dayjs(flight.departureTime)
   const arrival = dayjs(flight.arrivalTime)
   const totalMinutes = arrival.diff(departure, 'minute')
@@ -37,12 +45,12 @@ const FlightListItem = ({
   const minutes = totalMinutes % 60
   const transfers = flight.flights.length - 1
 
-  const formattedDeparture = departure.format('HH:mm DD/MM/YY')
-  const formattedArrival = arrival.format('HH:mm DD/MM/YY')
+  const formattedDeparture = departure.format('HH:mm L')
+  const formattedArrival = arrival.format('HH:mm L')
 
   return (
-    <Paper p="xs" withBorder>
-      <Group justify="space-between" align="center">
+    <Paper p={{ base: 'xs', sm: 'md' }} withBorder>
+      <Group justify="space-between" align="center" wrap="wrap">
         <Group gap={2}>
           <Image src={flight.flights[0].airlineLogo} height={24} />
           <Text fw={600}>{flight.origin.code}</Text>
@@ -50,7 +58,14 @@ const FlightListItem = ({
           <Text fw={600}>{flight.destination.code}</Text>
         </Group>
 
-        <Group>
+        <Group
+          wrap="wrap"
+          style={{
+            flex: '1 1 auto',
+            justifyContent: 'center',
+          }}
+          visibleFrom="sm"
+        >
           <IconPlaneDeparture stroke={1} />
           <Text>{formattedDeparture}</Text>
           <Text color="gray">
@@ -58,16 +73,43 @@ const FlightListItem = ({
           </Text>
           <Text>
             {transfers > 0
-              ? `${transfers} Transfer${transfers > 1 ? 's' : ''}`
-              : 'Non-Stop'}
+              ? t('flightList.transfer', { count: transfers })
+              : t('flightList.nonStop')}
           </Text>
           <IconPlaneArrival stroke={1} />
           <Text>{formattedArrival}</Text>
         </Group>
 
-        <Group>
+        <Group hiddenFrom="sm" style={{ width: '100%' }} mt="xs">
+          <Group gap="xs">
+            <IconPlaneDeparture stroke={1} />
+            <Text>{formattedDeparture}</Text>
+          </Group>
+          <Text color="gray">
+            {hours}h {minutes}m
+          </Text>
+          <Group gap="xs">
+            <IconPlaneArrival stroke={1} />
+            <Text>{formattedArrival}</Text>
+          </Group>
+          <Text>
+            {transfers > 0
+              ? t('flightList.transfer', { count: transfers })
+              : t('flightList.nonStop')}
+          </Text>
+        </Group>
+
+        <Group
+          justify="space-between"
+          style={{
+            flex: '0 0 auto',
+            alignSelf: 'flex-end',
+          }}
+        >
           <NumberFormatter value={flight.price} suffix=" PLN" />
-          <Button onClick={() => onSelect(flight)}>Select</Button>
+          <Button onClick={() => onSelect(flight)} size="sm">
+            {t('flightList.select')}
+          </Button>
         </Group>
       </Group>
     </Paper>
@@ -75,6 +117,7 @@ const FlightListItem = ({
 }
 
 export const FlightList = () => {
+  const { t } = useTranslation()
   const {
     destination,
     origin,
@@ -85,6 +128,7 @@ export const FlightList = () => {
   } = useAppSelector(selectSearchForm)
 
   const [step, setStep] = useState<'departure' | 'return'>('departure')
+  const [filters, setFilters] = useState<FlightFilters>(getDefaultFilters())
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
 
@@ -97,6 +141,36 @@ export const FlightList = () => {
     destination,
     returnDate
   )
+
+  const filteredDepartureData = useMemo(() => {
+    if (!departureData) return []
+    return applyFlightFilters(departureData, filters)
+  }, [departureData, filters])
+
+  const filteredReturnData = useMemo(() => {
+    if (!returnData) return []
+    return applyFlightFilters(returnData, filters)
+  }, [returnData, filters])
+
+  const departureFlightStats = useMemo(() => {
+    if (!departureData) return { min: 0, max: 0 }
+    const stats = getFlightStats(departureData)
+    return { min: stats.minPrice, max: stats.maxPrice }
+  }, [departureData])
+
+  const returnFlightStats = useMemo(() => {
+    if (!returnData) return { min: 0, max: 0 }
+    const stats = getFlightStats(returnData)
+    return { min: stats.minPrice, max: stats.maxPrice }
+  }, [returnData])
+
+  const handleFiltersChange = (newFilters: FlightFilters) => {
+    setFilters(newFilters)
+  }
+
+  const handleFiltersReset = () => {
+    setFilters(getDefaultFilters())
+  }
 
   const handleDepartureSelect = (flight: Trip) => {
     dispatch(setDepartureFlight(flight))
@@ -116,9 +190,12 @@ export const FlightList = () => {
     return (
       <>
         <Title order={2} mb="sm">
-          Popular Destinations
+          {t('flightList.popularDestinations')}
         </Title>
-        <SimpleGrid cols={3}>
+        <SimpleGrid
+          cols={{ base: 1, sm: 2, lg: 3 }}
+          spacing={{ base: 'xs', sm: 'md' }}
+        >
           {popularDestinations.map((destination) => (
             <PopularDestinations
               key={destination.name}
@@ -147,26 +224,40 @@ export const FlightList = () => {
       return (
         <>
           <Title order={2} mb="sm">
-            Select Departure Flight
+            {t('flightList.selectDepartureFlight')}
           </Title>
-          <Stack gap="sm">
-            {departureData.map((flight) => (
-              <FlightListItem
-                key={flight.id}
-                flight={flight}
-                onSelect={handleDepartureSelect}
-              />
-            ))}
-          </Stack>
+
+          <FlightFiltersComponent
+            filters={filters}
+            onFiltersChange={handleFiltersChange}
+            onReset={handleFiltersReset}
+            resultCount={filteredDepartureData.length}
+            totalCount={departureData.length}
+            priceStats={departureFlightStats}
+          />
+
+          {filteredDepartureData.length > 0 ? (
+            <Stack gap="sm">
+              {filteredDepartureData.map((flight) => (
+                <FlightListItem
+                  key={flight.id}
+                  flight={flight}
+                  onSelect={handleDepartureSelect}
+                />
+              ))}
+            </Stack>
+          ) : (
+            <Text>{t('flightList.noFlightsMatchFilters')}</Text>
+          )}
         </>
       )
     } else {
       return (
         <>
           <Title order={2} mb="sm">
-            Select Departure Flight
+            {t('flightList.selectDepartureFlight')}
           </Title>
-          <Text>No flights found! Choose another date.</Text>
+          <Text>{t('flightList.noFlights')}</Text>
         </>
       )
     }
@@ -177,26 +268,40 @@ export const FlightList = () => {
       return (
         <>
           <Title order={2} mb="sm">
-            Select Return Flight
+            {t('flightList.selectReturnFlight')}
           </Title>
-          <Stack gap="sm">
-            {returnData.map((flight) => (
-              <FlightListItem
-                key={flight.id}
-                flight={flight}
-                onSelect={handleReturnSelect}
-              />
-            ))}
-          </Stack>
+
+          <FlightFiltersComponent
+            filters={filters}
+            onFiltersChange={handleFiltersChange}
+            onReset={handleFiltersReset}
+            resultCount={filteredReturnData.length}
+            totalCount={returnData.length}
+            priceStats={returnFlightStats}
+          />
+
+          {filteredReturnData.length > 0 ? (
+            <Stack gap="sm">
+              {filteredReturnData.map((flight) => (
+                <FlightListItem
+                  key={flight.id}
+                  flight={flight}
+                  onSelect={handleReturnSelect}
+                />
+              ))}
+            </Stack>
+          ) : (
+            <Text>{t('flightList.noFlightsMatchFilters')}</Text>
+          )}
         </>
       )
     } else {
       return (
         <>
           <Title order={2} mb="sm">
-            Select Return Flight
+            {t('flightList.selectReturnFlight')}
           </Title>
-          <Text>No flights found! Choose another date.</Text>
+          <Text>{t('flightList.noFlights')}</Text>
         </>
       )
     }
