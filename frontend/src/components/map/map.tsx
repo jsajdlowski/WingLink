@@ -62,6 +62,18 @@ const MapChart = () => {
         layout: root.horizontalLayout,
         x: 20,
         y: 40,
+        background: am5.RoundedRectangle.new(root, {
+          fill: am5.color(0x000000),
+          fillOpacity: 0.5,
+          cornerRadiusTL: 8,
+          cornerRadiusTR: 8,
+          cornerRadiusBL: 8,
+          cornerRadiusBR: 8,
+        }),
+        paddingTop: 8,
+        paddingBottom: 8,
+        paddingLeft: 12,
+        paddingRight: 12,
       })
     )
 
@@ -69,6 +81,7 @@ const MapChart = () => {
       am5.Label.new(root, {
         centerY: am5.p50,
         text: 'Map',
+        fill: am5.color(0xffffff),
       })
     )
 
@@ -98,6 +111,7 @@ const MapChart = () => {
       am5.Label.new(root, {
         centerY: am5.p50,
         text: 'Globe',
+        fill: am5.color(0xffffff),
       })
     )
 
