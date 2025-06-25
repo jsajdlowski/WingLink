@@ -1,0 +1,113 @@
+{
+  "searchForm": {
+    "title": "Wyszukaj loty",
+    "from": "Z",
+    "to": "Do",
+    "departureDate": "Data wylotu",
+    "returnDate": "Data powrotu",
+    "oneWay": "W jedną stronę",
+    "search": "Szukaj",
+    "clear": "Wyczyść",
+    "swapAirports": "Zamień miejscami lotniska wylotu i przylotu",
+    "placeholders": {
+      "selectOrigin": "Lotnisko wylotu",
+      "selectDestination": "Lotnisko przylotu",
+      "departureDate": "Data wylotu",
+      "returnDate": "Data powrotu"
+    },
+    "validation": {
+      "originRequired": "Miejsce wylotu jest wymagane",
+      "destinationRequired": "Miejsce przylotu jest wymagane",
+      "departureDateRequired": "Data wylotu jest wymagana",
+      "returnDateRequired": "Data powrotu jest wymagana",
+      "passengersLimit": "Od 1 do 8 pasażerów"
+    }
+  },
+  "flightList": {
+    "popularDestinations": "Popularne kierunki",
+    "selectDepartureFlight": "Wybierz lot docelowy",
+    "selectReturnFlight": "Wybierz lot powrotny",
+    "noFlights": "Nie znaleziono lotów! Wybierz inną datę.",
+    "nonStop": "Bez przesiadek",
+    "transfer": "{{count}} Przesiadka",
+    "transfer_plural": "{{count}} Przesiadki",
+    "select": "Wybierz",
+    "checkFlights": "Sprawdź loty",
+    "showingResults": "Wyświetlane {{count}} z {{total}} lotów",
+    "noFlightsMatchFilters": "Żadne loty nie spełniają kryteriów filtrów. Spróbuj zmienić ustawienia."
+  },
+  "languageSwitcher": {
+    "language": "Język"
+  },
+  "navigation": {
+    "logout": "Wyloguj się",
+    "tripHistory": "Historia podróży",
+    "adminPanel": "Panel administratora"
+  },
+  "bookTrip": {
+    "flightsInfo": "Informacje o lotach",
+    "departureFlight": "Lot wylotu",
+    "returnFlight": "Lot powrotny",
+    "passengerInfo": "Dane pasażera",
+    "firstName": "Imię",
+    "lastName": "Nazwisko",
+    "enterFirstName": "Wprowadź swoje imię",
+    "enterLastName": "Wprowadź swoje nazwisko",
+    "totalPrice": "Całkowita cena",
+    "buyTicket": "Kup bilet",
+    "loginRequired": "Zaloguj się, aby dokończyć rezerwację.",
+    "seatClass": "Klasa miejsca",
+    "price": "Cena",
+    "duration": {
+      "hours": "godz.",
+      "minutes": "min"
+    },
+    "nonStop": "Bez przesiadek",
+    "transfers": "Przesiadki",
+    "seatClasses": {
+      "economy": "Ekonomiczna",
+      "premiumEconomy": "Premium Ekonomiczna",
+      "business": "Biznesowa",
+      "firstClass": "Pierwsza Klasa"
+    }
+  },
+  "tripHistory": {
+    "title": "Historia twoich podróży",
+    "noTrips": "Nie masz jeszcze lotów",
+    "bookFlights": "Zarezerwuj je teraz!",
+    "seatClass": "Klasa miejsca",
+    "price": "Cena",
+    "transfers": {
+      "nonStop": "Bez przesiadek",
+      "transfer": "{{count}} Przesiadka",
+      "transfer_plural": "{{count}} Przesiadki"
+    }
+  },
+  "filters": {
+    "title": "Filtry",
+    "duration": "Maks. czas trwania",
+    "selectMaxDuration": "Dostosuj maksymalny czas lotu",
+    "maxDurationValue": "Do {{hours}} godzin",
+    "departureTime": "Czas wylotu",
+    "selectDepartureTime": "Wybierz zakres czasu wylotu",
+    "arrivalTime": "Czas przylotu",
+    "selectArrivalTime": "Wybierz zakres czasu przylotu",
+    "stops": "Przesiadki",
+    "selectStops": "Maks. przesiadki",
+    "directOnly": "Tylko bezpośrednie",
+    "upTo1Stop": "Do 1 przesiadki",
+    "upTo2Stops": "Do 2 przesiadek",
+    "upTo3Stops": "Do 3 przesiadek",
+    "priceRange": "Zakres cen",
+    "minPrice": "Od",
+    "maxPrice": "Do",
+    "priceRangeInfo": "Dostępne loty: {{min}} - {{max}} PLN",
+    "clearAll": "Wyczyść wszystko",
+    "showingResults": "{{count}} z {{total}} lotów"
+  },
+  "themeSwitcher": {
+    "toggle": "Przełącz motyw",
+    "light": "Jasny motyw",
+    "dark": "Ciemny motyw"
+  }
+}

@@ -1,0 +1,113 @@
+{
+  "searchForm": {
+    "title": "Search Flights",
+    "from": "From",
+    "to": "To",
+    "departureDate": "Departure Date",
+    "returnDate": "Return Date",
+    "oneWay": "One Way",
+    "search": "Search",
+    "clear": "Clear",
+    "swapAirports": "Swap departure and destination airports",
+    "placeholders": {
+      "selectOrigin": "Origin airport",
+      "selectDestination": "Destination airport",
+      "departureDate": "Departure Date",
+      "returnDate": "Return Date"
+    },
+    "validation": {
+      "originRequired": "Origin is required",
+      "destinationRequired": "Destination is required",
+      "departureDateRequired": "Departure date is required",
+      "returnDateRequired": "Return date is required",
+      "passengersLimit": "Between 1 and 8 passengers"
+    }
+  },
+  "flightList": {
+    "popularDestinations": "Popular Destinations",
+    "selectDepartureFlight": "Select Departure Flight",
+    "selectReturnFlight": "Select Return Flight",
+    "noFlights": "No flights found! Choose another date.",
+    "nonStop": "Non-Stop",
+    "transfer": "{{count}} Transfer",
+    "transfer_plural": "{{count}} Transfers",
+    "select": "Select",
+    "checkFlights": "Check Flights",
+    "showingResults": "Showing {{count}} of {{total}} flights",
+    "noFlightsMatchFilters": "No flights match your filters. Try adjusting your criteria."
+  },
+  "filters": {
+    "title": "Filters",
+    "duration": "Max Duration",
+    "selectMaxDuration": "Adjust maximum flight duration",
+    "maxDurationValue": "Up to {{hours}} hours",
+    "departureTime": "Departure Time",
+    "selectDepartureTime": "Select departure time range",
+    "arrivalTime": "Arrival Time",
+    "selectArrivalTime": "Select arrival time range",
+    "stops": "Stops",
+    "selectStops": "Max stops",
+    "directOnly": "Direct only",
+    "upTo1Stop": "Up to 1 stop",
+    "upTo2Stops": "Up to 2 stops",
+    "upTo3Stops": "Up to 3 stops",
+    "priceRange": "Price Range",
+    "minPrice": "From",
+    "maxPrice": "To",
+    "priceRangeInfo": "Available flights: {{min}} - {{max}} PLN",
+    "clearAll": "Clear All",
+    "showingResults": "{{count}} of {{total}} flights"
+  },
+  "languageSwitcher": {
+    "language": "Language"
+  },
+  "navigation": {
+    "logout": "Logout",
+    "tripHistory": "Trip History",
+    "adminPanel": "Admin Panel"
+  },
+  "bookTrip": {
+    "flightsInfo": "Flights info",
+    "departureFlight": "Departure Flight",
+    "returnFlight": "Return Flight",
+    "passengerInfo": "Passenger Info",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "enterFirstName": "Enter your first name",
+    "enterLastName": "Enter your last name",
+    "totalPrice": "Total Price",
+    "buyTicket": "Buy Ticket",
+    "loginRequired": "Please log in to complete your booking.",
+    "seatClass": "Seat Class",
+    "price": "Price",
+    "duration": {
+      "hours": "h",
+      "minutes": "m"
+    },
+    "nonStop": "Non-stop",
+    "transfers": "Transfers",
+    "seatClasses": {
+      "economy": "Economy",
+      "premiumEconomy": "Premium Economy",
+      "business": "Business",
+      "firstClass": "First Class"
+    }
+  },
+  "tripHistory": {
+    "title": "Your trip history",
+    "noTrips": "No flights yet",
+    "bookFlights": "Go book some!",
+    "seatClass": "Seat Class",
+    "price": "Price",
+    "transfers": {
+      "nonStop": "Non-Stop",
+      "transfer": "{{count}} Transfer",
+      "transfer_plural": "{{count}} Transfers"
+    }
+  },
+  "themeSwitcher": {
+    "toggle": "Toggle theme",
+    "light": "Light theme",
+    "dark": "Dark theme"
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "destinations": {
+    "paris": {
+      "name": "Paris, France",
+      "text": "The 'City of Love' famous for the Eiffel Tower, Louvre Museum, and charming cafés along the Seine River."
+    },
+    "rome": {
+      "name": "Rome, Italy",
+      "text": "Ancient capital with iconic landmarks like the Colosseum, Vatican City, and Trevi Fountain."
+    },
+    "newYork": {
+      "name": "New York City, USA",
+      "text": "The bustling metropolis known for Times Square, Statue of Liberty, and Central Park."
+    },
+    "tokyo": {
+      "name": "Tokyo, Japan",
+      "text": "High-tech city blending futuristic skyscrapers with traditional temples and cherry blossoms."
+    },
+    "london": {
+      "name": "London, UK",
+      "text": "Historic city featuring Buckingham Palace, Big Ben, and the Tower of London."
+    },
+    "barcelona": {
+      "name": "Barcelona, Spain",
+      "text": "Vibrant city with Gaudí's Sagrada Família, La Rambla, and beautiful Mediterranean beaches."
+    },
+    "sydney": {
+      "name": "Sydney, Australia",
+      "text": "Coastal city known for its iconic Opera House, Harbour Bridge, and Bondi Beach."
+    },
+    "rio": {
+      "name": "Rio de Janeiro, Brazil",
+      "text": "Famous for Christ the Redeemer statue, Copacabana Beach, and Carnival celebrations."
+    },
+    "dubai": {
+      "name": "Dubai, UAE",
+      "text": "Ultra-modern city with the Burj Khalifa, Palm Islands, and luxury shopping malls."
+    }
+  }
+}

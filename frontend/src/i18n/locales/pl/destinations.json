@@ -1,0 +1,40 @@
+{
+  "destinations": {
+    "paris": {
+      "name": "Paryż, Francja",
+      "text": "Miasto miłości słynące z Wieży Eiffla, Muzeum Luwru i urokliwych kawiarni wzdłuż rzeki Sekwany."
+    },
+    "rome": {
+      "name": "Rzym, Włochy",
+      "text": "Starożytna stolica z ikonicznymi zabytkami jak Koloseum, Watykan i Fontanna di Trevi."
+    },
+    "newYork": {
+      "name": "Nowy Jork, USA",
+      "text": "Tętniąca życiem metropolia znana z Times Square, Statuy Wolności i Central Parku."
+    },
+    "tokyo": {
+      "name": "Tokio, Japonia",
+      "text": "Zaawansowane technologicznie miasto łączące futurystyczne wieżowce z tradycyjnymi świątyniami i kwitnącymi wiśniami."
+    },
+    "london": {
+      "name": "Londyn, Wielka Brytania",
+      "text": "Historyczne miasto z Pałacem Buckingham, Big Benem i Tower of London."
+    },
+    "barcelona": {
+      "name": "Barcelona, Hiszpania",
+      "text": "Tętniące życiem miasto z Sagrada Família Gaudíego, La Ramblą i pięknymi plażami nad Morzem Śródziemnym."
+    },
+    "sydney": {
+      "name": "Sydney, Australia",
+      "text": "Nadmorskie miasto znane z ikonicznej Opery, Mostu Portowego i plaży Bondi."
+    },
+    "rio": {
+      "name": "Rio de Janeiro, Brazylia",
+      "text": "Słynne z posągu Chrystusa Odkupiciela, plaży Copacabana i obchodów karnawału."
+    },
+    "dubai": {
+      "name": "Dubaj, ZEA",
+      "text": "Ultranowoczesne miasto z Burj Khalifą, Wyspami Palmowymi i luksusowymi centrami handlowymi."
+    }
+  }
+}
