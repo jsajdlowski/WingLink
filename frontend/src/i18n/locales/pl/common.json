@@ -88,7 +88,7 @@
     "duration": "Maks. czas trwania",
     "selectMaxDuration": "Dostosuj maksymalny czas lotu",
     "maxDurationValue": "Do {{hours}} godzin",
-    "departureTime": "Czas wylotu",
+    "departureTime": "Godzina wylotu",
     "selectDepartureTime": "Wybierz zakres czasu wylotu",
     "arrivalTime": "Czas przylotu",
     "selectArrivalTime": "Wybierz zakres czasu przylotu",
