@@ -11,11 +11,8 @@ export const LoginButton = () => {
     <Button
       onClick={() => loginWithRedirect()}
       variant="gradient"
-      gradient={{
-        from: 'rgba(0, 229, 255, 1)',
-        to: 'rgba(42, 0, 255, 1)',
-        deg: 172,
-      }}
+      px={{ base: 'xs', sm: 'md' }}
+      gradient={{ from: 'rgba(64, 201, 190, 1)', to: 'blue', deg: 180 }}
     >
       Sign in
     </Button>

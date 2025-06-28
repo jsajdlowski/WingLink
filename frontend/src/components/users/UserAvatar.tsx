@@ -10,10 +10,12 @@ import { IconChevronRight } from '@tabler/icons-react'
 
 import { useMe } from './hooks'
 import { useAuth0 } from '@auth0/auth0-react'
-import { useNavigate } from 'react-router'
+import { useNavigate } from 'react-router-dom'
 import { User } from './types'
+import { useTranslation } from 'react-i18next'
 
 export const UserAvatar = () => {
+  const { t } = useTranslation()
   const navigate = useNavigate()
   const { logout, user } = useAuth0()
   const { data, isLoading } = useMe()
@@ -31,34 +33,40 @@ export const UserAvatar = () => {
       <Menu.Target>
         <UnstyledButton
           style={{
-            padding: 'var(--mantine-spacing-md)',
+            padding: 'var(--mantine-spacing-xs)',
             color: 'var(--mantine-color-text)',
             borderRadius: 'var(--mantine-radius-sm)',
           }}
         >
-          <Group>
-            <Avatar radius="xl" />
+          <Group wrap="nowrap" gap="xs">
+            <Avatar radius="xl" size="sm" />
 
-            <div style={{ flex: 1 }}>
-              <Text c="dimmed" size="xs">
-                {data?.email}
-              </Text>
-            </div>
+            <Text
+              c="dimmed"
+              size="xs"
+              lineClamp={1}
+              style={{ maxWidth: '100px' }}
+              visibleFrom="xs"
+            >
+              {data?.email}
+            </Text>
 
-            <IconChevronRight size={16} />
+            <IconChevronRight size={14} />
           </Group>
         </UnstyledButton>
       </Menu.Target>
       <Menu.Dropdown>
         <Menu.Item onClick={() => navigate('my-trip-history')}>
-          Trip history
+          {t('navigation.tripHistory')}
         </Menu.Item>
         {user && isAdmin(user as User) && (
-          <Menu.Item onClick={() => navigate('/admin')}>Admin Panel</Menu.Item>
+          <Menu.Item onClick={() => navigate('/admin')}>
+            {t('navigation.adminPanel')}
+          </Menu.Item>
         )}
         <Menu.Divider />
         <Menu.Item color="red" onClick={() => logout()}>
-          Logout
+          {t('navigation.logout')}
         </Menu.Item>
       </Menu.Dropdown>
     </Menu>

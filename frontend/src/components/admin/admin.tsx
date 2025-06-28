@@ -14,6 +14,7 @@ import { useState } from 'react'
 import { mutate } from 'swr'
 import { useTickets, useUsers, useDeleteTicket } from './hooks'
 import { SeatClass } from './types'
+import { dayjs } from '../../i18n/dayjs-config'
 
 export const AdminPage = () => {
   const [active, setActive] = useState<'users' | 'tickets'>('users')
@@ -73,9 +74,8 @@ export const AdminPage = () => {
     <AppShell
       padding="md"
       navbar={{
-        width: 300,
+        width: { base: '100%', sm: 300 },
         breakpoint: 'sm',
-        collapsed: { mobile: false },
       }}
     >
       <Modal
@@ -254,9 +254,7 @@ export const AdminPage = () => {
                           Departure:
                         </Text>
                         <Text size="sm">
-                          {new Date(
-                            ticket.flightTrip.departureTime
-                          ).toLocaleString()}
+                          {dayjs(ticket.flightTrip.departureTime).format('LLL')}
                         </Text>
                       </Group>
 

@@ -20,12 +20,12 @@ const flightSearchSlice = createSlice({
       action: PayloadAction<{ destination?: string; origin?: string }>
     ) => {
       const { destination, origin } = action.payload
-      if (destination) {
-        state.destination = action.payload.destination || undefined
+      if (destination !== undefined) {
+        state.destination = destination || undefined
       }
 
-      if (origin) {
-        state.origin = action.payload.origin || undefined
+      if (origin !== undefined) {
+        state.origin = origin || undefined
       }
     },
 

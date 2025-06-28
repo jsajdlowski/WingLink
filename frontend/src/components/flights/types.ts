@@ -40,3 +40,11 @@ export interface Destination {
   text: string
   airport: string
 }
+
+export interface FlightFilters {
+  maxDuration: number | null
+  departureTimeRange: [number, number] | null
+  arrivalTimeRange: [number, number] | null
+  maxTransfers: number | null
+  priceRange: [number | null, number | null]
+}
