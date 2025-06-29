@@ -48,8 +48,12 @@ const MapChart = () => {
       am5map.MapChart.new(root, {
         panX: 'translateX',
         panY: 'translateY',
-        minZoomLevel: 0.97,
         projection: am5map.geoMercator(),
+        minZoomLevel: 1.5,
+        maxZoomLevel: 10,
+        zoomLevel: 2.5,
+        centerMapOnZoomOut: true,
+        homeGeoPoint: { longitude: 10, latitude: 20 },
       })
     )
 
@@ -58,6 +62,18 @@ const MapChart = () => {
         layout: root.horizontalLayout,
         x: 20,
         y: 40,
+        background: am5.RoundedRectangle.new(root, {
+          fill: am5.color(0x000000),
+          fillOpacity: 0.5,
+          cornerRadiusTL: 8,
+          cornerRadiusTR: 8,
+          cornerRadiusBL: 8,
+          cornerRadiusBR: 8,
+        }),
+        paddingTop: 8,
+        paddingBottom: 8,
+        paddingLeft: 12,
+        paddingRight: 12,
       })
     )
 
@@ -65,6 +81,7 @@ const MapChart = () => {
       am5.Label.new(root, {
         centerY: am5.p50,
         text: 'Map',
+        fill: am5.color(0xffffff),
       })
     )
 
@@ -94,6 +111,7 @@ const MapChart = () => {
       am5.Label.new(root, {
         centerY: am5.p50,
         text: 'Globe',
+        fill: am5.color(0xffffff),
       })
     )
 
@@ -122,9 +140,6 @@ const MapChart = () => {
           break
       }
       dispatch(setSelectedCountry({ selectedCountry: countryName }))
-      console.log('Selected country:', countryName)
-
-      console.log('Attempting to zoom to:', dataContext?.name, dataItem)
 
       polygonSeries.mapPolygons.each(function (polygon) {
         polygon.set('active', false)
@@ -171,8 +186,7 @@ const MapChart = () => {
       airportCircle.events.on('click', function (e) {
         const dataItem = e.target.dataItem
         const dataContext = dataItem?.dataContext as AirportDataContext
-        console.log(dataContext.id)
-        console.log('selectedField', selectedField)
+
         switch (selectedField) {
           case SearchFormFields.FROM:
             dispatch(
@@ -208,10 +222,6 @@ const MapChart = () => {
 
   useEffect(() => {
     if (countryAirportSeriesRef.current && airports && airports.length > 0) {
-      console.log(
-        'Updating airports based on selected country:',
-        selectedCountry
-      )
       if (selectedCountry) {
         const filteredAirports = airports.filter(
           (airport) =>

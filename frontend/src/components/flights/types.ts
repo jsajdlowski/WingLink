@@ -14,12 +14,37 @@ export interface Ticket {
 
 export interface Flight {
   id: number
-  airline: string
-  arrivalTime: Date
-  departureTime: Date
-  destination: Airport
   flightNumber: string
   origin: Airport
+  destination: Airport
+  departureTime: Date
+  arrivalTime: Date
+  airline: string
+  airlineLogo: string
   price: number
-  tickets: Ticket[]
+}
+
+export interface Trip {
+  id: number
+  origin: Airport
+  destination: Airport
+  departureTime: Date
+  arrivalTime: Date
+  price: number
+  flights: Flight[]
+}
+
+export interface Destination {
+  image: string
+  name: string
+  text: string
+  airport: string
+}
+
+export interface FlightFilters {
+  maxDuration: number | null
+  departureTimeRange: [number, number] | null
+  arrivalTimeRange: [number, number] | null
+  maxTransfers: number | null
+  priceRange: [number | null, number | null]
 }

@@ -4,9 +4,15 @@ export enum UserRole {
 }
 
 export interface User {
-  id: number
-  firstName: string
-  lastName: string
   email: string
-  role: UserRole
+  email_verified: boolean
+  family_name: string
+  given_name: string
+  name: string
+  nickname: string
+  picture: string
+  sub: string
+  updated_at: string
+  'https://winglink.api/email': string
+  'https://winglink.api/roles': string[]
 }
